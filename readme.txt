@@ -12,7 +12,7 @@ Manage to-do list items on a individual or group basis with customizable setting
 
 This plugin provides users with a to-do list feature.
 
-You can configure the plugin to have private to-do lists for each user or for all users to share a to-do list. The shared to-do list has a variety of settings available. You can assign tasks to certain user and have only those tasks viewable to a user. You can also assign different permission levels using capabilities.
+You can configure the plugin to have private to-do lists for each user or for all users to share a to-do list. The shared to-do list has a variety of settings available. You can assign tasks to a specific user and have only those tasks assigned viewable to a user. You can also assign different permission levels using capabilities.
 
 A page is added under the Tools menu to manage items and they are also listed on a dashboard widget. You can manage the settings from under the Settings menu.
 
