@@ -505,9 +505,10 @@ function atd_todo_in_activity_box() {
 			echo '<p><input type="checkbox" id="td-'.$result->id.'" onclick="window.location = \'tools.php?page=cleverness-to-do-list&amp;action=comptd&amp;id='.$result->id.'&amp;noheader&amp;message=2\';" /> <span'.$priority_class.'>'.$result->todotext.'</span>';
 			if ( ($atd_option['list_view'] == '1' && $atd_option['show_only_assigned'] == '0' && (current_user_can($atd_option['view_all_assigned_capability']))) ||  ($atd_option['list_view'] == '1' && $atd_option['show_only_assigned'] == '1') && $atd_option['assign'] == '0') {
 				$assign_user = '';
-				if ( $result->assign != '-1' )
+				if ( $result->assign != '-1' ) {
 					$assign_user = get_userdata($result->assign)->display_name;
-				echo ' <small>['.__('assigned to', 'cleverness-to-do-list').' '.$assign_user.']</small>';
+					echo ' <small>['.__('assigned to', 'cleverness-to-do-list').' '.$assign_user.']</small>';
+				}
 			}
 			if ( $atd_option['list_view'] == '1' && $atd_option['dashboard_author'] == '0' )
 				echo ' <small>- '.__('added by', 'cleverness-to-do-list').' '.$user_info->display_name.'</small>';
