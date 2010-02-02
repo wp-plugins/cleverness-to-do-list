@@ -61,6 +61,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 
+= 1.2.1 =
+* Removed a div tag from the dashboard widget that did not belong there
+
 = 1.2 =
 * Added ability to check off items from dashboard
 * Added uninstall function
@@ -82,6 +85,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Fixed to work in WordPress 2.8
 
 == Upgrade Notice ==
+
+= 1.2.1
+Bug fix
 
 = 1.2 =
 Major changes to plugin

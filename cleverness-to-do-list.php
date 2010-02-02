@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Cleverness To-Do List
-Version: 1.2
+Version: 1.2.1
 Description: Manage to-do list items on a individual or group basis. Adds a page under the Tools menu and a dashboard widget.
 Author: C.M. Kendrick
 Author URI: http://cleverness.org
@@ -213,7 +213,7 @@ function atd_install () {
 	      status tinyint(1) DEFAULT '0' NOT NULL,
 	      priority tinyint(1) NOT NULL,
           todotext text NOT NULL,
-		  assign varchar(20),
+		  assign int(10),
 	      UNIQUE KEY id (id)
 	    );";
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
@@ -520,7 +520,7 @@ function atd_todo_in_activity_box() {
 		echo '<p>'.__('No items to do.', 'cleverness-to-do-list').'</p>';
 		}
 		if (current_user_can($atd_option['add_capability']))
-			echo '<p style="text-align: right">'. '<a href="tools.php?page=cleverness-to-do-list#addtd">'. __('New To-Do Item &raquo;', 'cleverness-to-do-list').'</a></p></div>';
+			echo '<p style="text-align: right">'. '<a href="tools.php?page=cleverness-to-do-list#addtd">'. __('New To-Do Item &raquo;', 'cleverness-to-do-list').'</a></p>';
 	}
 
 
