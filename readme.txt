@@ -46,6 +46,10 @@ You should have received a copy of the GNU General Public License along with thi
 * **Delete To-Do Item Capability** - This allows the selected capability to delete individual to-do items.
 * **Purge To-Do Items Capability** - This allows the selected capability to purge all the completed to-do items.
 
+= How are the sorted in the Assign To dropdown? =
+
+They are sorted by Contributors, then Authors, then Editors, and then Admins.
+
 = What should I do if I find a bug? =
 
 Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave a comment](http://cleverness.org/plugins/to-do-list/#respond) or [contact me](http://cleverness.org/contact/).
@@ -60,6 +64,10 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 6. Settings Page
 
 == Changelog ==
+
+= 1.3 =
+* Added a deadline field and settings
+* Only shows users above Subscribers in the Assign To dropdown
 
 = 1.2.1 =
 * Removed a div tag from the dashboard widget that did not belong there

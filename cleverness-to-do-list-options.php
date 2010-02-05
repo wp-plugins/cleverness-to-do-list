@@ -25,6 +25,20 @@ function atd_settings_page() {
 	</tbody>
 	</table>
 
+    <table class="form-table">
+	<tbody>
+        <tr>
+        <th scope="row"><label for="cleverness_todo_settings[show_deadline]"><?php _e('Show Deadline', 'cleverness-to-do-list'); ?></label></th>
+        <td>
+			<select id="cleverness_todo_settings[list_view]" name="cleverness_todo_settings[show_deadline]">
+				<option value="0"<?php if ( $options['show_deadline'] == '0' ) echo ' selected="selected"'; ?>><?php _e('No', 'cleverness-to-do-list'); ?></option>
+				<option value="1"<?php if ( $options['show_deadline'] == '1' ) echo ' selected="selected"'; ?>><?php _e('Yes', 'cleverness-to-do-list'); ?>&nbsp;</option>
+			</select>
+		</td>
+        </tr>
+	</tbody>
+	</table>
+
 	<h3><?php _e('Dashboard Widget Settings', 'cleverness-to-do-list'); ?></h3>
 	<table class="form-table">
 	<tbody>
@@ -40,13 +54,22 @@ function atd_settings_page() {
 			</select>
 		</td>
 		</tr>
-		</tbody>
-		</table>
+		<tr>
+		<th scope="row"><label for="cleverness_todo_settings[show_dashboard_deadline]"><?php _e('Show Deadline', 'cleverness-to-do-list'); ?></label></th>
+        <td valign="top">
+			<select id="cleverness_todo_settings[show_dashboard_deadline]" name="cleverness_todo_settings[show_dashboard_deadline]">
+				<option value="0"<?php if ( $options['show_dashboard_deadline'] == '0' ) echo ' selected="selected"'; ?>><?php _e('No', 'cleverness-to-do-list'); ?></option>
+				<option value="1"<?php if ( $options['show_dashboard_deadline'] == '1' ) echo ' selected="selected"'; ?>><?php _e('Yes', 'cleverness-to-do-list'); ?>&nbsp;</option>
+			</select>
+		</td>
+		</tr>
+	</tbody>
+	</table>
 
-		<h3><?php _e('Priority Label Settings', 'cleverness-to-do-list'); ?></h3>
-		<p><?php _e('The highest priority list items are shown in red in the lists. The lowest priority list items are shown in a lighter grey.', 'cleverness-to-do-list'); ?></p>
-		<table class="form-table">
-		<tbody>
+	<h3><?php _e('Priority Label Settings', 'cleverness-to-do-list'); ?></h3>
+	<p><?php _e('The highest priority list items are shown in red in the lists. The lowest priority list items are shown in a lighter grey.', 'cleverness-to-do-list'); ?></p>
+	<table class="form-table">
+	<tbody>
 		<tr>
 		<th scope="row"><label for="cleverness_todo_settings[priority_0]"><?php _e('Highest Priority Label', 'cleverness-to-do-list'); ?></label></th>
 		<td>
