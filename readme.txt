@@ -65,6 +65,10 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 
+= 1.3.1 =
+* Fixed an incompability with PHP 4
+* Added a call to the userdata global in the complete function
+
 = 1.3 =
 * Added a deadline field and settings
 * Only shows users above Subscribers in the Assign To dropdown
@@ -93,6 +97,12 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Fixed to work in WordPress 2.8
 
 == Upgrade Notice ==
+
+= 1.3.1 =
+Bug fixes
+
+= 1.3 =
+Added features, changed database structure. Be sure to deactivate and activate plugin.
 
 = 1.2.1
 Bug fix

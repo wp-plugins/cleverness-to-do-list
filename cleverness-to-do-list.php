@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Cleverness To-Do List
-Version: 1.3
+Version: 1.3.1
 Description: Manage to-do list items on a individual or group basis. Adds a page under the Tools menu and a dashboard widget.
 Author: C.M. Kendrick
 Author URI: http://cleverness.org
@@ -165,7 +165,7 @@ function atd_delete($id) {
 
 /* Mark to-do list item as completed */
 function atd_complete($id, $status) {
-  	 global $wpdb, $atd_option;
+  	 global $wpdb, $userdata, $atd_option;
    	 $table_name = $wpdb->prefix . 'todolist';
    	 if (current_user_can($atd_option['complete_capability'])) {
 		$results = $wpdb->update( $table_name, array( 'status' => $status), array( 'id' => $id) );
@@ -389,8 +389,8 @@ function atd_todo_subpanel() {
 				if ( $atd_option['list_view'] == '1' && $atd_option['assign'] == '0' ) {
 					$assign_user = '';
 					if ( $result->assign != '-1' )
-						$assign_user = get_userdata($result->assign)->display_name;
-					echo '<td>'.$assign_user.'</td>';
+						$assign_user = get_userdata($result->assign);
+					echo '<td>'.$assign_user->display_name.'</td>';
 					}
 				if ( $atd_option['show_deadline'] == '1' )
 					echo '<td>'.$result->deadline.'</td>';
@@ -454,8 +454,8 @@ function atd_todo_subpanel() {
 				if ( $atd_option['list_view'] == '1' && $atd_option['assign'] == '0' ) {
 					$assign_user = '';
 					if ( $result->assign != '-1' )
-						$assign_user = get_userdata($result->assign)->display_name;
-					echo '<td>'.$assign_user.'</td>';
+						$assign_user = get_userdata($result->assign);
+					echo '<td>'.$assign_user->display_name.'</td>';
 					}
 				if ( $atd_option['show_deadline'] == '1' )
 					echo '<td>'.$result->deadline.'</td>';
@@ -578,8 +578,8 @@ function atd_todo_in_activity_box() {
 			if ( ($atd_option['list_view'] == '1' && $atd_option['show_only_assigned'] == '0' && (current_user_can($atd_option['view_all_assigned_capability']))) ||  ($atd_option['list_view'] == '1' && $atd_option['show_only_assigned'] == '1') && $atd_option['assign'] == '0') {
 				$assign_user = '';
 				if ( $result->assign != '-1' && $result->assign != '') {
-					$assign_user = get_userdata($result->assign)->display_name;
-					echo ' <small>['.__('assigned to', 'cleverness-to-do-list').' '.$assign_user.']</small>';
+					$assign_user = get_userdata($result->assign);
+					echo ' <small>['.__('assigned to', 'cleverness-to-do-list').' '.$assign_user->display_name.']</small>';
 				}
 			}
 			if ( $atd_option['show_dashboard_deadline'] == '1' && $result->deadline != '' )
