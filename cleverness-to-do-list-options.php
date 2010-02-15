@@ -1,12 +1,12 @@
 <?php
 /* Creates a page under settings to manage the To-Do List settings */
-function atd_settings_page() {
+function cleverness_todo_settings_page() {
 ?>
 <div class="wrap">
 <div id="icon-options-general" class="icon32"></div> <h2><?php _e('To-Do List Settings', 'cleverness-to-do-list'); ?></h2>
 
 <form method="post" action="options.php">
-    <?php settings_fields( 'atd-settings-group' ); ?>
+    <?php settings_fields( 'cleverness-todo-settings-group' ); ?>
 	<?php $options = get_option('cleverness_todo_settings'); ?>
 
 	<p><?php _e('<em>List View</em> sets how the to-do lists are viewed. The <em>Individual</em> setting allows each user to have their own private to-do list. The <em>Group</em> setting allows all users to share one to-do list.', 'cleverness-to-do-list'); ?></p>
@@ -245,6 +245,6 @@ function atd_settings_page() {
 </div>
 <?php
 /* Adds information about the plugin on the settings page footer */
-add_action( 'in_admin_footer', 'atd_admin_footer' );
+add_action( 'in_admin_footer', 'cleverness_todo_admin_footer' );
 }
 ?>

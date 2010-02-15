@@ -65,6 +65,11 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 
+= 1.3.2 =
+* Fixed a bug where "assigned by" would show on the dashboard widget when empty
+* Renamed functions
+* Added a check to prevent blank to-do items
+
 = 1.3.1 =
 * Fixed an incompability with PHP 4
 * Added a call to the userdata global in the complete function
@@ -97,6 +102,10 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Fixed to work in WordPress 2.8
 
 == Upgrade Notice ==
+
+= 1.3.2 =
+Bug fixes
+Changed function names
 
 = 1.3.1 =
 Bug fixes

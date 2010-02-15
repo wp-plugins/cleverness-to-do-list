@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cleverness To-Do List\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-04 19:52-0500\n"
-"PO-Revision-Date: 2010-02-04 19:52-0500\n"
+"POT-Creation-Date: 2010-02-14 22:14-0500\n"
+"PO-Revision-Date: 2010-02-14 22:14-0500\n"
 "Last-Translator: C.M. Kendrick <cindy@cleverness.org>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -239,166 +239,170 @@ msgstr ""
 msgid "To-Do List requires WordPress 2.8 or newer. <a href=\"http://codex.wordpress.org/Upgrading_WordPress\">Please update.</a>"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:227
+#: ../cleverness-to-do-list.php:231
 msgid "Add your first To-Do List item"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:279
+#: ../cleverness-to-do-list.php:284
 msgid "New To-Do item has been added."
 msgstr ""
 
-#: ../cleverness-to-do-list.php:280
+#: ../cleverness-to-do-list.php:285
 msgid "To-Do item has been marked completed."
 msgstr ""
 
-#: ../cleverness-to-do-list.php:281
+#: ../cleverness-to-do-list.php:286
 msgid "To-Do item has been deleted."
 msgstr ""
 
-#: ../cleverness-to-do-list.php:282
+#: ../cleverness-to-do-list.php:287
 msgid "To-Do item has been updated."
 msgstr ""
 
-#: ../cleverness-to-do-list.php:283
+#: ../cleverness-to-do-list.php:288
 msgid "To-Do database table has been installed."
 msgstr ""
 
-#: ../cleverness-to-do-list.php:284
+#: ../cleverness-to-do-list.php:289
 msgid "Completed To-Do items have been deleted."
 msgstr ""
 
-#: ../cleverness-to-do-list.php:285
+#: ../cleverness-to-do-list.php:290
 msgid "To-Do item has been marked uncompleted."
 msgstr ""
 
-#: ../cleverness-to-do-list.php:286
+#: ../cleverness-to-do-list.php:291
 msgid "You do not have sufficient privileges to do that."
 msgstr ""
 
-#: ../cleverness-to-do-list.php:301
-#: ../cleverness-to-do-list.php:345
-#: ../cleverness-to-do-list.php:606
-#: ../cleverness-to-do-list.php:607
-#: ../cleverness-to-do-list.php:624
+#: ../cleverness-to-do-list.php:292
+msgid "To-Do cannot be blank."
+msgstr ""
+
+#: ../cleverness-to-do-list.php:307
+#: ../cleverness-to-do-list.php:351
+#: ../cleverness-to-do-list.php:612
+#: ../cleverness-to-do-list.php:613
+#: ../cleverness-to-do-list.php:630
 msgid "To-Do List"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:302
-#: ../cleverness-to-do-list.php:334
+#: ../cleverness-to-do-list.php:308
+#: ../cleverness-to-do-list.php:340
 msgid "Edit To-Do Item"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:306
-#: ../cleverness-to-do-list.php:355
-#: ../cleverness-to-do-list.php:426
-#: ../cleverness-to-do-list.php:487
+#: ../cleverness-to-do-list.php:312
+#: ../cleverness-to-do-list.php:361
+#: ../cleverness-to-do-list.php:432
+#: ../cleverness-to-do-list.php:493
 msgid "Priority"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:318
-#: ../cleverness-to-do-list.php:498
+#: ../cleverness-to-do-list.php:324
+#: ../cleverness-to-do-list.php:504
 msgid "Assign To"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:323
-#: ../cleverness-to-do-list.php:357
-#: ../cleverness-to-do-list.php:428
-#: ../cleverness-to-do-list.php:530
+#: ../cleverness-to-do-list.php:329
+#: ../cleverness-to-do-list.php:363
+#: ../cleverness-to-do-list.php:434
+#: ../cleverness-to-do-list.php:536
 msgid "Deadline"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:328
-#: ../cleverness-to-do-list.php:535
+#: ../cleverness-to-do-list.php:334
+#: ../cleverness-to-do-list.php:541
 msgid "To-Do"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:336
+#: ../cleverness-to-do-list.php:342
 msgid "&laquo; Return to To-Do List"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:346
+#: ../cleverness-to-do-list.php:352
 msgid "To-Do Items"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:348
+#: ../cleverness-to-do-list.php:354
 msgid "Add New Item"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:354
-#: ../cleverness-to-do-list.php:425
+#: ../cleverness-to-do-list.php:360
+#: ../cleverness-to-do-list.php:431
 msgid "Item"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:356
-#: ../cleverness-to-do-list.php:427
+#: ../cleverness-to-do-list.php:362
+#: ../cleverness-to-do-list.php:433
 msgid "Assigned To"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:358
-#: ../cleverness-to-do-list.php:429
+#: ../cleverness-to-do-list.php:364
+#: ../cleverness-to-do-list.php:435
 msgid "Added By"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:359
-#: ../cleverness-to-do-list.php:430
+#: ../cleverness-to-do-list.php:365
+#: ../cleverness-to-do-list.php:436
 msgid "Action"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:383
-#: ../cleverness-to-do-list.php:590
+#: ../cleverness-to-do-list.php:389
+#: ../cleverness-to-do-list.php:596
 msgid "Edit"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:385
-#: ../cleverness-to-do-list.php:450
+#: ../cleverness-to-do-list.php:391
+#: ../cleverness-to-do-list.php:456
 msgid "Delete"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:410
+#: ../cleverness-to-do-list.php:416
 msgid "There is nothing to do..."
 msgstr ""
 
-#: ../cleverness-to-do-list.php:417
+#: ../cleverness-to-do-list.php:423
 msgid "Completed Items"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:419
+#: ../cleverness-to-do-list.php:425
 msgid "Delete All"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:475
+#: ../cleverness-to-do-list.php:481
 msgid "There are no completed items"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:483
+#: ../cleverness-to-do-list.php:489
 msgid "Add New To-Do Item"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:541
+#: ../cleverness-to-do-list.php:547
 msgid "Add To-Do Item &raquo;"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:582
+#: ../cleverness-to-do-list.php:588
 msgid "assigned to"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:586
+#: ../cleverness-to-do-list.php:592
 msgid "Deadline:"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:588
+#: ../cleverness-to-do-list.php:594
 msgid "added by"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:594
+#: ../cleverness-to-do-list.php:600
 msgid "No items to do."
 msgstr ""
 
-#: ../cleverness-to-do-list.php:597
+#: ../cleverness-to-do-list.php:603
 msgid "New To-Do Item &raquo;"
 msgstr ""
 
-#: ../cleverness-to-do-list.php:624
+#: ../cleverness-to-do-list.php:630
 msgid "&raquo;"
 msgstr ""
 
