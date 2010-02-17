@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Cleverness To-Do List
-Version: 1.3.2
+Version: 1.3.3
 Description: Manage to-do list items on a individual or group basis. Adds a page under the Tools menu and a dashboard widget.
 Author: C.M. Kendrick
 Author URI: http://cleverness.org
@@ -243,7 +243,7 @@ function cleverness_todo_install () {
 		'edit_capability' => 'publish_posts',
 		'delete_capability' => 'manage_options',
 		'purge_capability' => 'manage_options',
-		'complete_capablity' => 'publish_posts',
+		'complete_capability' => 'publish_posts',
 		'assign_capability' => 'manage_options',
 		'view_all_assigned_capability' => 'manage_options',
 		'dashboard_number' => '10',

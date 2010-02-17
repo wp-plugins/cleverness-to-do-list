@@ -3,7 +3,7 @@ Contributors: elusivelight
 Donate link: http://cleverness.org/plugins/to-do-list/
 Tags: to-do, to do list, to-do list, list, assign tasks, admin
 Requires at least: 2.8
-Tested up to: 2.9.1
+Tested up to: 2.9.2
 Stable tag: trunk
 
 Manage to-do list items on a individual or group basis with customizable settings.
@@ -65,6 +65,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 
+= 1.3.3 =
+* Fixed a typo in the default options that caused items to be unable to be marked as completed. Please visit the To-Do List settings page and click on Save Changes if you are having difficult marking items as completed
+
 = 1.3.2 =
 * Fixed a bug where "assigned by" would show on the dashboard widget when empty
 * Renamed functions
@@ -102,6 +105,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Fixed to work in WordPress 2.8
 
 == Upgrade Notice ==
+
+= 1.3.3 =
+Bug fix, Go to the To-Do List settings page and click on Save Changes if unable to mark items as completed
 
 = 1.3.2 =
 Bug fixes
