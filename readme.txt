@@ -35,6 +35,9 @@ You should have received a copy of the GNU General Public License along with thi
 
 == Frequently Asked Questions ==
 
+= I can't mark items as completed =
+Please visit the To-Do List settings page and click on Save Changes. There was a typo in a previous version in the default settings.
+
 = Can you explain the permissions in more detail? =
 
 * **View To-Do Item Capability** - This allows the selected capability to view to-do items in the dashboard widget and on the To-Do List page under Tools.
