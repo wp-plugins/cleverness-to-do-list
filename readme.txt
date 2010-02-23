@@ -68,6 +68,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 
+= 1.3.4 = 
+* Added Spanish translation (contributed by [Ricardo](http://yabocs.avytes.com/))
+
 = 1.3.3 =
 * Fixed a typo in the default options that caused items to be unable to be marked as completed. Please visit the To-Do List settings page and click on Save Changes if you are having difficult marking items as completed
 
@@ -109,6 +112,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Upgrade Notice ==
 
+= 1.3.4 =
+Spanish translation added
+
 = 1.3.3 =
 Bug fix, Go to the To-Do List settings page and click on Save Changes if unable to mark items as completed
 
@@ -131,3 +137,5 @@ Major changes to plugin
 == Credits ==
 
 This plugin was originally from Abstract Dimensions (site no longer available) with a patch to display the list in the dashboard by WordPress by Example (site also no longer available). It was abandoned prior to WordPress 2.7.
+
+Spanish translation by [Ricardo](http://yabocs.avytes.com/)
