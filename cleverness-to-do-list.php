@@ -256,7 +256,6 @@ function cleverness_todo_install () {
    		dbDelta($sql);
    		$welcome_text = __('Add your first To-Do List item', 'cleverness-to-do-list');
    		$results = $wpdb->insert( $table_name, array( 'author' => $userdata->ID, 'status' => 0, 'priority' => 1, 'todotext' => $welcome_text ) );
-   		}
 
 		$new_options = array(
 		'list_view' => '0',
@@ -287,7 +286,7 @@ function cleverness_todo_install () {
 
 	$installed_ver = get_option( 'cleverness_todo_db_version' );
 
-	//if( $installed_ver != $cleverness_todo_db_version ) {
+	if( $installed_ver != $cleverness_todo_db_version ) {
 
 		if ( !function_exists('maybe_create_table') ) {
 			require_once(ABSPATH . 'wp-admin/install-helper.php');
@@ -299,7 +298,8 @@ function cleverness_todo_install () {
 
     	update_option( 'cleverness_todo_db_version', $cleverness_todo_db_version );
 		delete_option( 'atd_db_version' );
-		//}
+		}
+	}
 
 /* Create admin page */
 function cleverness_todo_todo_subpanel() {
