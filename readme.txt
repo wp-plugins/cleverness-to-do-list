@@ -47,11 +47,11 @@ Several options are available:
 
 * **title** - default is no title.
 * **type** - you can chose *list* or *table* view. Default is *list*.
-* **priorities** - default is *show*. Use a blank value to hide (only appplies to table view).
-* **assigned** - default is *show*. Use a blank value to hide (only appplies to table view).
-* **deadline** - default is *show*. Use a blank value to hide (only appplies to table view).
-* **progress** - default is *show*. Use a blank value to hide (only appplies to table view).
-* **addedby** - default is *show*. Use a blank value to hide (only appplies to table view).
+* **priorities** - default is *show*. Use a blank value to hide (only applies to table view).
+* **assigned** - default is *show*. Use a blank value to hide (only applies to table view).
+* **deadline** - default is *show*. Use a blank value to hide (only applies to table view).
+* **progress** - default is *show*. Use a blank value to hide (only applies to table view).
+* **addedby** - default is *show*. Use a blank value to hide (only applies to table view).
 
 Example:
 
