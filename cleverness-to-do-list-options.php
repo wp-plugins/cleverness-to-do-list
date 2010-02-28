@@ -30,9 +30,18 @@ function cleverness_todo_settings_page() {
         <tr>
         <th scope="row"><label for="cleverness_todo_settings[show_deadline]"><?php _e('Show Deadline', 'cleverness-to-do-list'); ?></label></th>
         <td>
-			<select id="cleverness_todo_settings[list_view]" name="cleverness_todo_settings[show_deadline]">
+			<select id="cleverness_todo_settings[show_deadline]" name="cleverness_todo_settings[show_deadline]">
 				<option value="0"<?php if ( $options['show_deadline'] == '0' ) echo ' selected="selected"'; ?>><?php _e('No', 'cleverness-to-do-list'); ?></option>
 				<option value="1"<?php if ( $options['show_deadline'] == '1' ) echo ' selected="selected"'; ?>><?php _e('Yes', 'cleverness-to-do-list'); ?>&nbsp;</option>
+			</select>
+		</td>
+        </tr>
+        <tr>
+        <th scope="row"><label for="cleverness_todo_settings[show_progress]"><?php _e('Show Progress', 'cleverness-to-do-list'); ?></label></th>
+        <td>
+			<select id="cleverness_todo_settings[show_progress]" name="cleverness_todo_settings[show_progress]">
+				<option value="0"<?php if ( $options['show_progress'] == '0' ) echo ' selected="selected"'; ?>><?php _e('No', 'cleverness-to-do-list'); ?></option>
+				<option value="1"<?php if ( $options['show_progress'] == '1' ) echo ' selected="selected"'; ?>><?php _e('Yes', 'cleverness-to-do-list'); ?>&nbsp;</option>
 			</select>
 		</td>
         </tr>
@@ -119,6 +128,15 @@ function cleverness_todo_settings_page() {
 			<select id="cleverness_todo_settings[assign]" name="cleverness_todo_settings[assign]">
 				<option value="0"<?php if ( $options['assign'] == '0' ) echo ' selected="selected"'; ?>><?php _e('Yes', 'cleverness-to-do-list'); ?>&nbsp;</option>
 				<option value="1"<?php if ( $options['assign'] == '1' ) echo ' selected="selected"'; ?>><?php _e('No', 'cleverness-to-do-list'); ?></option>
+			</select>
+		</td>
+		</tr>
+		<tr>
+		<th scope="row"><label for="cleverness_todo_settings[email_assigned]"><?php _e('Email Assigned Task to User', 'cleverness-to-do-list'); ?></label></th>
+        <td valign="top">
+			<select id="cleverness_todo_settings[assign]" name="cleverness_todo_settings[email_assigned]">
+				<option value="0"<?php if ( $options['email_assigned'] == '0' ) echo ' selected="selected"'; ?>><?php _e('No', 'cleverness-to-do-list'); ?>&nbsp;</option>
+				<option value="1"<?php if ( $options['email_assigned'] == '1' ) echo ' selected="selected"'; ?>><?php _e('Yes', 'cleverness-to-do-list'); ?></option>
 			</select>
 		</td>
 		</tr>

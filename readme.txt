@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: elusivelight
 Donate link: http://cleverness.org/plugins/to-do-list/
-Tags: to-do, to do list, to-do list, list, assign tasks, admin
+Tags: to-do, to do list, to-do list, list, assign tasks, tasks, admin
 Requires at least: 2.8
 Tested up to: 2.9.2
 Stable tag: trunk
@@ -12,9 +12,11 @@ Manage to-do list items on a individual or group basis with customizable setting
 
 This plugin provides users with a to-do list feature.
 
-You can configure the plugin to have private to-do lists for each user or for all users to share a to-do list. The shared to-do list has a variety of settings available. You can assign tasks to a specific user and have only those tasks assigned viewable to a user. You can also assign different permission levels using capabilities.
+You can configure the plugin to have private to-do lists for each user or for all users to share a to-do list. The shared to-do list has a variety of settings available. You can assign tasks to a specific user (includes a setting to email a new task to its' assigned user) and have only those tasks assigned viewable to a user. You can also assign different permission levels using capabilities. There are also settings to show deadline and progress fields.
 
 A page is added under the Tools menu to manage items and they are also listed on a dashboard widget. You can manage the settings from under the Settings menu.
+
+A sidebar widget is available as well as a shortcode to display the to-do list items on your site.
 
 == Installation ==
 
@@ -38,6 +40,25 @@ You should have received a copy of the GNU General Public License along with thi
 = I can't mark items as completed =
 Please visit the To-Do List settings page and click on Save Changes. There was a typo in a previous version in the default settings.
 
+= What is the shortcode to display items in a post or page? =
+[todolist]
+
+Several options are available:
+
+* **title** - default is no title.
+* **type** - you can chose *list* or *table* view. Default is *list*.
+* **priorities** - default is *show*. Use a blank value to hide (only appplies to table view).
+* **assigned** - default is *show*. Use a blank value to hide (only appplies to table view).
+* **deadline** - default is *show*. Use a blank value to hide (only appplies to table view).
+* **progress** - default is *show*. Use a blank value to hide (only appplies to table view).
+* **addedby** - default is *show*. Use a blank value to hide (only appplies to table view).
+
+Example:
+
+Table view with the title of Upcoming Articles and showing the progress and who the item was assigned to.
+
+[todolist title="Upcoming Articles" type="table" priorities="" deadline="" addedby=""]
+
 = Can you explain the permissions in more detail? =
 
 * **View To-Do Item Capability** - This allows the selected capability to view to-do items in the dashboard widget and on the To-Do List page under Tools.
@@ -49,7 +70,7 @@ Please visit the To-Do List settings page and click on Save Changes. There was a
 * **Delete To-Do Item Capability** - This allows the selected capability to delete individual to-do items.
 * **Purge To-Do Items Capability** - This allows the selected capability to purge all the completed to-do items.
 
-= How are the sorted in the Assign To dropdown? =
+= How are the user names sorted in the Assign To dropdown? =
 
 They are sorted by Contributors, then Authors, then Editors, and then Admins.
 
@@ -68,7 +89,14 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 
-= 1.3.4 = 
+= 1.4 =
+* Added progress field
+* Added sidebar widget
+* Added post/page shortcode to display list
+* Added ability to email users a new to-do item
+* Removed permission check on install (may help fix WPMU issue)
+
+= 1.3.4 =
 * Added Spanish translation (contributed by [Ricardo](http://yabocs.avytes.com/))
 
 = 1.3.3 =
@@ -111,6 +139,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Fixed to work in WordPress 2.8
 
 == Upgrade Notice ==
+
+= 1.4 =
+Added several new features and settings, added new field to database table
 
 = 1.3.4 =
 Spanish translation added
