@@ -1,0 +1,490 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Cleverness To-Do List\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-02-28 17:45-0500\n"
+"PO-Revision-Date: 2010-02-28 17:46-0500\n"
+"Last-Translator: C.M. Kendrick <cindy@cleverness.org>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../cleverness-to-do-list-options.php:6
+msgid "To-Do List Settings"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:12
+msgid "<em>List View</em> sets how the to-do lists are viewed. The <em>Individual</em> setting allows each user to have their own private to-do list. The <em>Group</em> setting allows all users to share one to-do list."
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:17
+msgid "List View"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:20
+msgid "Individual"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:21
+msgid "Group"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:31
+#: ../cleverness-to-do-list-options.php:67
+#: ../cleverness-to-do-list-widget.php:93
+msgid "Show Deadline"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:34
+#: ../cleverness-to-do-list-options.php:43
+#: ../cleverness-to-do-list-options.php:70
+#: ../cleverness-to-do-list-options.php:112
+#: ../cleverness-to-do-list-options.php:121
+#: ../cleverness-to-do-list-options.php:130
+#: ../cleverness-to-do-list-options.php:138
+#: ../cleverness-to-do-list-options.php:148
+msgid "No"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:35
+#: ../cleverness-to-do-list-options.php:44
+#: ../cleverness-to-do-list-options.php:71
+#: ../cleverness-to-do-list-options.php:111
+#: ../cleverness-to-do-list-options.php:120
+#: ../cleverness-to-do-list-options.php:129
+#: ../cleverness-to-do-list-options.php:139
+#: ../cleverness-to-do-list-options.php:147
+msgid "Yes"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:40
+#: ../cleverness-to-do-list-widget.php:96
+msgid "Show Progress"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:51
+msgid "Dashboard Widget Settings"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:55
+msgid "Number of List Items to Show"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:58
+msgid "1"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:59
+msgid "5"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:60
+msgid "10"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:61
+msgid "15"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:62
+msgid "20"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:78
+msgid "Priority Label Settings"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:79
+msgid "The highest priority list items are shown in red in the lists. The lowest priority list items are shown in a lighter grey."
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:83
+msgid "Highest Priority Label"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:89
+msgid "Middle Priority Label"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:95
+msgid "Lowest Priority Label"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:103
+msgid "Group View Settings"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:104
+msgid "These settings are only used when <em>List View</em> is set to <em>Group</em>."
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:108
+msgid "Show <em>Added By</em> on Dashboard Widget"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:117
+msgid "Show <em>Added By</em> on To-Do List page"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:126
+msgid "Assign Tasks to Users"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:135
+msgid "Email Assigned Task to User"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:144
+msgid "Show Each User Only Their Assigned Tasks"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:153
+msgid "View To-Do Item Capability"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:156
+#: ../cleverness-to-do-list-options.php:169
+#: ../cleverness-to-do-list-options.php:182
+#: ../cleverness-to-do-list-options.php:195
+#: ../cleverness-to-do-list-options.php:208
+#: ../cleverness-to-do-list-options.php:222
+#: ../cleverness-to-do-list-options.php:235
+#: ../cleverness-to-do-list-options.php:248
+msgid "Edit Posts"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:157
+#: ../cleverness-to-do-list-options.php:170
+#: ../cleverness-to-do-list-options.php:183
+#: ../cleverness-to-do-list-options.php:196
+#: ../cleverness-to-do-list-options.php:209
+#: ../cleverness-to-do-list-options.php:223
+#: ../cleverness-to-do-list-options.php:236
+#: ../cleverness-to-do-list-options.php:249
+msgid "Publish Posts"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:158
+#: ../cleverness-to-do-list-options.php:171
+#: ../cleverness-to-do-list-options.php:184
+#: ../cleverness-to-do-list-options.php:197
+#: ../cleverness-to-do-list-options.php:210
+#: ../cleverness-to-do-list-options.php:224
+#: ../cleverness-to-do-list-options.php:237
+#: ../cleverness-to-do-list-options.php:250
+msgid "Edit Others Posts"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:159
+#: ../cleverness-to-do-list-options.php:172
+#: ../cleverness-to-do-list-options.php:185
+#: ../cleverness-to-do-list-options.php:198
+#: ../cleverness-to-do-list-options.php:211
+#: ../cleverness-to-do-list-options.php:225
+#: ../cleverness-to-do-list-options.php:238
+#: ../cleverness-to-do-list-options.php:251
+msgid "Publish Pages"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:160
+#: ../cleverness-to-do-list-options.php:173
+#: ../cleverness-to-do-list-options.php:186
+#: ../cleverness-to-do-list-options.php:199
+#: ../cleverness-to-do-list-options.php:212
+#: ../cleverness-to-do-list-options.php:226
+#: ../cleverness-to-do-list-options.php:239
+#: ../cleverness-to-do-list-options.php:252
+msgid "Edit Users"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:161
+#: ../cleverness-to-do-list-options.php:174
+#: ../cleverness-to-do-list-options.php:187
+#: ../cleverness-to-do-list-options.php:200
+#: ../cleverness-to-do-list-options.php:213
+#: ../cleverness-to-do-list-options.php:227
+#: ../cleverness-to-do-list-options.php:240
+#: ../cleverness-to-do-list-options.php:253
+msgid "Manage Options"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:166
+msgid "Complete To-Do Item Capability"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:179
+msgid "Add To-Do Item Capability"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:192
+msgid "Edit To-Do Item Capability"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:205
+msgid "Assign To-Do Item Capability"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:218
+msgid "View All Assigned Tasks Capability"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:221
+msgid "None"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:232
+msgid "Delete To-Do Item Capability"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:245
+msgid "Purge To-Do Items Capability"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:260
+msgid "Save Changes"
+msgstr ""
+
+#: ../cleverness-to-do-list-widget.php:9
+msgid "Lists To-Do Items"
+msgstr ""
+
+#: ../cleverness-to-do-list-widget.php:11
+msgid "To-Do List Widget"
+msgstr ""
+
+#: ../cleverness-to-do-list-widget.php:39
+msgid "Deadline: "
+msgstr ""
+
+#: ../cleverness-to-do-list-widget.php:44
+msgid "Assigned to "
+msgstr ""
+
+#: ../cleverness-to-do-list-widget.php:49
+#: ../cleverness-to-do-list.php:691
+msgid "No items to do."
+msgstr ""
+
+#: ../cleverness-to-do-list-widget.php:69
+#: ../cleverness-to-do-list.php:335
+#: ../cleverness-to-do-list.php:406
+#: ../cleverness-to-do-list.php:794
+#: ../cleverness-to-do-list.php:795
+#: ../cleverness-to-do-list.php:812
+msgid "To-Do List"
+msgstr ""
+
+#: ../cleverness-to-do-list-widget.php:73
+msgid "Title:"
+msgstr ""
+
+#: ../cleverness-to-do-list-widget.php:78
+msgid "Number of Items to Display:"
+msgstr ""
+
+#: ../cleverness-to-do-list-widget.php:90
+msgid "Show Assigned To"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:17
+msgid "To-Do List requires WordPress 2.8 or newer. <a href=\"http://codex.wordpress.org/Upgrading_WordPress\">Please update.</a>"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:163
+msgid "A task has been assigned to you"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:166
+msgid "Task:"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:167
+msgid "Priority:"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:169
+#: ../cleverness-to-do-list.php:681
+msgid "Deadline:"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:170
+msgid "Website:"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:171
+msgid "Website Login:"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:257
+msgid "Add your first To-Do List item"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:312
+msgid "New To-Do item has been added."
+msgstr ""
+
+#: ../cleverness-to-do-list.php:313
+msgid "To-Do item has been marked completed."
+msgstr ""
+
+#: ../cleverness-to-do-list.php:314
+msgid "To-Do item has been deleted."
+msgstr ""
+
+#: ../cleverness-to-do-list.php:315
+msgid "To-Do item has been updated."
+msgstr ""
+
+#: ../cleverness-to-do-list.php:316
+msgid "To-Do database table has been installed."
+msgstr ""
+
+#: ../cleverness-to-do-list.php:317
+msgid "Completed To-Do items have been deleted."
+msgstr ""
+
+#: ../cleverness-to-do-list.php:318
+msgid "To-Do item has been marked uncompleted."
+msgstr ""
+
+#: ../cleverness-to-do-list.php:319
+msgid "You do not have sufficient privileges to do that."
+msgstr ""
+
+#: ../cleverness-to-do-list.php:320
+msgid "To-Do cannot be blank."
+msgstr ""
+
+#: ../cleverness-to-do-list.php:336
+#: ../cleverness-to-do-list.php:395
+msgid "Edit To-Do Item"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:340
+#: ../cleverness-to-do-list.php:416
+#: ../cleverness-to-do-list.php:494
+#: ../cleverness-to-do-list.php:555
+#: ../cleverness-to-do-list.php:720
+msgid "Priority"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:352
+#: ../cleverness-to-do-list.php:566
+msgid "Assign To"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:357
+#: ../cleverness-to-do-list.php:418
+#: ../cleverness-to-do-list.php:496
+#: ../cleverness-to-do-list.php:598
+#: ../cleverness-to-do-list.php:722
+msgid "Deadline"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:362
+#: ../cleverness-to-do-list.php:419
+#: ../cleverness-to-do-list.php:603
+#: ../cleverness-to-do-list.php:723
+msgid "Progress"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:389
+#: ../cleverness-to-do-list.php:630
+msgid "To-Do"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:397
+msgid "&laquo; Return to To-Do List"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:407
+msgid "To-Do Items"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:409
+msgid "Add New Item"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:415
+#: ../cleverness-to-do-list.php:493
+#: ../cleverness-to-do-list.php:719
+msgid "Item"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:417
+#: ../cleverness-to-do-list.php:495
+#: ../cleverness-to-do-list.php:721
+msgid "Assigned To"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:420
+#: ../cleverness-to-do-list.php:497
+#: ../cleverness-to-do-list.php:724
+msgid "Added By"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:421
+#: ../cleverness-to-do-list.php:498
+msgid "Action"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:445
+#: ../cleverness-to-do-list.php:687
+msgid "Edit"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:447
+#: ../cleverness-to-do-list.php:518
+msgid "Delete"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:478
+msgid "There is nothing to do..."
+msgstr ""
+
+#: ../cleverness-to-do-list.php:485
+msgid "Completed Items"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:487
+msgid "Delete All"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:543
+msgid "There are no completed items"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:551
+msgid "Add New To-Do Item"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:636
+msgid "Add To-Do Item &raquo;"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:677
+msgid "assigned to"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:685
+msgid "added by"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:694
+msgid "New To-Do Item &raquo;"
+msgstr ""
+
+#: ../cleverness-to-do-list.php:766
+#: ../cleverness-to-do-list.php:781
+msgid "There are no items listed."
+msgstr ""
+
+#: ../cleverness-to-do-list.php:812
+msgid "&raquo;"
+msgstr ""
+
