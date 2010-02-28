@@ -89,6 +89,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 
+= 1.4.1 =
+* Bug fix affecting updating table and viewing items
+
 = 1.4 =
 * Added progress field
 * Added sidebar widget
@@ -139,6 +142,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Fixed to work in WordPress 2.8
 
 == Upgrade Notice ==
+
+= 1.4.1 =
+Bug fix
 
 = 1.4 =
 Added several new features and settings, added new field to database table
