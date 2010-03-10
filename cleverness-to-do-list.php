@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Cleverness To-Do List
-Version: 1.4.1
+Version: 1.5
 Description: Manage to-do list items on a individual or group basis. Adds a page under the Tools menu, a dashboard widget, and a sidebar widget.
 Author: C.M. Kendrick
 Author URI: http://cleverness.org
@@ -236,7 +236,7 @@ function cleverness_todo_install () {
    	global $wpdb, $userdata;
    	get_currentuserinfo();
 
-	$cleverness_todo_db_version = '1.2';
+	$cleverness_todo_db_version = '1.3';
 
 	$table_name = $wpdb->prefix . 'todolist';
 
@@ -250,6 +250,7 @@ function cleverness_todo_install () {
 		  assign int(10),
 		  progress int(3),
 		  deadline varchar(30),
+		  completed timestamp
 	      UNIQUE KEY id (id)
 	    );";
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
@@ -278,7 +279,10 @@ function cleverness_todo_install () {
 		'show_deadline' => '0',
 		'show_dashboard_deadline' => '0',
 		'show_progress' => '0',
-		'email_assigned' => '0'
+		'email_assigned' => '0',
+		'show_completed_date' => '0',
+		'date_format' => 'm-d-Y',
+		'user_roles' => 'contributor, author, editor, admin'
    		);
    		add_option( 'cleverness_todo_settings', $new_options );
 		add_option( 'cleverness_todo_db_version', $cleverness_todo_db_version );
@@ -295,6 +299,7 @@ function cleverness_todo_install () {
 		maybe_add_column($table_name, 'assign', "ALTER TABLE `$table_name` ADD `assign` int(10);");
 		maybe_add_column($table_name, 'deadline', "ALTER TABLE `$table_name` ADD `deadline` varchar(30);");
 		maybe_add_column($table_name, 'progress', "ALTER TABLE `$table_name` ADD `progress` int(3);");
+		maybe_add_column($table_name, 'completed', "ALTER TABLE `$table_name` ADD `completed` timestamp;");
 
     	update_option( 'cleverness_todo_db_version', $cleverness_todo_db_version );
 		delete_option( 'atd_db_version' );
@@ -494,19 +499,24 @@ function cleverness_todo_todo_subpanel() {
 	   		<th><?php _e('Priority', 'cleverness-to-do-list'); ?></th>
 			<?php if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['assign'] == '0' ) : ?><th><?php _e('Assigned To', 'cleverness-to-do-list'); ?></th><?php endif; ?>
 			<?php if ( $cleverness_todo_option['show_deadline'] == '1' ) : ?><th><?php _e('Deadline', 'cleverness-to-do-list'); ?></th><?php endif; ?>
+			<?php if ( $cleverness_todo_option['show_completed_date'] == '1' ) : ?><th><?php _e('Completed', 'cleverness-to-do-list'); ?></th><?php endif; ?>
 	   		<?php if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['todo_author'] == '0' ) : ?><th><?php _e('Added By', 'cleverness-to-do-list'); ?></th><?php endif; ?>
        		<?php if (current_user_can($cleverness_todo_option['delete_capability'])) : ?><th><?php _e('Action', 'cleverness-to-do-list'); ?></th><?php endif; ?>
     	</tr>
 		</thead>
 		<?php
 		if ( $cleverness_todo_option['list_view'] == '0' )
-			$sql = "SELECT id, status, todotext, priority, deadline, progress FROM $table_name WHERE status = 1 AND author = $userdata->ID ORDER BY priority";
+			$sql = "SELECT id, status, todotext, priority, deadline, progress, completed FROM $table_name WHERE status = 1 AND author = $userdata->ID";
 		elseif ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['show_only_assigned'] == '0' && (current_user_can($cleverness_todo_option['view_all_assigned_capability'])) )
-			$sql = "SELECT id, todotext, priority, author, assign, deadline, progress FROM $table_name WHERE status = 1 ORDER BY priority";
+			$sql = "SELECT id, todotext, priority, author, assign, deadline, progress, completed FROM $table_name WHERE status = 1";
 		elseif ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['show_only_assigned'] == '0' )
-			$sql = "SELECT id, todotext, priority, author, assign, deadline, progress FROM $table_name WHERE status = 1 AND assign = $userdata->ID ORDER BY priority";
+			$sql = "SELECT id, todotext, priority, author, assign, deadline, progress, completed FROM $table_name WHERE status = 1 AND assign = $userdata->ID";
 		elseif ( $cleverness_todo_option['list_view'] == '1' )
-	   		$sql = "SELECT id, todotext, priority, author, assign, deadline, progress FROM $table_name WHERE status = 1 ORDER BY priority";
+	   		$sql = "SELECT id, todotext, priority, author, assign, deadline, progress, completed FROM $table_name WHERE status = 1";
+		if ( $cleverness_todo_option['show_completed_date'] == '1' )
+			$sql .= " ORDER BY completed DESC";
+		else
+			$sql .= " ORDER BY priority";
    		$results = $wpdb->get_results($sql);
    		if ($results) {
 	   		foreach ($results as $result) {
@@ -527,6 +537,12 @@ function cleverness_todo_todo_subpanel() {
 					}
 				if ( $cleverness_todo_option['show_deadline'] == '1' )
 					echo '<td>'.$result->deadline.'</td>';
+				if ( $cleverness_todo_option['show_completed_date'] == '1' ) {
+					$date = '';
+					if ( $result->completed != '0000-00-00 00:00:00' )
+						$date = date($cleverness_todo_option['date_format'], strtotime($result->completed));
+					echo '<td>'.$date.'</td>';
+					}
 		   		if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['todo_author'] == '0' )
 		   			echo '<td>'.$user_info->display_name.'</td>';
 		  		if (current_user_can($cleverness_todo_option['delete_capability']))
@@ -538,6 +554,8 @@ function cleverness_todo_todo_subpanel() {
 			$colspan = 2;
 	   		if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['assign'] == '0' ) $colspan += 1;
 			if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['todo_author'] == '0' ) $colspan += 1;
+			if ( $cleverness_todo_option['show_deadline'] == '1' ) $colspan += 1;
+			if ( $cleverness_todo_option['show_completed_date'] == '1' ) $colspan += 1;
 			if ( current_user_can($cleverness_todo_option['delete_capability']) ) $colspan += 1;
 			echo 'colspan="'.$colspan.'"';
 	  	 	echo '>'.__('There are no completed items', 'cleverness-to-do-list').'</td></tr>';
@@ -565,41 +583,32 @@ function cleverness_todo_todo_subpanel() {
 			<tr>
 		  		<th scope="row"><label for="cleverness_todo_assign"><?php _e('Assign To', 'cleverness-to-do-list') ?></label></th>
 		  		<td>
-			   		<select name='cleverness_todo_assign' id='cleverness_todo_assign' class=''>
-						<option value='-1'>None</option>
-						<?php
-						$contributors = cleverness_todo_get_users('contributor');
-						foreach($contributors as $contributor){
-							$user_info = get_userdata($contributor);
-							echo '<option value="'.$contributor.'">'.$user_info->display_name.'</option>';
+					<select name='cleverness_todo_assign' id='cleverness_todo_assign' class=''>
+					<option value='-1'>None</option>
+					<?php
+					if ( $cleverness_todo_option['user_roles'] == '' ) $roles = array('contributor', 'author', 'editor', 'admin');
+					else $roles = explode(", ", $cleverness_todo_option['user_roles']);
+					foreach ( $roles as $role ) {
+						$role_users = cleverness_todo_get_users($role);
+						foreach($role_users as $role_user){
+							$user_info = get_userdata($role_user);
+							echo '<option value="'.$role_user.'">'.$user_info->display_name.'</option>';
 						}
-						$authors = cleverness_todo_get_users('author');
-						foreach($authors as $author){
-							$user_info = get_userdata($author);
-							echo '<option value="'.$author.'">'.$user_info->display_name.'</option>';
-						}
-						$editors = cleverness_todo_get_users('editor');
-						foreach($editors as $editor){
-							$user_info = get_userdata($editor);
-							echo '<option value="'.$editor.'">'.$user_info->display_name.'</option>';
-						}
-						$admins = cleverness_todo_get_users('admin');
-						foreach($admins as $admin){
-							$user_info = get_userdata($admin);
-							echo '<option value="'.$admin.'">'.$user_info->display_name.'</option>';
-						}
-						?>
+					}
+					?>
 					</select>
 				</td>
 		<?php// wp_dropdown_users('show_option_none=None&name=cleverness_todo_assign'); ?>
 			</tr>
 			<?php endif; ?>
 			<?php if ($cleverness_todo_option['show_deadline'] == '1') : ?>
+			<tr>
 				<th scope="row"><label for="cleverness_todo_deadline"><?php _e('Deadline', 'cleverness-to-do-list') ?></label></th>
 				<td><input type="text" name="cleverness_todo_deadline" id="cleverness_todo_deadline" value="" /></td>
 			</tr>
 			<?php endif; ?>
 			<?php if ($cleverness_todo_option['show_progress'] == '1') : ?>
+			<tr>
 				<th scope="row"><label for="cleverness_todo_progress"><?php _e('Progress', 'cleverness-to-do-list') ?></label></th>
 				<td><select name="cleverness_todo_progress">
 					<option value="0">0</option>
@@ -706,7 +715,10 @@ function cleverness_todo_display_items($atts) {
 		'assigned' => 'show',
 		'deadline' => 'show',
 		'progress' => 'show',
-		'addedby' => 'show'
+		'addedby' => 'show',
+		'completed' => '',
+		'completed_title' => '',
+		'list_type' => 'ol'
 	), $atts));
 
    ?>
@@ -767,10 +779,71 @@ function cleverness_todo_display_items($atts) {
    			}
 		?>
 		</table>
+
+		<?php if ( $completed == 'show' ) : ?>
+		<table id="todo-list" border="1">
+   		<?php if ( $completed_title != '' ) echo '<caption>'.$completed_title.'</caption>'; ?>
+		<thead>
+		<tr>
+	   		<th><?php _e('Item', 'cleverness-to-do-list'); ?></th>
+	  		<?php if ( $priorities == 'show' ) : ?><th><?php _e('Priority', 'cleverness-to-do-list'); ?></th><?php endif; ?>
+			<?php if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['assign'] == '0' && $assigned == 'show') : ?><th><?php _e('Assigned To', 'cleverness-to-do-list'); ?></th><?php endif; ?>
+			<?php if ( $cleverness_todo_option['show_deadline'] == '1' && $deadline == 'show' ) : ?><th><?php _e('Deadline', 'cleverness-to-do-list'); ?></th><?php endif; ?>
+			<?php if ( $cleverness_todo_option['show_completed_date'] == '1' ) : ?><th><?php _e('Completed', 'cleverness-to-do-list'); ?></th><?php endif; ?>
+	  		<?php if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['todo_author'] == '0' && $addedby == 'show' ) : ?><th><?php _e('Added By', 'cleverness-to-do-list'); ?></th><?php endif; ?>
+    	</tr>
+		</thead>
+		<?php
+		$sql = "SELECT * FROM $table_name WHERE status = 1 ORDER BY completed DESC";
+   		$results = $wpdb->get_results($sql);
+   		if ($results) {
+	   		foreach ($results as $result) {
+		   		$class = ('alternate' == $class) ? '' : 'alternate';
+		   		$prstr = $priority[$result->priority];
+		   		$priority_class = '';
+		   		$user_info = get_userdata($result->author);
+		   		if ($result->priority == '0') $priority_class = ' todo-important';
+				if ($result->priority == '2') $priority_class = ' todo-low';
+		   		echo '<tr id="cleverness_todo-'.$result->id.'" class="'.$class.$priority_class.'">
+			   	<td>'.$result->todotext.'</td>';
+			   	if ( $priorities == 'show' )
+					echo '<td>'.$prstr.'</td>';
+				if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['assign'] == '0' && $assigned == 'show' ) {
+					$assign_user = '';
+					if ( $result->assign != '-1' )
+						$assign_user = get_userdata($result->assign);
+					echo '<td>'.$assign_user->display_name.'</td>';
+					}
+				if ( $cleverness_todo_option['show_deadline'] == '1' && $deadline == 'show' )
+					echo '<td>'.$result->deadline.'</td>';
+				if ( $cleverness_todo_option['show_completed_date'] == '1' ) {
+					$date = '';
+					if ( $result->completed != '0000-00-00 00:00:00' )
+						$date = date($cleverness_todo_option['date_format'], strtotime($result->completed));
+					}
+					echo '<td>'.$date.'</td>';
+		   		if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['todo_author'] == '0' && $addedby == 'show' )
+		   			echo '<td>'.$user_info->display_name.'</td>';
+	   		}
+   		} else {
+	   		echo '<tr><td ';
+	   		$colspan = 2;
+	   		if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['assign'] == '0' ) $colspan += 1;
+			if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['todo_author'] == '0' ) $colspan += 1;
+			if ( $cleverness_todo_option['show_deadline'] == '1' ) $colspan += 1;
+			if ( $cleverness_todo_option['show_completed'] == '1' ) $colspan += 1;
+			echo 'colspan="'.$colspan.'"';
+	   		echo '>'.__('There are no items listed.', 'cleverness-to-do-list').'</td></tr>';
+   			}
+		?>
+		</table>
+		<?php endif; ?>
+
+
 		<?php elseif ( $type == 'list' ) : ?>
 		  	<?php
 		   	if ( $title != '' ) echo '<h3>'.$title.'</h3>';
-			echo '<ol>';
+			echo '<'.$list_type.'>';
 		   	$sql = "SELECT * FROM $table_name WHERE status = 0 ORDER BY priority";
    	   		$results = $wpdb->get_results($sql);
    	   		if ($results) {
@@ -780,7 +853,30 @@ function cleverness_todo_display_items($atts) {
    			} else {
 	   	   		echo '<li>'.__('There are no items listed.', 'cleverness-to-do-list').'</li>';
    			}
-		echo '</ol>';
+		echo '</'.$list_type.'>';
+
+		if ( $completed == 'show' ) {
+		   	if ( $completed_title != '' ) echo '<h3>'.$completed_title.'</h3>';
+			echo '<'.$list_type.'>';
+		   	$sql = "SELECT * FROM $table_name WHERE status = 1 ORDER BY completed DESC";
+   	   		$results = $wpdb->get_results($sql);
+   	   		if ($results) {
+	   			foreach ($results as $result) {
+			   		echo '<li>';
+					if ( $cleverness_todo_option['show_completed_date'] == '1' ) {
+						$date = '';
+						if ( $result->completed != '0000-00-00 00:00:00' ) {
+							$date = date($cleverness_todo_option['date_format'], strtotime($result->completed));
+							echo $date.' - ';
+							}
+					}
+					echo $result->todotext.'</li>';
+	   			}
+   			} else {
+	   	   		echo '<li>'.__('There are no items listed.', 'cleverness-to-do-list').'</li>';
+   			}
+		echo '</'.$list_type.'>';
+		}
 		endif;
 }
 
@@ -815,9 +911,13 @@ function cleverness_todo_dashboard_setup() {
 
 /* Add CSS file to admin header */
 function cleverness_todo_admin_add_css() {
-	$siteurl = get_option('siteurl');
-	$url = $siteurl . '/wp-content/plugins/' . basename(dirname(__FILE__)) . '/admin.css';
-	echo "<link rel='stylesheet' type='text/css' href='$url' />\n";
+		$cleverness_style_url = WP_PLUGIN_URL . '/'.plugin_basename(dirname( __FILE__ )).'/admin.css';
+        $cleverness_style_file = WP_PLUGIN_DIR . '/'.plugin_basename(dirname( __FILE__ )).'/admin.css';
+        if ( file_exists($cleverness_style_file) ) {
+            wp_register_style('cleverness_todo_style_sheet', $cleverness_style_url);
+            wp_enqueue_style( 'cleverness_todo_style_sheet');
+        }
+
 	}
 
 /* Translation Support */
@@ -837,7 +937,7 @@ if (function_exists('add_action')) {
   	add_action('admin_menu', 'cleverness_todo_admin_menu');
 	add_action('admin_init', 'cleverness_todo_register_settings');
 	add_action('wp_dashboard_setup', 'cleverness_todo_dashboard_setup');
-	add_action('admin_head', 'cleverness_todo_admin_add_css');
+	add_action('admin_print_styles', 'cleverness_todo_admin_add_css');
 	add_action('widgets_init', 'cleverness_todo_widget');
 	add_action('init', 'cleverness_todo_load_translation_file');
 	}

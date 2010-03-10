@@ -22,11 +22,6 @@ function cleverness_todo_settings_page() {
 			</select>
 		</td>
         </tr>
-	</tbody>
-	</table>
-
-    <table class="form-table">
-	<tbody>
         <tr>
         <th scope="row"><label for="cleverness_todo_settings[show_deadline]"><?php _e('Show Deadline', 'cleverness-to-do-list'); ?></label></th>
         <td>
@@ -43,6 +38,21 @@ function cleverness_todo_settings_page() {
 				<option value="0"<?php if ( $options['show_progress'] == '0' ) echo ' selected="selected"'; ?>><?php _e('No', 'cleverness-to-do-list'); ?></option>
 				<option value="1"<?php if ( $options['show_progress'] == '1' ) echo ' selected="selected"'; ?>><?php _e('Yes', 'cleverness-to-do-list'); ?>&nbsp;</option>
 			</select>
+		</td>
+        </tr>
+		<tr>
+        <th scope="row"><label for="cleverness_todo_settings[show_completed_date]"><?php _e('Show Date Completed', 'cleverness-to-do-list'); ?></label></th>
+        <td>
+			<select id="cleverness_todo_settings[show_completed_date]" name="cleverness_todo_settings[show_completed_date]">
+				<option value="0"<?php if ( $options['show_completed_date'] == '0' ) echo ' selected="selected"'; ?>><?php _e('No', 'cleverness-to-do-list'); ?></option>
+				<option value="1"<?php if ( $options['show_completed_date'] == '1' ) echo ' selected="selected"'; ?>><?php _e('Yes', 'cleverness-to-do-list'); ?>&nbsp;</option>
+			</select>
+		</td>
+        </tr>
+		<tr>
+        <th scope="row"><label for="cleverness_todo_settings[date_format]"><?php _e('Date Format', 'cleverness-to-do-list'); ?></label></th>
+        <td>
+			<input type="text" id="cleverness_todo_settings[date_format]" name="cleverness_todo_settings[date_format]" value="<?php if ( $options['date_format'] != '' ) echo $options['date_format']; else echo 'm-d-Y'; ?>" /><br /><a href="http://codex.wordpress.org/Formatting_Date_and_Time"><?php _e('Documentation on Date Formatting', 'cleverness-to-do-list'); ?></a>
 		</td>
         </tr>
 	</tbody>
@@ -149,6 +159,14 @@ function cleverness_todo_settings_page() {
 			</select>
 		</td>
 		</tr>
+		<tr>
+        <th scope="row"><label for="cleverness_todo_settings[user_roles]"><?php _e('User Roles', 'cleverness-to-do-list'); ?></label></th>
+        <td>
+			<?php _e('This is used in displaying the list of users to-do items can be assigned to.', 'cleverness-to-do-list'); ?><br />
+			<?php _e('Separate each role with a comma.', 'cleverness-to-do-list'); ?><br />
+			<input type="text" id="cleverness_todo_settings[user_roles]" name="cleverness_todo_settings[user_roles]" value="<?php if ( $options['user_roles'] != '' ) echo $options['user_roles']; else echo 'contributor, author, editor, admin'; ?>" style="width: 300px;" /><br /><a href="http://codex.wordpress.org/Roles_and_Capabilities"><?php _e('Documentation on User Roles', 'cleverness-to-do-list'); ?></a>
+		</td>
+        </tr>
 		<tr>
 		<th scope="row"><label for="cleverness_todo_settings[view_capability]"><?php _e('View To-Do Item Capability', 'cleverness-to-do-list'); ?></label></th>
         <td valign="top">

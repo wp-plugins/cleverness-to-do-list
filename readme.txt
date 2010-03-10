@@ -52,6 +52,9 @@ Several options are available:
 * **deadline** - default is *show*. Use a blank value to hide (only applies to table view).
 * **progress** - default is *show*. Use a blank value to hide (only applies to table view).
 * **addedby** - default is *show*. Use a blank value to hide (only applies to table view).
+* **completed** - default is blank. Set to *show* to display completed items.
+* **completed_title** - default is no title.
+* **list_type** - default is ol (ordered list). Use ul to show an unordered list.
 
 Example:
 
@@ -70,10 +73,6 @@ Table view with the title of Upcoming Articles and showing the progress and who 
 * **Delete To-Do Item Capability** - This allows the selected capability to delete individual to-do items.
 * **Purge To-Do Items Capability** - This allows the selected capability to purge all the completed to-do items.
 
-= How are the user names sorted in the Assign To dropdown? =
-
-They are sorted by Contributors, then Authors, then Editors, and then Admins.
-
 = What should I do if I find a bug? =
 
 Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave a comment](http://cleverness.org/plugins/to-do-list/#respond) or [contact me](http://cleverness.org/contact/).
@@ -88,6 +87,12 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 6. Settings Page
 
 == Changelog ==
+
+= 1.5 =
+* Changed the way CSS is added to the admin pages
+* Added more shortcode options
+* Changed the way users are selected for the dropdown list
+* Added option to show completed date and an option to format the date
 
 = 1.4.1 =
 * Bug fix affecting updating table and viewing items
@@ -142,6 +147,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Fixed to work in WordPress 2.8
 
 == Upgrade Notice ==
+
+= 1.5 =
+New features added
 
 = 1.4.1 =
 Bug fix
