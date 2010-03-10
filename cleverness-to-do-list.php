@@ -848,7 +848,19 @@ function cleverness_todo_display_items($atts) {
    	   		$results = $wpdb->get_results($sql);
    	   		if ($results) {
 	   			foreach ($results as $result) {
-			   		echo '<li>'.$result->todotext.'</li>';
+	   				$user_info = get_userdata($result->author);
+			   		echo '<li>';
+					echo $result->todotext;
+					if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['assign'] == '0' && $assigned == 'show' ) {
+						$assign_user = '';
+				   		if ( $result->assign != '-1' && $result->assign != '' ) {
+							$assign_user = get_userdata($result->assign);
+				   			echo ' - '.$assign_user->display_name;
+							}
+						}
+					if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['todo_author'] == '0' && $addedby == 'show' )
+		   		   		echo ' - '.$user_info->display_name;
+					echo '</li>';
 	   			}
    			} else {
 	   	   		echo '<li>'.__('There are no items listed.', 'cleverness-to-do-list').'</li>';
@@ -862,6 +874,7 @@ function cleverness_todo_display_items($atts) {
    	   		$results = $wpdb->get_results($sql);
    	   		if ($results) {
 	   			foreach ($results as $result) {
+					$user_info = get_userdata($result->author);
 			   		echo '<li>';
 					if ( $cleverness_todo_option['show_completed_date'] == '1' ) {
 						$date = '';
@@ -870,7 +883,17 @@ function cleverness_todo_display_items($atts) {
 							echo $date.' - ';
 							}
 					}
-					echo $result->todotext.'</li>';
+					echo $result->todotext;
+					if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['assign'] == '0' && $assigned == 'show' ) {
+						$assign_user = '';
+				   		if ( $result->assign != '-1' && $result->assign != '' ) {
+							$assign_user = get_userdata($result->assign);
+				   			echo ' - '.$assign_user->display_name;
+							}
+						}
+					if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['todo_author'] == '0' && $addedby == 'show' )
+		   		   		echo ' - '.$user_info->display_name;
+					echo '</li>';
 	   			}
    			} else {
 	   	   		echo '<li>'.__('There are no items listed.', 'cleverness-to-do-list').'</li>';

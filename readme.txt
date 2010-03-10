@@ -54,7 +54,7 @@ Several options are available:
 * **addedby** - default is *show*. Use a blank value to hide (only applies to table view).
 * **completed** - default is blank. Set to *show* to display completed items.
 * **completed_title** - default is no title.
-* **list_type** - default is ol (ordered list). Use ul to show an unordered list.
+* **list_type** - default is *ol* (ordered list). Use *ul* to show an unordered list.
 
 Example:
 
