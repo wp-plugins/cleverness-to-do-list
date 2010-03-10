@@ -860,6 +860,12 @@ function cleverness_todo_display_items($atts) {
 						}
 					if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['todo_author'] == '0' && $addedby == 'show' )
 		   		   		echo ' - '.$user_info->display_name;
+					if ( $cleverness_todo_option['show_progress'] == '1' && $progress == 'show' ) {
+				   		echo ' - '.$result->progress;
+						if ( $result->progress != '' ) echo '%';
+						}
+					if ( $cleverness_todo_option['show_deadline'] == '1' && $deadline == 'show' )
+						echo ' - '.$result->deadline.'';
 					echo '</li>';
 	   			}
    			} else {
