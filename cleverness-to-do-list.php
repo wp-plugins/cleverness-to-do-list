@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Cleverness To-Do List
-Version: 1.5
+Version: 1.5.1
 Description: Manage to-do list items on a individual or group basis. Adds a page under the Tools menu, a dashboard widget, and a sidebar widget.
 Author: C.M. Kendrick
 Author URI: http://cleverness.org
@@ -48,7 +48,7 @@ for ($i=0; $i<count($wpvarstoreset); $i += 1) {
 }
 
 /* Location used for redirect after command is executed */
-$location = get_settings('siteurl') . '/wp-admin/tools.php?page=cleverness-to-do-list';
+$location = get_bloginfo('url') . '/wp-admin/tools.php?page=cleverness-to-do-list';
 
 switch($action) {
 case 'addtodo':
@@ -242,7 +242,7 @@ function cleverness_todo_install () {
 
    	if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
    		$sql = "CREATE TABLE ".$table_name." (
-	      id bigint(20) NOT NULL AUTO_INCREMENT,
+	      id bigint(20) UNIQUE NOT NULL AUTO_INCREMENT,
 	      author bigint(20) NOT NULL,
 	      status tinyint(1) DEFAULT '0' NOT NULL,
 	      priority tinyint(1) NOT NULL,
@@ -251,7 +251,6 @@ function cleverness_todo_install () {
 		  progress int(3),
 		  deadline varchar(30),
 		  completed timestamp
-	      UNIQUE KEY id (id)
 	    );";
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
    		dbDelta($sql);
