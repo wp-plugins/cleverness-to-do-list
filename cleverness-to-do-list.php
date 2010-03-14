@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Cleverness To-Do List
-Version: 1.5.1
+Version: 1.5.2
 Description: Manage to-do list items on a individual or group basis. Adds a page under the Tools menu, a dashboard widget, and a sidebar widget.
 Author: C.M. Kendrick
 Author URI: http://cleverness.org
@@ -48,7 +48,7 @@ for ($i=0; $i<count($wpvarstoreset); $i += 1) {
 }
 
 /* Location used for redirect after command is executed */
-$location = get_bloginfo('url') . '/wp-admin/tools.php?page=cleverness-to-do-list';
+$location = get_bloginfo('wpurl') . '/wp-admin/tools.php?page=cleverness-to-do-list';
 
 switch($action) {
 case 'addtodo':

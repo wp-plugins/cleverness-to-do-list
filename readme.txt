@@ -88,6 +88,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 
+= 1.5.2 =
+* Changed the url in the location variable again to work when WP is placed outside the root directory
+
 = 1.5.1 =
 * Fixed a problem with the install function
 * Changed the url in the location variable
@@ -151,6 +154,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Fixed to work in WordPress 2.8
 
 == Upgrade Notice ==
+
+= 1.5.2 =
+Bug fix
 
 = 1.5.1 =
 Bug fix
