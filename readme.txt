@@ -3,7 +3,7 @@ Contributors: elusivelight
 Donate link: http://cleverness.org/plugins/to-do-list/
 Tags: to-do, to do list, to-do list, list, assign tasks, tasks, admin
 Requires at least: 2.8
-Tested up to: 2.9.2
+Tested up to: 3.0
 Stable tag: trunk
 
 Manage to-do list items on a individual or group basis with customizable settings.
@@ -88,6 +88,13 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 
+= 2.0 =
+* Changed backend code for better error control and improved performance
+* Compatible with WordPress 3.0
+* Minor bug fixes
+* The page is no longer redirected to the main To-Do List page when marking at item on the dashboard as completed
+* Russian translation added
+
 = 1.5.2 =
 * Changed the url in the location variable again to work when WP is placed outside the root directory
 
@@ -155,6 +162,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Upgrade Notice ==
 
+= 2.0 =
+Backend code changes, bug fixes
+
 = 1.5.2 =
 Bug fix
 
@@ -197,3 +207,4 @@ Major changes to plugin
 This plugin was originally from Abstract Dimensions (site no longer available) with a patch to display the list in the dashboard by WordPress by Example (site also no longer available). It was abandoned prior to WordPress 2.7.
 
 Spanish translation by [Ricardo](http://yabocs.avytes.com/)
+Russian translation by [Almaz](http://alm.net.ru)

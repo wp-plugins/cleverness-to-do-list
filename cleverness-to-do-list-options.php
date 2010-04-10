@@ -164,7 +164,7 @@ function cleverness_todo_settings_page() {
         <td>
 			<?php _e('This is used in displaying the list of users to-do items can be assigned to.', 'cleverness-to-do-list'); ?><br />
 			<?php _e('Separate each role with a comma.', 'cleverness-to-do-list'); ?><br />
-			<input type="text" id="cleverness_todo_settings[user_roles]" name="cleverness_todo_settings[user_roles]" value="<?php if ( $options['user_roles'] != '' ) echo $options['user_roles']; else echo 'contributor, author, editor, admin'; ?>" style="width: 300px;" /><br /><a href="http://codex.wordpress.org/Roles_and_Capabilities"><?php _e('Documentation on User Roles', 'cleverness-to-do-list'); ?></a>
+			<input type="text" id="cleverness_todo_settings[user_roles]" name="cleverness_todo_settings[user_roles]" value="<?php if ( $options['user_roles'] != '' ) echo $options['user_roles']; else echo 'contributor, author, editor, administrator'; ?>" style="width: 300px;" /><br /><a href="http://codex.wordpress.org/Roles_and_Capabilities"><?php _e('Documentation on User Roles', 'cleverness-to-do-list'); ?></a>
 		</td>
         </tr>
 		<tr>
