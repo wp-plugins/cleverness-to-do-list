@@ -88,6 +88,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 
+= 2.0.l =
+* Fixed bug where users could not edit or delete other user's item when they had the ability
+
 = 2.0 =
 * Changed backend code for better error control and improved performance
 * Compatible with WordPress 3.0
@@ -162,6 +165,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Upgrade Notice ==
 
+= 2.0.1 =
+* Bug fix
+
 = 2.0 =
 Backend code changes, bug fixes
 
@@ -207,4 +213,5 @@ Major changes to plugin
 This plugin was originally from Abstract Dimensions (site no longer available) with a patch to display the list in the dashboard by WordPress by Example (site also no longer available). It was abandoned prior to WordPress 2.7.
 
 Spanish translation by [Ricardo](http://yabocs.avytes.com/)
+
 Russian translation by [Almaz](http://alm.net.ru)

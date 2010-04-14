@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Cleverness To-Do List
-Version: 2.0
+Version: 2.0.1
 Description: Manage to-do list items on a individual or group basis. Adds a page under the Tools menu, a dashboard widget, and a sidebar widget.
 Author: C.M. Kendrick
 Author URI: http://cleverness.org
@@ -162,7 +162,7 @@ function cleverness_todo_update($id, $priority, $todotext, $assign, $deadline, $
 
    	if (current_user_can($cleverness_todo_option['edit_capability'])) {
 		$table_name = $wpdb->prefix . 'todolist';
-   		$results = $wpdb->update( $table_name, array( 'priority' => $priority, 'todotext' => $todotext, 'assign' => $assign, 'deadline' => $deadline, 'progress' => $progress ), array( 'author' => $userdata->ID, 'id' => $id ) );
+   		$results = $wpdb->update( $table_name, array( 'priority' => $priority, 'todotext' => $todotext, 'assign' => $assign, 'deadline' => $deadline, 'progress' => $progress ), array( 'id' => $id ) );
 		if ( $results ) $message = __('To-Do item has been updated.', 'cleverness-to-do-list');
 		else {
 			$message = __('There was a problem editing the item.', 'cleverness-to-do-list');
@@ -178,7 +178,7 @@ function cleverness_todo_delete($id) {
    	global $wpdb, $userdata, $cleverness_todo_option;
    	$table_name = $wpdb->prefix . 'todolist';
    	if (current_user_can($cleverness_todo_option['delete_capability'])) {
-   		$delete = "DELETE FROM ".$table_name." WHERE id = '".$id."' AND author = '".$userdata->ID."'";
+   		$delete = "DELETE FROM ".$table_name." WHERE id = '".$id."'";
    		$results = $wpdb->query( $delete );
 		if ( $results ) $message = __('To-Do item has been deleted.', 'cleverness-to-do-list');
 		else {
