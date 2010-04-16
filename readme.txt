@@ -88,6 +88,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 
+= 2.0.2 =
+* Removed require_once for pluggable.php from main body of plugin into functions
+
 = 2.0.l =
 * Fixed bug where users could not edit or delete other user's item when they had the ability
 
@@ -165,8 +168,11 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Upgrade Notice ==
 
+= 2.0.2 =
+Bug fix
+
 = 2.0.1 =
-* Bug fix
+Bug fix
 
 = 2.0 =
 Backend code changes, bug fixes

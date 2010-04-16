@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Cleverness To-Do List
-Version: 2.0.1
+Version: 2.0.2
 Description: Manage to-do list items on a individual or group basis. Adds a page under the Tools menu, a dashboard widget, and a sidebar widget.
 Author: C.M. Kendrick
 Author URI: http://cleverness.org
@@ -20,13 +20,7 @@ if (version_compare($wp_version, "2.8", "<")) {
 	exit($exit_msg);
   	}
 
-require_once ABSPATH . WPINC . '/pluggable.php';
-
-get_currentuserinfo();
-
-if (current_user_can('manage_options'))
-	include 'cleverness-to-do-list-options.php';
-
+include 'cleverness-to-do-list-options.php';
 include 'cleverness-to-do-list-dashboard-widget.php';
 include 'cleverness-to-do-list-widget.php';
 include 'cleverness-to-do-list-shortcode.php';
@@ -45,72 +39,46 @@ case 'setuptodo':
 
 case 'addtodo':
 	if ( $_POST['cleverness_todo_description'] != '' ) {
-		if ( $cleverness_todo_option['list_view'] == '0' || current_user_can($cleverness_todo_option['add_capability']) ) {
-			if (! wp_verify_nonce($_REQUEST['_wpnonce'], 'todoadd') ) die('Security check');
-			$todotext = attribute_escape($_POST['cleverness_todo_description']);
-			$priority = attribute_escape($_POST['cleverness_todo_priority']);
-			$assign = attribute_escape($_POST['cleverness_todo_assign']);
-			$deadline = attribute_escape($_POST['cleverness_todo_deadline']);
-			$progress = attribute_escape($_POST['cleverness_todo_progress']);
-			if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['email_assigned'] == '1' && $cleverness_todo_option['assign'] == '0' )
-				cleverness_todo_email_user($todotext, $priority, $assign, $deadline);
-			$message = cleverness_todo_insert($todotext, $priority, $assign, $deadline, $progress);
-		} else {
-			$message = __('You do not have sufficient privileges to do that.', 'cleverness-to-do-list');
-			}
+		$todotext = attribute_escape($_POST['cleverness_todo_description']);
+		$priority = attribute_escape($_POST['cleverness_todo_priority']);
+		$assign = attribute_escape($_POST['cleverness_todo_assign']);
+		$deadline = attribute_escape($_POST['cleverness_todo_deadline']);
+		$progress = attribute_escape($_POST['cleverness_todo_progress']);
+		if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['email_assigned'] == '1' && $cleverness_todo_option['assign'] == '0' )
+			cleverness_todo_email_user($todotext, $priority, $assign, $deadline);
+		$message = cleverness_todo_insert($todotext, $priority, $assign, $deadline, $progress);
 	} else {
 		$message = __('To-Do cannot be blank.', 'cleverness-to-do-list');
 	}
 	break;
 
 case 'updatetodo':
-	if ( $cleverness_todo_option['list_view'] == '0' || current_user_can($cleverness_todo_option['edit_capability']) ) {
-		if (! wp_verify_nonce($_REQUEST['_wpnonce'], 'todoupdate') ) die('Security check');
-		$id = attribute_escape($_POST['id']);
-		$todotext = attribute_escape($_POST['cleverness_todo_description']);
-		$priority = attribute_escape($_POST['cleverness_todo_priority']);
-		$assign = attribute_escape($_POST['cleverness_todo_assign']);
-		$deadline = attribute_escape($_POST['cleverness_todo_deadline']);
-		$progress = attribute_escape($_POST['cleverness_todo_progress']);
-		$message = cleverness_todo_update($id, $priority, $todotext, $assign, $deadline, $progress);
-	} else {
-		$message = __('You do not have sufficient privileges to do that.', 'cleverness-to-do-list');
-		}
+	$id = attribute_escape($_POST['id']);
+	$todotext = attribute_escape($_POST['cleverness_todo_description']);
+	$priority = attribute_escape($_POST['cleverness_todo_priority']);
+	$assign = attribute_escape($_POST['cleverness_todo_assign']);
+	$deadline = attribute_escape($_POST['cleverness_todo_deadline']);
+	$progress = attribute_escape($_POST['cleverness_todo_progress']);
+	$message = cleverness_todo_update($id, $priority, $todotext, $assign, $deadline, $progress);
 	break;
 
 case 'deletetodo':
-	if ( $cleverness_todo_option['list_view'] == '0' || current_user_can($cleverness_todo_option['delete_capability']) ) {
-		$id = attribute_escape($_GET['id']);
-		$message = cleverness_todo_delete($id);
-	} else {
-		$message = __('You do not have sufficient privileges to do that.', 'cleverness-to-do-list');
-		}
+	$id = attribute_escape($_GET['id']);
+	$message = cleverness_todo_delete($id);
 	break;
 
 case 'completetodo':
-	if ( $cleverness_todo_option['list_view'] == '0' || current_user_can($cleverness_todo_option['complete_capability']) ) {
-		$id = attribute_escape($_GET['id']);
-		$message = cleverness_todo_complete($id, '1');
-	} else {
-		$message = __('You do not have sufficient privileges to do that.', 'cleverness-to-do-list');
-		}
+	$id = attribute_escape($_GET['id']);
+	$message = cleverness_todo_complete($id, '1');
 	break;
 
 case 'uncompletetodo':
-	if ( $cleverness_todo_option['list_view'] == '0' || current_user_can($cleverness_todo_option['complete_capability']) ) {
-		$id = attribute_escape($_GET['id']);
-		$message = cleverness_todo_complete($id, '0');
-	} else {
-		$message = __('You do not have sufficient privileges to do that.', 'cleverness-to-do-list');
-		}
+	$id = attribute_escape($_GET['id']);
+	$message = cleverness_todo_complete($id, '0');
 	break;
 
 case 'purgetodo':
-	if ( $cleverness_todo_option['list_view'] == '0' || current_user_can($cleverness_todo_option['purge_capability']) ) {
-		$message = cleverness_todo_purge();
-	} else {
-		$message = __('You do not have sufficient privileges to do that.', 'cleverness-to-do-list');
-		}
+	$message = cleverness_todo_purge();
 	break;
 
 } // end switch
@@ -118,9 +86,11 @@ case 'purgetodo':
 /* Insert new to-do item into the database */
 function cleverness_todo_insert($todotext, $priority, $assign, $deadline, $progress) {
 	global $wpdb, $userdata, $cleverness_todo_option;
+	require_once (ABSPATH . WPINC . '/pluggable.php');
    	get_currentuserinfo();
+	if (! wp_verify_nonce($_REQUEST['_wpnonce'], 'todoadd') ) die('Security check');
 
-	if (current_user_can($cleverness_todo_option['add_capability'])) {
+	if ( $cleverness_todo_option['list_view'] == '0' || current_user_can($cleverness_todo_option['add_capability']) ) {
   	 	$table_name = $wpdb->prefix . 'todolist';
    		$results = $wpdb->insert( $table_name, array( 'author' => $userdata->ID, 'status' => 0, 'priority' => $priority, 'todotext' => $todotext, 'assign' => $assign, 'deadline' => $deadline, 'progress' => $progress ) );
 		if ( $results ) $message = __('New To-Do item has been added.', 'cleverness-to-do-list');
@@ -138,7 +108,9 @@ function cleverness_todo_insert($todotext, $priority, $assign, $deadline, $progr
 function cleverness_todo_email_user($todotext, $priority, $assign, $deadline) {
 	global $wpdb, $userdata, $cleverness_todo_option;
 	$priority_array = array(0 => $cleverness_todo_option['priority_0'] , 1 => $cleverness_todo_option['priority_1'], 2 => $cleverness_todo_option['priority_2']);
+	require_once (ABSPATH . WPINC . '/pluggable.php');
    	get_currentuserinfo();
+	if (! wp_verify_nonce($_REQUEST['_wpnonce'], 'todoupdate') ) die('Security check');
 
    	if ( current_user_can($cleverness_todo_option['assign_capability']) && $assign != '' && $assign != '-1' ) {
 		$headers = 'From: '.html_entity_decode(get_bloginfo('name')).' <'.get_bloginfo('admin_email').'>' . "\r\n\\";
@@ -158,9 +130,10 @@ function cleverness_todo_email_user($todotext, $priority, $assign, $deadline) {
 /* Update to-do list item */
 function cleverness_todo_update($id, $priority, $todotext, $assign, $deadline, $progress) {
    	global $wpdb, $userdata, $cleverness_todo_option;
+	require_once (ABSPATH . WPINC . '/pluggable.php');
    	get_currentuserinfo();
 
-   	if (current_user_can($cleverness_todo_option['edit_capability'])) {
+   	if ( $cleverness_todo_option['list_view'] == '0' || current_user_can($cleverness_todo_option['edit_capability']) ) {
 		$table_name = $wpdb->prefix . 'todolist';
    		$results = $wpdb->update( $table_name, array( 'priority' => $priority, 'todotext' => $todotext, 'assign' => $assign, 'deadline' => $deadline, 'progress' => $progress ), array( 'id' => $id ) );
 		if ( $results ) $message = __('To-Do item has been updated.', 'cleverness-to-do-list');
@@ -176,8 +149,11 @@ function cleverness_todo_update($id, $priority, $todotext, $assign, $deadline, $
 /* Delete to-do list item */
 function cleverness_todo_delete($id) {
    	global $wpdb, $userdata, $cleverness_todo_option;
+	require_once (ABSPATH . WPINC . '/pluggable.php');
+   	get_currentuserinfo();
+
    	$table_name = $wpdb->prefix . 'todolist';
-   	if (current_user_can($cleverness_todo_option['delete_capability'])) {
+   	if ( $cleverness_todo_option['list_view'] == '0' || current_user_can($cleverness_todo_option['delete_capability']) ) {
    		$delete = "DELETE FROM ".$table_name." WHERE id = '".$id."'";
    		$results = $wpdb->query( $delete );
 		if ( $results ) $message = __('To-Do item has been deleted.', 'cleverness-to-do-list');
@@ -192,9 +168,12 @@ function cleverness_todo_delete($id) {
 
 /* Mark to-do list item as completed or uncompleted */
 function cleverness_todo_complete($id, $status) {
-  	 global $wpdb, $userdata, $cleverness_todo_option;
+	global $wpdb, $userdata, $cleverness_todo_option;
+	require_once (ABSPATH . WPINC . '/pluggable.php');
+   	get_currentuserinfo();
+
    	 $table_name = $wpdb->prefix . 'todolist';
-   	 if (current_user_can($cleverness_todo_option['complete_capability'])) {
+   	 if ( $cleverness_todo_option['list_view'] == '0' || current_user_can($cleverness_todo_option['complete_capability']) ) {
 		$results = $wpdb->update( $table_name, array( 'status' => $status ), array( 'id' => $id ) );
 		if ( $status == '1' ) $status_text = __('completed', 'cleverness-to-do-list');
 		else $status_text = __('uncompleted', 'cleverness-to-do-list');
@@ -211,10 +190,11 @@ function cleverness_todo_complete($id, $status) {
 /* Get to-do list item */
 function cleverness_todo_get_todo($id) {
    	global $wpdb, $userdata, $cleverness_todo_option;
+	require_once (ABSPATH . WPINC . '/pluggable.php');
    	get_currentuserinfo();
 
    	$table_name = $wpdb->prefix . 'todolist';
-   	if (current_user_can($cleverness_todo_option['edit_capability'])) {
+   	if ( $cleverness_todo_option['list_view'] == '0' || current_user_can($cleverness_todo_option['edit_capability']) ) {
    		$edit = "SELECT * FROM ".$table_name." WHERE id = '".$id."' LIMIT 1";
    		$result = $wpdb->get_row( $edit );
    		return $result;
@@ -227,10 +207,11 @@ function cleverness_todo_get_todo($id) {
 /* Delete all completed to-do list items */
 function cleverness_todo_purge() {
    	global $wpdb, $userdata, $cleverness_todo_option;
+	require_once (ABSPATH . WPINC . '/pluggable.php');
    	get_currentuserinfo();
 
    	$table_name = $wpdb->prefix . 'todolist';
-   	if (current_user_can($cleverness_todo_option['purge_capability'])) {
+   	if ( $cleverness_todo_option['list_view'] == '0' || current_user_can($cleverness_todo_option['purge_capability']) ) {
    		if ( $cleverness_todo_option['list_view'] == '0' )
    			$purge = "DELETE FROM ".$table_name." WHERE status = '1' AND author = '".$userdata->ID."'";
 	   	elseif ( $cleverness_todo_option['list_view'] == '1' )
@@ -675,7 +656,6 @@ function cleverness_todo_get_users($role) {
       return $wp_user_search->get_results();
 }
 
-
 /* Add Page under Tools and Add Settings Page */
 function cleverness_todo_admin_menu() {
 	if (function_exists('add_submenu_page')) {
@@ -715,12 +695,12 @@ function cleverness_todo_register_settings() {
 
 /* Add Action Hooks */
 if (function_exists('add_action')) {
- 	add_action('activate_'.plugin_basename(__FILE__),'cleverness_todo_install');
-  	add_action('admin_menu', 'cleverness_todo_admin_menu');
-	add_action('admin_init', 'cleverness_todo_register_settings');
-	add_action('wp_dashboard_setup', 'cleverness_todo_dashboard_setup');
-	add_action('admin_print_styles', 'cleverness_todo_admin_add_css');
-	add_action('widgets_init', 'cleverness_todo_widget');
-	add_action('init', 'cleverness_todo_load_translation_file');
+	add_action('activate_'.plugin_basename(__FILE__),'cleverness_todo_install');
+   	add_action('admin_menu', 'cleverness_todo_admin_menu');
+   	add_action('admin_init', 'cleverness_todo_register_settings');
+   	add_action('wp_dashboard_setup', 'cleverness_todo_dashboard_setup');
+   	add_action('admin_print_styles', 'cleverness_todo_admin_add_css');
+  	add_action('widgets_init', 'cleverness_todo_widget');
+   	add_action('init', 'cleverness_todo_load_translation_file');
 	}
 ?>
