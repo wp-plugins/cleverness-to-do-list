@@ -88,6 +88,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 
+= 2.0.3 =
+* Moved a nonce check to the correct function and added some additional code
+
 = 2.0.2 =
 * Removed require_once for pluggable.php from main body of plugin into functions
 
@@ -167,6 +170,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Fixed to work in WordPress 2.8
 
 == Upgrade Notice ==
+
+= 2.0.3 =
+Bug fix
 
 = 2.0.2 =
 Bug fix

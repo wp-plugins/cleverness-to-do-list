@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Cleverness To-Do List
-Version: 2.0.2
+Version: 2.0.3
 Description: Manage to-do list items on a individual or group basis. Adds a page under the Tools menu, a dashboard widget, and a sidebar widget.
 Author: C.M. Kendrick
 Author URI: http://cleverness.org
@@ -44,9 +44,10 @@ case 'addtodo':
 		$assign = attribute_escape($_POST['cleverness_todo_assign']);
 		$deadline = attribute_escape($_POST['cleverness_todo_deadline']);
 		$progress = attribute_escape($_POST['cleverness_todo_progress']);
+		$add_nonce = $_REQUEST['_wpnonce'];
 		if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['email_assigned'] == '1' && $cleverness_todo_option['assign'] == '0' )
 			cleverness_todo_email_user($todotext, $priority, $assign, $deadline);
-		$message = cleverness_todo_insert($todotext, $priority, $assign, $deadline, $progress);
+		$message = cleverness_todo_insert($todotext, $priority, $assign, $deadline, $progress, $add_nonce);
 	} else {
 		$message = __('To-Do cannot be blank.', 'cleverness-to-do-list');
 	}
@@ -59,7 +60,8 @@ case 'updatetodo':
 	$assign = attribute_escape($_POST['cleverness_todo_assign']);
 	$deadline = attribute_escape($_POST['cleverness_todo_deadline']);
 	$progress = attribute_escape($_POST['cleverness_todo_progress']);
-	$message = cleverness_todo_update($id, $priority, $todotext, $assign, $deadline, $progress);
+	$update_nonce = $_REQUEST['_wpnonce'];
+	$message = cleverness_todo_update($id, $priority, $todotext, $assign, $deadline, $progress, $update_nonce);
 	break;
 
 case 'deletetodo':
@@ -84,11 +86,11 @@ case 'purgetodo':
 } // end switch
 
 /* Insert new to-do item into the database */
-function cleverness_todo_insert($todotext, $priority, $assign, $deadline, $progress) {
+function cleverness_todo_insert($todotext, $priority, $assign, $deadline, $progress, $add_nonce) {
 	global $wpdb, $userdata, $cleverness_todo_option;
 	require_once (ABSPATH . WPINC . '/pluggable.php');
    	get_currentuserinfo();
-	if (! wp_verify_nonce($_REQUEST['_wpnonce'], 'todoadd') ) die('Security check');
+	if (!wp_verify_nonce($add_nonce, 'todoadd') ) die('Security check');
 
 	if ( $cleverness_todo_option['list_view'] == '0' || current_user_can($cleverness_todo_option['add_capability']) ) {
   	 	$table_name = $wpdb->prefix . 'todolist';
@@ -110,7 +112,6 @@ function cleverness_todo_email_user($todotext, $priority, $assign, $deadline) {
 	$priority_array = array(0 => $cleverness_todo_option['priority_0'] , 1 => $cleverness_todo_option['priority_1'], 2 => $cleverness_todo_option['priority_2']);
 	require_once (ABSPATH . WPINC . '/pluggable.php');
    	get_currentuserinfo();
-	if (! wp_verify_nonce($_REQUEST['_wpnonce'], 'todoupdate') ) die('Security check');
 
    	if ( current_user_can($cleverness_todo_option['assign_capability']) && $assign != '' && $assign != '-1' ) {
 		$headers = 'From: '.html_entity_decode(get_bloginfo('name')).' <'.get_bloginfo('admin_email').'>' . "\r\n\\";
@@ -128,10 +129,11 @@ function cleverness_todo_email_user($todotext, $priority, $assign, $deadline) {
 }
 
 /* Update to-do list item */
-function cleverness_todo_update($id, $priority, $todotext, $assign, $deadline, $progress) {
+function cleverness_todo_update($id, $priority, $todotext, $assign, $deadline, $progress, $updated_nonce) {
    	global $wpdb, $userdata, $cleverness_todo_option;
 	require_once (ABSPATH . WPINC . '/pluggable.php');
    	get_currentuserinfo();
+	if (!wp_verify_nonce($updated_nonce, 'todoupdate') ) die('Security check');
 
    	if ( $cleverness_todo_option['list_view'] == '0' || current_user_can($cleverness_todo_option['edit_capability']) ) {
 		$table_name = $wpdb->prefix . 'todolist';
