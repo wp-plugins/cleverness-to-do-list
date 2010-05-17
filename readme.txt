@@ -88,6 +88,10 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 
+= 2.0.4 =
+* Added German translation by Ascobol
+* Added Japanese translation by [Takemi Tasaki](http://route58.org)
+
 = 2.0.3 =
 * Moved a nonce check to the correct function and added some additional code
 
@@ -171,6 +175,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Upgrade Notice ==
 
+= 2.0.4 =
+Two new translations added
+
 = 2.0.3 =
 Bug fix
 
@@ -227,3 +234,7 @@ This plugin was originally from Abstract Dimensions (site no longer available) w
 Spanish translation by [Ricardo](http://yabocs.avytes.com/)
 
 Russian translation by [Almaz](http://alm.net.ru)
+
+German translation by Ascobol
+
+Japanese translation by [Takemi Tasaki](http://route58.org)
