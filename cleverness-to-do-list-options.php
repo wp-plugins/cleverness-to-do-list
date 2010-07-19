@@ -1,6 +1,7 @@
 <?php
-/* Creates a page under settings to manage the To-Do List settings */
+/* Creates a page to manage the To-Do List settings */
 function cleverness_todo_settings_page() {
+	global $wpdb;
 ?>
 <div class="wrap">
 <div id="icon-options-general" class="icon32"></div> <h2><?php _e('To-Do List Settings', 'cleverness-to-do-list'); ?></h2>
@@ -8,6 +9,22 @@ function cleverness_todo_settings_page() {
 <form method="post" action="options.php">
     <?php settings_fields( 'cleverness-todo-settings-group' ); ?>
 	<?php $options = get_option('cleverness_todo_settings'); ?>
+
+	<p><?php _e('Category support is turned off by default. If you would like to organize your to-do list into categories, enable it here.', 'cleverness-to-do-list'); ?></p>
+
+	<table class="form-table">
+	<tbody>
+        <tr>
+        <th scope="row"><label for="cleverness_todo_settings[categories]"><?php _e('Categories', 'cleverness-to-do-list'); ?></label></th>
+        <td>
+			<select id="cleverness_todo_settings[categories]" name="cleverness_todo_settings[categories]">
+				<option value="0"<?php if ( $options['categories'] == '0' ) echo ' selected="selected"'; ?>><?php _e('Disable', 'cleverness-to-do-list'); ?>&nbsp;</option>
+				<option value="1"<?php if ( $options['categories'] == '1' ) echo ' selected="selected"'; ?>><?php _e('Enable', 'cleverness-to-do-list'); ?></option>
+			</select>
+		</td>
+        </tr>
+	</tbody>
+	</table>
 
 	<p><?php _e('<em>List View</em> sets how the to-do lists are viewed. The <em>Individual</em> setting allows each user to have their own private to-do list. The <em>Group</em> setting allows all users to share one to-do list.', 'cleverness-to-do-list'); ?></p>
 
@@ -55,6 +72,21 @@ function cleverness_todo_settings_page() {
 			<input type="text" id="cleverness_todo_settings[date_format]" name="cleverness_todo_settings[date_format]" value="<?php if ( $options['date_format'] != '' ) echo $options['date_format']; else echo 'm-d-Y'; ?>" /><br /><a href="http://codex.wordpress.org/Formatting_Date_and_Time"><?php _e('Documentation on Date Formatting', 'cleverness-to-do-list'); ?></a>
 		</td>
         </tr>
+		<tr>
+        <th scope="row"><label for="cleverness_todo_settings[sort_order]"><?php _e('Sort Order', 'cleverness-to-do-list'); ?></label></th>
+        <td>
+			<select id="cleverness_todo_settings[sort_order]" name="cleverness_todo_settings[sort_order]">
+				<option value="id"<?php if ( $options['sort_order'] == 'id' ) echo ' selected="selected"'; ?>><?php _e('ID', 'cleverness-to-do-list'); ?></option>
+				<option value="todotext"<?php if ( $options['sort_order'] == 'todotext' ) echo ' selected="selected"'; ?>><?php _e('Alphabetical', 'cleverness-to-do-list'); ?>&nbsp;</option>
+				<option value="deadline"<?php if ( $options['sort_order'] == 'deadline' ) echo ' selected="selected"'; ?>><?php _e('Deadline', 'cleverness-to-do-list'); ?></option>
+				<option value="progress"<?php if ( $options['sort_order'] == 'progress' ) echo ' selected="selected"'; ?>><?php _e('Progress', 'cleverness-to-do-list'); ?></option>
+				<?php if ( $options['categories'] == '1' ) : ?>
+				<option value="cat_id"<?php if ( $options['sort_order'] == 'cat_id' ) echo ' selected="selected"'; ?>><?php _e('Category', 'cleverness-to-do-list'); ?></option>
+				<?php endif; ?>
+			</select>
+			<br /><?php _e('Items are first sorted by priority', 'cleverness-to-do-list'); ?>
+		</td>
+        </tr>
 	</tbody>
 	</table>
 
@@ -82,6 +114,27 @@ function cleverness_todo_settings_page() {
 			</select>
 		</td>
 		</tr>
+		<?php if ( $options['categories'] == '1' ) : ?>
+		<tr>
+		<th scope="row"><label for="cleverness_todo_settings[dashboard_cat]"><?php _e('Category', 'cleverness-to-do-list'); ?></label></th>
+        <td valign="top">
+			<select id="cleverness_todo_settings[dashboard_cat]" name="cleverness_todo_settings[dashboard_cat]">
+		   		<option value="All"<?php if ( 'All' == $options['dashboard_cat'] ) echo ' selected="selected"'; ?>><?php _e('All', 'cleverness-to-do-list'); ?></option>
+				<?php
+			   	$cat_table_name = $wpdb->prefix . 'todolist_cats';
+				$sql = "SELECT * FROM $cat_table_name ORDER BY name";
+				$results = $wpdb->get_results($sql);
+   				if ($results) {
+   					foreach ($results as $result) { ?>
+   							<option value="<?php echo $result->id; ?>"<?php if ( $result->id == $options['dashboard_cat'] ) echo ' selected="selected"'; ?>><?php echo $result->name; ?></option>
+   					   <?php
+					   	}
+   					}
+				?>
+			</select>
+		</td>
+		</tr>
+		<?php endif; ?>
 	</tbody>
 	</table>
 
@@ -272,6 +325,19 @@ function cleverness_todo_settings_page() {
 			</select>
 		</td>
 		</tr>
+		<tr>
+		<th scope="row"><label for="cleverness_todo_settings[add_cat_capability]"><?php _e('Add Categories Capability', 'cleverness-to-do-list'); ?></label></th>
+        <td valign="top">
+			<select id="cleverness_todo_settings[add_cat_capability]" name="cleverness_todo_settings[add_cat_capability]">
+				<option value="edit_posts"<?php if ( $options['add_cat_capability'] == 'edit_posts' ) echo ' selected="selected"'; ?>><?php _e('Edit Posts', 'cleverness-to-do-list'); ?></option>
+				<option value="publish_posts"<?php if ( $options['add_cat_capability'] == 'publish_posts' ) echo ' selected="selected"'; ?>><?php _e('Publish Posts', 'cleverness-to-do-list'); ?></option>
+				<option value="edit_others_posts"<?php if ( $options['add_cat_capability'] == 'edit_others_posts' ) echo ' selected="selected"'; ?>><?php _e('Edit Others Posts', 'cleverness-to-do-list'); ?></option>
+				<option value="publish_pages"<?php if ( $options['add_cat_capability'] == 'publish_pages' ) echo ' selected="selected"'; ?>><?php _e('Publish Pages', 'cleverness-to-do-list'); ?></option>
+				<option value="edit_users"<?php if ( $options['add_cat_capability'] == 'edit_users' ) echo ' selected="selected"'; ?>><?php _e('Edit Users', 'cleverness-to-do-list'); ?></option>
+				<option value="manage_options"<?php if ( $options['add_cat_capability'] == 'manage_options' ) echo ' selected="selected"'; ?>><?php _e('Manage Options', 'cleverness-to-do-list'); ?></option>
+			</select>
+		</td>
+		</tr>
 		</tbody>
 		</table>
 
@@ -280,7 +346,5 @@ function cleverness_todo_settings_page() {
 </form>
 </div>
 <?php
-/* Adds information about the plugin on the settings page footer */
-add_action( 'in_admin_footer', 'cleverness_todo_admin_footer' );
 }
 ?>

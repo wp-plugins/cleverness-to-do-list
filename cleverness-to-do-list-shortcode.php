@@ -3,6 +3,7 @@
 function cleverness_todo_display_items($atts) {
 	global $wpdb, $cleverness_todo_option;
 	$table_name = $wpdb->prefix . 'todolist';
+	$cat_table_name = $wpdb->prefix . 'todolist_cats';
 	$priority = array(0 => $cleverness_todo_option['priority_0'] , 1 => $cleverness_todo_option['priority_1'], 2 => $cleverness_todo_option['priority_2']);
 	extract(shortcode_atts(array(
 	    'title' => '',
@@ -14,7 +15,8 @@ function cleverness_todo_display_items($atts) {
 		'addedby' => 'show',
 		'completed' => '',
 		'completed_title' => '',
-		'list_type' => 'ol'
+		'list_type' => 'ol',
+		'category' => 'all'
 	), $atts));
 
    ?>
@@ -29,11 +31,22 @@ function cleverness_todo_display_items($atts) {
 			<?php if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['assign'] == '0' && $assigned == 'show') : ?><th><?php _e('Assigned To', 'cleverness-to-do-list'); ?></th><?php endif; ?>
 			<?php if ( $cleverness_todo_option['show_deadline'] == '1' && $deadline == 'show' ) : ?><th><?php _e('Deadline', 'cleverness-to-do-list'); ?></th><?php endif; ?>
 			<?php if ( $cleverness_todo_option['show_progress'] == '1' && $progress == 'show' ) : ?><th><?php _e('Progress', 'cleverness-to-do-list'); ?></th><?php endif; ?>
+			<?php if ( $cleverness_todo_option['categories'] == '1' && $category == 'all' ) : ?><th><?php _e('Category', 'cleverness-to-do-list'); ?></th><?php endif; ?>
 	  		<?php if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['todo_author'] == '0' && $addedby == 'show' ) : ?><th><?php _e('Added By', 'cleverness-to-do-list'); ?></th><?php endif; ?>
     	</tr>
 		</thead>
 		<?php
-		$sql = "SELECT * FROM $table_name WHERE status = 0 ORDER BY priority";
+		$sort = $cleverness_todo_option['sort_order'];
+
+		if ( $cleverness_todo_option['categories'] == '0' ) {
+			$sql = "SELECT * FROM $table_name WHERE status = 0 ORDER BY priority, $sort";
+		} else {
+			if ( $category != 'all' )
+				$sql = "SELECT * FROM $table_name WHERE status = 0 AND cat_id = $category ORDER BY priority, $sort";
+			else
+				$sql = "SELECT * FROM $table_name LEFT JOIN $cat_table_name ON $table_name.cat_id = $cat_table_name.id WHERE status = 0 AND $cat_table_name.visibility = 0 ORDER BY cat_id, priority, $table_name.$sort";
+			}
+
    		$results = $wpdb->get_results($sql);
    		if ($results) {
 	   		foreach ($results as $result) {
@@ -60,6 +73,10 @@ function cleverness_todo_display_items($atts) {
 					if ( $result->progress != '' ) echo '%';
 					echo '</td>';
 					}
+				if ( $cleverness_todo_option['categories'] == '1' && $category == 'all' ) {
+					$cat = cleverness_todo_get_cat_name($result->cat_id);
+					echo '<td>'.$cat->name.'</td>';
+					}
 		   		if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['todo_author'] == '0' && $addedby == 'show' )
 		   			echo '<td>'.$user_info->display_name.'</td>';
 	   		}
@@ -70,6 +87,7 @@ function cleverness_todo_display_items($atts) {
 			if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['todo_author'] == '0' ) $colspan += 1;
 			if ( $cleverness_todo_option['show_deadline'] == '1' ) $colspan += 1;
 			if ( $cleverness_todo_option['show_progress'] == '1' ) $colspan += 1;
+			if ( $cleverness_todo_option['categories'] == '1' && $category == 'all' ) $colspan += 1;
 			echo 'colspan="'.$colspan.'"';
 	   		echo '>'.__('There are no items listed.', 'cleverness-to-do-list').'</td></tr>';
    			}
@@ -86,11 +104,19 @@ function cleverness_todo_display_items($atts) {
 			<?php if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['assign'] == '0' && $assigned == 'show') : ?><th><?php _e('Assigned To', 'cleverness-to-do-list'); ?></th><?php endif; ?>
 			<?php if ( $cleverness_todo_option['show_deadline'] == '1' && $deadline == 'show' ) : ?><th><?php _e('Deadline', 'cleverness-to-do-list'); ?></th><?php endif; ?>
 			<?php if ( $cleverness_todo_option['show_completed_date'] == '1' ) : ?><th><?php _e('Completed', 'cleverness-to-do-list'); ?></th><?php endif; ?>
+			<?php if ( $cleverness_todo_option['categories'] == '1' && $category == 'all' ) : ?><th><?php _e('Category', 'cleverness-to-do-list'); ?></th><?php endif; ?>
 	  		<?php if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['todo_author'] == '0' && $addedby == 'show' ) : ?><th><?php _e('Added By', 'cleverness-to-do-list'); ?></th><?php endif; ?>
     	</tr>
 		</thead>
 		<?php
-		$sql = "SELECT * FROM $table_name WHERE status = 1 ORDER BY completed DESC";
+			if ( $cleverness_todo_option['categories'] == '0' ) {
+				$sql = "SELECT * FROM $table_name WHERE status = 1 ORDER BY ORDER BY completed DESC, $sort";
+			} else {
+				if ( $category != 'all' )
+					$sql = "SELECT * FROM $table_name WHERE status = 1 AND cat_id = $category ORDER BY ORDER BY completed DESC, $sort";
+				else
+					$sql = "SELECT * FROM $table_name LEFT JOIN $cat_table_name ON $table_name.cat_id = $cat_table_name.id WHERE status = 1 AND $cat_table_name.visibility = 0 ORDER BY cat_id, completed DESC, $table_name.$sort";
+				}
    		$results = $wpdb->get_results($sql);
    		if ($results) {
 	   		foreach ($results as $result) {
@@ -116,8 +142,12 @@ function cleverness_todo_display_items($atts) {
 					$date = '';
 					if ( $result->completed != '0000-00-00 00:00:00' )
 						$date = date($cleverness_todo_option['date_format'], strtotime($result->completed));
-					}
 					echo '<td>'.$date.'</td>';
+					}
+				if ( $cleverness_todo_option['categories'] == '1' && $category == 'all' ) {
+					$cat = cleverness_todo_get_cat_name($result->cat_id);
+					echo '<td>'.$cat->name.'</td>';
+					}
 		   		if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['todo_author'] == '0' && $addedby == 'show' )
 		   			echo '<td>'.$user_info->display_name.'</td>';
 	   		}
@@ -128,6 +158,7 @@ function cleverness_todo_display_items($atts) {
 			if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['todo_author'] == '0' ) $colspan += 1;
 			if ( $cleverness_todo_option['show_deadline'] == '1' ) $colspan += 1;
 			if ( $cleverness_todo_option['show_completed'] == '1' ) $colspan += 1;
+			if ( $cleverness_todo_option['categories'] == '1' && $category == 'all' ) $colspan += 1;
 			echo 'colspan="'.$colspan.'"';
 	   		echo '>'.__('There are no items listed.', 'cleverness-to-do-list').'</td></tr>';
    			}
@@ -140,10 +171,26 @@ function cleverness_todo_display_items($atts) {
 		  	<?php
 		   	if ( $title != '' ) echo '<h3>'.$title.'</h3>';
 			echo '<'.$list_type.'>';
-		   	$sql = "SELECT * FROM $table_name WHERE status = 0 ORDER BY priority";
+			$sort = $cleverness_todo_option['sort_order'];
+
+			if ( $cleverness_todo_option['categories'] == '0' ) {
+				$sql = "SELECT * FROM $table_name WHERE status = 0 ORDER BY priority, $sort";
+			} else {
+				if ( $category != 'all' )
+					$sql = "SELECT * FROM $table_name WHERE status = 0 AND cat_id = $category ORDER BY priority, $sort";
+				else
+					$sql = "SELECT * FROM $table_name LEFT JOIN $cat_table_name ON $table_name.cat_id = $cat_table_name.id WHERE status = 0 AND $cat_table_name.visibility = 0 ORDER BY cat_id, priority, $table_name.$sort";
+				}
    	   		$results = $wpdb->get_results($sql);
    	   		if ($results) {
 	   			foreach ($results as $result) {
+
+					if ( $cleverness_todo_option['categories'] == '1' && $category == 'all' ) {
+						$cat = cleverness_todo_get_cat_name($result->cat_id);
+						if ( $catid != $result->cat_id && $cat->name != '' ) echo '<h4>'.$cat->name.'</h4>';
+		   		   		$catid = $result->cat_id;
+					}
+
 	   				$user_info = get_userdata($result->author);
 			   		echo '<li>';
 					echo $result->todotext;
@@ -172,7 +219,14 @@ function cleverness_todo_display_items($atts) {
 		if ( $completed == 'show' ) {
 		   	if ( $completed_title != '' ) echo '<h3>'.$completed_title.'</h3>';
 			echo '<'.$list_type.'>';
-		   	$sql = "SELECT * FROM $table_name WHERE status = 1 ORDER BY completed DESC";
+			if ( $cleverness_todo_option['categories'] == '0' ) {
+				$sql = "SELECT * FROM $table_name WHERE status = 1 ORDER BY ORDER BY completed DESC, $sort";
+			} else {
+				if ( $category != 'all' )
+					$sql = "SELECT * FROM $table_name WHERE status = 1 AND cat_id = $category ORDER BY ORDER BY completed DESC, $sort";
+				else
+					$sql = "SELECT * FROM $table_name LEFT JOIN $cat_table_name ON $table_name.cat_id = $cat_table_name.id WHERE status = 1 AND $cat_table_name.visibility = 0 ORDER BY cat_id, completed DESC, $table_name.$sort";
+				}
    	   		$results = $wpdb->get_results($sql);
    	   		if ($results) {
 	   			foreach ($results as $result) {

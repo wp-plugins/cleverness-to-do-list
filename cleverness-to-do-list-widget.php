@@ -12,7 +12,7 @@ class cleverness_todo_list_widget extends WP_Widget {
 	}
 
 	function widget( $args, $instance ) {
-		global $wpdb;
+		global $wpdb, $cleverness_todo_option;
 		extract( $args );
 
 		$title = apply_filters('widget_title', $instance['title'] );
@@ -20,6 +20,7 @@ class cleverness_todo_list_widget extends WP_Widget {
 		$assignedto = $instance['assigned_to'];
 		$deadline = $instance['deadline'];
 		$progress = $instance['progress'];
+		$category = $instance['category'];
 
 		echo $before_widget;
 
@@ -28,10 +29,28 @@ class cleverness_todo_list_widget extends WP_Widget {
 
 		echo '<ol>';
 		$table_name = $wpdb->prefix . 'todolist';
-		$sql = "SELECT * FROM $table_name WHERE status = 0 ORDER BY priority LIMIT $number";
+		$cat_table_name = $wpdb->prefix . 'todolist_cats';
+		$sort = $cleverness_todo_option['sort_order'];
+
+		if ( $cleverness_todo_option['categories'] == '0' ) {
+			$sql = "SELECT * FROM $table_name WHERE status = 0 ORDER BY priority, $sort LIMIT $number";
+		} else {
+			if ( $category != 'All' )
+				$sql = "SELECT * FROM $table_name WHERE status = 0 AND cat_id = $category ORDER BY priority, $sort LIMIT $number";
+			else
+				$sql = "SELECT * FROM $table_name LEFT JOIN $cat_table_name ON $table_name.cat_id = $cat_table_name.id WHERE status = 0 AND $cat_table_name.visibility = 0 ORDER BY cat_id, priority, $table_name.$sort LIMIT $number";
+			}
+
 		$results = $wpdb->get_results($sql);
    		if ($results) {
 	   		foreach ($results as $result) {
+
+				if ( $cleverness_todo_option['categories'] == '1' && $category == 'All' ) {
+					$cat = cleverness_todo_get_cat_name($result->cat_id);
+					if ( $catid != $result->cat_id && $cat->name != '' ) echo '</ol><h4>'.$cat->name.'</h4><ol>';
+		   			$catid = $result->cat_id;
+				}
+
 		   		echo '<li>'.$result->todotext;
 				if ( $result->progress != '' && $progress == true )
 					echo ' - '.$result->progress.'%';
@@ -62,11 +81,13 @@ class cleverness_todo_list_widget extends WP_Widget {
 		$instance['assigned_to'] = $new_instance['assigned_to'];
 		$instance['deadline'] = $new_instance['deadline'];
 		$instance['progress'] = $new_instance['progress'];
+		$instance['category'] = $new_instance['category'];
 		return $instance;
 	}
 
 	function form( $instance ) {
-		$defaults = array( 'title' => __('To-Do List', 'cleverness-to-do-list'), 'number' => '5', 'assigned_to' => false, 'deadline' => false, 'progress' => false);
+		global $wpdb, $cleverness_todo_option;
+		$defaults = array( 'title' => __('To-Do List', 'cleverness-to-do-list'), 'number' => '5', 'assigned_to' => false, 'deadline' => false, 'progress' => false, 'category' => 'All');
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 
 		<p>
@@ -81,9 +102,29 @@ class cleverness_todo_list_widget extends WP_Widget {
 				<option <?php if ( '5' == $instance['number'] ) echo 'selected="selected"'; ?>>5</option>
 				<option <?php if ( '10' == $instance['number'] ) echo 'selected="selected"'; ?>>10</option>
 				<option <?php if ( '15' == $instance['number'] ) echo 'selected="selected"'; ?>>15</option>
-				<option <?php if ( '20' == $instance['number'] ) echo 'selected="selected"'; ?>>20&nbsp;</option>
+				<option <?php if ( '20' == $instance['number'] ) echo 'selected="selected"'; ?>>20</option>
 			</select>
 		</p>
+
+		<?php if ( $cleverness_todo_option['categories'] == '1' ) : ?>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'category' ); ?>"><?php _e('Category:', 'cleverness-to-do-list'); ?></label>
+			<select id="<?php echo $this->get_field_id( 'category' ); ?>" name="<?php echo $this->get_field_name( 'category' ); ?>">
+				<option value="All"<?php if ( 'All' == $instance['category'] ) echo ' selected="selected"'; ?>><?php _e('All', 'cleverness-to-do-list'); ?></option>
+				<?php
+			   	$cat_table_name = $wpdb->prefix . 'todolist_cats';
+				$sql = "SELECT * FROM $cat_table_name ORDER BY name";
+				$results = $wpdb->get_results($sql);
+   				if ($results) {
+   					foreach ($results as $result) { ?>
+   							<option value="<?php echo $result->id; ?>"<?php if ( $result->id == $instance['category'] ) echo ' selected="selected"'; ?>><?php echo $result->name; ?></option>
+   					   <?php
+					   	}
+   					}
+				?>
+			</select>
+		</p>
+		<?php endif; ?>
 
 		<p>
 			<input class="checkbox" type="checkbox" <?php checked( $instance['assigned_to'], on ); ?> id="<?php echo $this->get_field_id( 'assigned_to' ); ?>" name="<?php echo $this->get_field_name( 'assigned_to' ); ?>" />
