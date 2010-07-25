@@ -89,6 +89,10 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 
+= 2.1.1 =
+* Fixed shortcode bug
+* Added option for email text
+
 = 2.1 =
 * Added category support
 * Added sort option
@@ -179,6 +183,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Fixed to work in WordPress 2.8
 
 == Upgrade Notice ==
+
+= 2.1.1 =
+Bug fix and new email option
 
 = 2.1 =
 Categories and sort order added

@@ -27,15 +27,13 @@ function cleverness_todo_email_user($todotext, $priority, $assign, $deadline) {
 
    	if ( current_user_can($cleverness_todo_option['assign_capability']) && $assign != '' && $assign != '-1' ) {
 		$headers = 'From: '.html_entity_decode(get_bloginfo('name')).' <'.get_bloginfo('admin_email').'>' . "\r\n\\";
-		$subject = html_entity_decode(get_bloginfo('name')).': '. __('A task has been assigned to you', 'cleverness-to-do-list');
+		$subject = html_entity_decode(get_bloginfo('name')).': '. $cleverness_todo_option['email_subject'];
 		$assign_user = get_userdata($assign);
 		$email = $assign_user->user_email;
-		$email_message = __('Task:', 'cleverness-to-do-list').' '.$todotext."\r\n";
-		$email_message .= __('Priority:', 'cleverness-to-do-list').' '.$priority_array[$priority]."\r\n";
+		$email_message = $cleverness_todo_option['email_text'];
+		$email_message .= "\r\n".$todotext."\r\n";
 		if ( $deadline != '' )
 			$email_message .= __('Deadline:', 'cleverness-to-do-list').' '.$deadline."\r\n";
-		$email_message .= "\r\n".__('Website:', 'cleverness-to-do-list').' '.get_bloginfo('url')."\r\n";
-		$email_message .= __('Website Login:', 'cleverness-to-do-list').' '.wp_login_url()."\r\n";
   		wp_mail($email, $subject, $email_message, $headers);
 	}
 }
@@ -249,7 +247,7 @@ function cleverness_todo_install () {
    	global $wpdb, $userdata;
    	get_currentuserinfo();
 
-	$cleverness_todo_db_version = '1.4';
+	$cleverness_todo_db_version = '1.5';
 
 	$table_name = $wpdb->prefix . 'todolist';
 	$cat_table_name = $wpdb->prefix .'todolist_cats';
@@ -306,7 +304,9 @@ function cleverness_todo_install () {
 		'categories' => '0',
 		'sort_order' => 'id',
 		'add_cat_capability' => 'manage_options',
-		'dashboard_cat' => 'All'
+		'dashboard_cat' => 'All',
+		'email_text' => __('The following item has been assigned to you.', 'cleverness-to-do-list'),
+		'email_subject' => __('A to-do list item has been assigned to you', 'cleverness-to-do-list')
    		);
    		add_option( 'cleverness_todo_settings', $new_options );
 		add_option( 'cleverness_todo_db_version', $cleverness_todo_db_version );
@@ -333,10 +333,12 @@ function cleverness_todo_install () {
 	    );");
 
 		$theoptions = get_option('cleverness_todo_settings');
-		$theoptions['categories'] = '0';
-		$theoptions['sort_order'] = 'id';
-		$theoptions['add_cat_capability'] = 'manage_options';
-		$theoptions['dashboard_cat'] = 'All';
+		if ( $theoptions['categories'] == '' ) $theoptions['categories'] = '0';
+		if ( $theoptions['sort_order'] == '' ) $theoptions['sort_order'] = 'id';
+		if ( $theoptions['add_cat_capability'] == '' ) $theoptions['add_cat_capability'] = 'manage_options';
+		if ( $theoptions['dashboard_cat'] == '' ) $theoptions['dashboard_cat'] = 'All';
+		if ( $theoptions['email_text'] == '' ) $theoptions['email_text'] = __('The following item has been assigned to you.', 'cleverness-to-do-list');
+		if ( $theoptions['email_subject'] == '' ) $theoptions['email_subject'] = __('A to-do list item has been assigned to you', 'cleverness-to-do-list');
 		update_option( 'cleverness_todo_settings', $theoptions);
 
     	update_option( 'cleverness_todo_db_version', $cleverness_todo_db_version );

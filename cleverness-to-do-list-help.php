@@ -9,7 +9,7 @@ function cleverness_todo_help() {
 <p><?php _e('Several options are available:', 'cleverness-to-do-list'); ?></p>
 <ul>
 <li><strong>title</strong> &#8211; <?php _e('default is no title', 'cleverness-to-do-list'); ?>.</li>
-<li><strong>type</strong> &#8211; <?php _e('you can chose <em>list</em> or <em>table</em> view. Default is *list*', 'cleverness-to-do-list'); ?>.</li>
+<li><strong>type</strong> &#8211; <?php _e('you can chose <em>list</em> or <em>table</em> view. Default is <em>list</em>', 'cleverness-to-do-list'); ?>.</li>
 <li><strong>priorities</strong> &#8211; <?php _e('default is <em>show</em>. Use a blank value to hide (only applies to table view)', 'cleverness-to-do-list'); ?>.</li>
 <li><strong>assigned</strong> &#8211; <?php _e('default is <em>show</em>. Use a blank value to hide', 'cleverness-to-do-list'); ?>.</li>
 <li><strong>deadline</strong> &#8211; <?php _e('default is <em>show</em>. Use a blank value to hide', 'cleverness-to-do-list'); ?>.</li>
