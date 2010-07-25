@@ -11,7 +11,6 @@ function cleverness_todo_settings_page() {
 	<?php $options = get_option('cleverness_todo_settings'); ?>
 
 	<p><?php _e('Category support is turned off by default. If you would like to organize your to-do list into categories, enable it here.', 'cleverness-to-do-list'); ?></p>
-	<p><?php _e('Please click Save Changes a second time after enabling categories.', 'cleverness-to-do-list'); ?></p>
 
 	<table class="form-table">
 	<tbody>
@@ -81,9 +80,7 @@ function cleverness_todo_settings_page() {
 				<option value="todotext"<?php if ( $options['sort_order'] == 'todotext' ) echo ' selected="selected"'; ?>><?php _e('Alphabetical', 'cleverness-to-do-list'); ?>&nbsp;</option>
 				<option value="deadline"<?php if ( $options['sort_order'] == 'deadline' ) echo ' selected="selected"'; ?>><?php _e('Deadline', 'cleverness-to-do-list'); ?></option>
 				<option value="progress"<?php if ( $options['sort_order'] == 'progress' ) echo ' selected="selected"'; ?>><?php _e('Progress', 'cleverness-to-do-list'); ?></option>
-				<?php if ( $options['categories'] == '1' ) : ?>
 				<option value="cat_id"<?php if ( $options['sort_order'] == 'cat_id' ) echo ' selected="selected"'; ?>><?php _e('Category', 'cleverness-to-do-list'); ?></option>
-				<?php endif; ?>
 			</select>
 			<br /><?php _e('Items are first sorted by priority', 'cleverness-to-do-list'); ?>
 		</td>
@@ -115,7 +112,6 @@ function cleverness_todo_settings_page() {
 			</select>
 		</td>
 		</tr>
-		<?php if ( $options['categories'] == '1' ) : ?>
 		<tr>
 		<th scope="row"><label for="cleverness_todo_settings[dashboard_cat]"><?php _e('Category', 'cleverness-to-do-list'); ?></label></th>
         <td valign="top">
@@ -135,7 +131,6 @@ function cleverness_todo_settings_page() {
 			</select>
 		</td>
 		</tr>
-		<?php endif; ?>
 	</tbody>
 	</table>
 
@@ -204,22 +199,18 @@ function cleverness_todo_settings_page() {
 			</select>
 		</td>
 		</tr>
-		<?php if ( $options['email_assigned'] == '1' ) : ?>
 		<tr>
 		<th scope="row"><label for="cleverness_todo_settings[email_subject]"><?php _e('Subject for Email Assigned Task to User', 'cleverness-to-do-list'); ?></label></th>
         <td valign="top">
 			<textarea id="cleverness_todo_settings[email_subject]" name="cleverness_todo_settings[email_subject]"><?php echo $options['email_subject']; ?></textarea>
 		</td>
 		</tr>
-		<?php endif; ?>
-		<?php if ( $options['email_assigned'] == '1' ) : ?>
 		<tr>
 		<th scope="row"><label for="cleverness_todo_settings[email_text]"><?php _e('Text in Email Assigned Task to User', 'cleverness-to-do-list'); ?></label></th>
         <td valign="top">
 			<textarea id="cleverness_todo_settings[email_text]" name="cleverness_todo_settings[email_text]"><?php echo $options['email_text']; ?></textarea>
 		</td>
 		</tr>
-		<?php endif; ?>
 		<tr>
 		<th scope="row"><label for="cleverness_todo_settings[show_only_assigned]"><?php _e('Show Each User Only Their Assigned Tasks', 'cleverness-to-do-list'); ?></label></th>
         <td valign="top">

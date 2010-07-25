@@ -247,7 +247,7 @@ function cleverness_todo_install () {
    	global $wpdb, $userdata;
    	get_currentuserinfo();
 
-	$cleverness_todo_db_version = '1.5';
+	$cleverness_todo_db_version = '1.6';
 
 	$table_name = $wpdb->prefix . 'todolist';
 	$cat_table_name = $wpdb->prefix .'todolist_cats';

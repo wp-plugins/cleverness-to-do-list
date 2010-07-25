@@ -89,6 +89,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 
+= 2.1.2 =
+* Fixed option bug
+
 = 2.1.1 =
 * Fixed shortcode bug
 * Added option for email text
@@ -183,6 +186,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Fixed to work in WordPress 2.8
 
 == Upgrade Notice ==
+
+= 2.1.2 =
+Bug fix
 
 = 2.1.1 =
 Bug fix and new email option
