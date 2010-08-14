@@ -58,7 +58,7 @@ function cleverness_todo_display_items($atts) {
 		   		if ($result->priority == '0') $priority_class = ' todo-important';
 				if ($result->priority == '2') $priority_class = ' todo-low';
 		   		$display_todo .= '<tr id="cleverness_todo-'.$result->id.'" class="'.$class.$priority_class.'">
-			   	<td>'.$result->todotext.'</td>';
+			   	<td>'.stripslashes($result->todotext).'</td>';
 			   	if ( $priorities == 'show' )
 					$display_todo .= '<td>'.$prstr.'</td>';
 				if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['assign'] == '0' && $assigned == 'show' ) {
@@ -193,7 +193,7 @@ function cleverness_todo_display_items($atts) {
 
 	   				$user_info = get_userdata($result->author);
 			   		$display_todo .= '<li>';
-					$display_todo .= $result->todotext;
+					$display_todo .= stripslashes($result->todotext);
 					if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['assign'] == '0' && $assigned == 'show' ) {
 						$assign_user = '';
 				   		if ( $result->assign != '-1' && $result->assign != '' ) {

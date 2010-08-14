@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Cleverness To-Do List
-Version: 2.1.2
+Version: 2.1.3
 Description: Manage to-do list items on a individual or group basis with categories. Includes a dashboard widget and a sidebar widget.
 Author: C.M. Kendrick
 Author URI: http://cleverness.org
@@ -197,7 +197,7 @@ function cleverness_todo_subpanel() {
 			<?php endif; ?>
 	   		<tr>
 				<th scope="row" valign="top"><label for="cleverness_todo_description"><?php _e('To-Do', 'cleverness-to-do-list') ?></label></th>
-				<td><textarea name="cleverness_todo_description" rows="5" cols="50"><?php echo wp_specialchars($todo->todotext, 1); ?></textarea></td>
+				<td><textarea name="cleverness_todo_description" rows="5" cols="50"><?php echo stripslashes(wp_specialchars($todo->todotext, 1)); ?></textarea></td>
 			</tr>
 			</table>
 			<?php wp_nonce_field( 'todoupdate' ) ?>
@@ -258,7 +258,7 @@ function cleverness_todo_subpanel() {
 				if (current_user_can($cleverness_todo_option['delete_capability']))
 					$edit .= ' | <a href="admin.php?page=cleverness-to-do-list&amp;action=deletetodo&amp;id='.$result->id.'" class="delete">'.__('Delete', 'cleverness-to-do-list').'</a>';
 		   		echo '<tr id="cleverness_todo-'.$result->id.'" class="'.$class.$priority_class.'">
-			   	<td><input type="checkbox" id="td-'.$result->id.'" onclick="window.location = \'admin.php?page=cleverness-to-do-list&amp;action=completetodo&amp;id='.$result->id.'\';" />&nbsp;'.$result->todotext.'</td>
+			   	<td><input type="checkbox" id="td-'.$result->id.'" onclick="window.location = \'admin.php?page=cleverness-to-do-list&amp;action=completetodo&amp;id='.$result->id.'\';" />&nbsp;'.stripslashes($result->todotext).'</td>
 			   	<td>'.$prstr.'</td>';
 				if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['assign'] == '0' ) {
 					$assign_user = '';
@@ -342,7 +342,7 @@ function cleverness_todo_subpanel() {
 				if (current_user_can($cleverness_todo_option['delete_capability']))
 		   			$edit = '<a href="admin.php?page=cleverness-to-do-list&amp;action=deletetodo&amp;id='.$result->id.'" class="delete">'.__('Delete', 'cleverness-to-do-list').'</a>';
 		   		echo '<tr id="cleverness_todo-'.$result->id.'" class="'.$class.'">
-			   	<td><input type="checkbox" id="td-'.$result->id.'" checked="checked" onclick="window.location = \'admin.php?page=cleverness-to-do-list&amp;action=uncompletetodo&amp;id='.$result->id.'\';" />&nbsp;'.$result->todotext.'</td>
+			   	<td><input type="checkbox" id="td-'.$result->id.'" checked="checked" onclick="window.location = \'admin.php?page=cleverness-to-do-list&amp;action=uncompletetodo&amp;id='.$result->id.'\';" />&nbsp;'.stripslashes($result->todotext).'</td>
 			   	<td>'.$prstr.'</td>';
 				if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['assign'] == '0' ) {
 					$assign_user = '';

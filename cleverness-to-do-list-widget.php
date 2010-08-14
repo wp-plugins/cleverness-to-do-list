@@ -51,7 +51,7 @@ class cleverness_todo_list_widget extends WP_Widget {
 		   			$catid = $result->cat_id;
 				}
 
-		   		echo '<li>'.$result->todotext;
+		   		echo '<li>'.stripslashes($result->todotext);
 				if ( $result->progress != '' && $progress == true )
 					echo ' - '.$result->progress.'%';
 				if ( $deadline == true && $result->deadline != '' )

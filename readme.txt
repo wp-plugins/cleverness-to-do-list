@@ -89,6 +89,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 
+= 2.1.3 =
+* Added stripslashes() to item display
+
 = 2.1.2 =
 * Fixed option bug
 
@@ -186,6 +189,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Fixed to work in WordPress 2.8
 
 == Upgrade Notice ==
+
+= 2.1.3 =
+Bug fix
 
 = 2.1.2 =
 Bug fix

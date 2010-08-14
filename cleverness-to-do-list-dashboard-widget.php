@@ -51,7 +51,7 @@ function cleverness_todo_todo_in_activity_box() {
 				$catid = $result->cat_id;
 			}
 
-			echo '<p><input type="checkbox" id="td-'.$result->id.'" onclick="window.location = \'index.php?cleverness_widget_action=complete&amp;cleverness_widget_id='.$result->id.'\';" /> <span'.$priority_class.'>'.$result->todotext.'</span>';
+			echo '<p><input type="checkbox" id="td-'.$result->id.'" onclick="window.location = \'index.php?cleverness_widget_action=complete&amp;cleverness_widget_id='.$result->id.'\';" /> <span'.$priority_class.'>'.stripslashes($result->todotext).'</span>';
 			if ( ($cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['show_only_assigned'] == '0' && (current_user_can($cleverness_todo_option['view_all_assigned_capability']))) ||  ($cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['show_only_assigned'] == '1') && $cleverness_todo_option['assign'] == '0') {
 				$assign_user = '';
 				if ( $result->assign != '-1' && $result->assign != '' && $result->assign != '0') {
