@@ -89,6 +89,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 
+= 2.1.4 =
+* Updated German translation by Ascobol
+
 = 2.1.3 =
 * Added stripslashes() to item display
 
@@ -189,6 +192,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Fixed to work in WordPress 2.8
 
 == Upgrade Notice ==
+
+= 2.1.4 =
+Updated German translation
 
 = 2.1.3 =
 Bug fix
