@@ -56,7 +56,7 @@ class cleverness_todo_list_widget extends WP_Widget {
 					echo ' - '.$result->progress.'%';
 				if ( $deadline == true && $result->deadline != '' )
 					echo '<br /><span class="deadline">'.__('Deadline: ', 'cleverness-to-do-list').$result->deadline.'</span>';
-				if ( $assignedto == true && $result->asign != '') {
+				if ( $assignedto == true && $result->assign != '') {
 					$assign_user = '';
 					if ( $result->assign != '-1' )
 						$assign_user = get_userdata($result->assign);

@@ -89,6 +89,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 
+= 2.1.5 =
+* Fixed a typo in the show assigned user code in the widget
+
 = 2.1.4 =
 * Updated German translation by Ascobol
 
@@ -192,6 +195,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Fixed to work in WordPress 2.8
 
 == Upgrade Notice ==
+
+= 2.1.5 =
+Bug fix
 
 = 2.1.4 =
 Updated German translation
