@@ -13,5 +13,7 @@ if ( current_user_can('delete_plugins') ) {
   	$wpdb->query("DROP TABLE IF EXISTS $thetable");
   	$thecattable = $wpdb->prefix."todolist_cats";
   	$wpdb->query("DROP TABLE IF EXISTS $thecattable");
+	$thestatustable = $wpdb->prefix."todolist_status";
+  	$wpdb->query("DROP TABLE IF EXISTS $thestatustable");
 }
 ?>

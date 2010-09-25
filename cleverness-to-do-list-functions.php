@@ -78,12 +78,17 @@ function cleverness_todo_delete($id) {
 
 /* Mark to-do list item as completed or uncompleted */
 function cleverness_todo_complete($id, $status) {
-	global $wpdb, $userdata, $cleverness_todo_option;
+	global $wpdb, $userdata, $cleverness_todo_option, $current_user;
 	require_once (ABSPATH . WPINC . '/pluggable.php');
    	get_currentuserinfo();
 
    	 $table_name = $wpdb->prefix . 'todolist';
-   	 if ( $cleverness_todo_option['list_view'] == '0' || current_user_can($cleverness_todo_option['complete_capability']) ) {
+	 $status_table_name = $wpdb->prefix . 'todolist_status';
+	 // if individual view, group view with complete capability, or master view with edit capability
+   	 if ( $cleverness_todo_option['list_view'] == '0' ||
+	 ( $cleverness_todo_option['list_view'] == '1' && current_user_can($cleverness_todo_option['complete_capability']) ) ||
+	 ( $cleverness_todo_option['list_view'] == '2' && current_user_can($cleverness_todo_option['edit_capability']) )
+	 ) {
 		$results = $wpdb->update( $table_name, array( 'status' => $status ), array( 'id' => $id ) );
 		if ( $status == '1' ) $status_text = __('completed', 'cleverness-to-do-list');
 		else $status_text = __('uncompleted', 'cleverness-to-do-list');
@@ -91,6 +96,25 @@ function cleverness_todo_complete($id, $status) {
 		else {
 			$message = __('There was a problem changing the status of the item.', 'cleverness-to-do-list');
 			}
+	 // master view - individual
+	 } elseif ( $cleverness_todo_option['list_view'] == '2' ) {
+	 	$user = $current_user->ID;
+		$wpdb->get_results("SELECT * FROM $status_table_name WHERE id = $id AND user = $user");
+		$num = $wpdb->num_rows;
+
+		if ( $num == 0 ) {
+			$results = $wpdb->insert( $status_table_name, array( 'id' => $id, 'status' => $status, 'user' => $user ) );
+	 	} else {
+			$results = $wpdb->update( $status_table_name, array( 'status' => $status ), array( 'id' => $id, 'user' => $user ) );
+			}
+
+		if ( $status == '1' ) $status_text = __('completed', 'cleverness-to-do-list');
+		else $status_text = __('uncompleted', 'cleverness-to-do-list');
+		if ( $results ) $message = __('To-Do item has been marked as ', 'cleverness-to-do-list').$status_text.'.';
+		else {
+			$message = __('There was a problem changing the status of the item.', 'cleverness-to-do-list');
+			}
+	 // no capability
 	 } else {
 		$message = __('You do not have sufficient privileges to do that.', 'cleverness-to-do-list');
 		}
@@ -124,7 +148,7 @@ function cleverness_todo_purge() {
    	if ( $cleverness_todo_option['list_view'] == '0' || current_user_can($cleverness_todo_option['purge_capability']) ) {
    		if ( $cleverness_todo_option['list_view'] == '0' )
    			$purge = "DELETE FROM ".$table_name." WHERE status = '1' AND author = '".$userdata->ID."'";
-	   	elseif ( $cleverness_todo_option['list_view'] == '1' )
+	   	elseif ( $cleverness_todo_option['list_view'] == '1' || $cleverness_todo_option['list_view'] == '2' )
 			$purge = "DELETE FROM ".$table_name." WHERE status = '1'";
    		$results = $wpdb->query( $purge );
 		if ( $results ) $message = __('Completed To-Do items have been deleted.', 'cleverness-to-do-list');
@@ -247,10 +271,11 @@ function cleverness_todo_install () {
    	global $wpdb, $userdata;
    	get_currentuserinfo();
 
-	$cleverness_todo_db_version = '1.6';
+	$cleverness_todo_db_version = '1.7';
 
-	$table_name = $wpdb->prefix . 'todolist';
-	$cat_table_name = $wpdb->prefix .'todolist_cats';
+	$table_name = $wpdb->prefix.'todolist';
+	$cat_table_name = $wpdb->prefix.'todolist_cats';
+	$status_table_name = $wpdb->prefix.'todolist_status';
 
    	if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
    		$sql = "CREATE TABLE ".$table_name." (
@@ -273,6 +298,12 @@ function cleverness_todo_install () {
 	      visibility tinyint(1) DEFAULT '0' NOT NULL
 	    );";
    		dbDelta($sql2);
+		$sql3 = "CREATE TABLE ".$status_table_name." (
+	      id bigint(20),
+	      user bigint(20),
+	      status tinyint(1) DEFAULT '0' NOT NULL
+	    );";
+   		dbDelta($sql3);
    		$welcome_text = __('Add your first To-Do List item', 'cleverness-to-do-list');
    		$results = $wpdb->insert( $table_name, array( 'author' => $userdata->ID, 'status' => 0, 'priority' => 1, 'todotext' => $welcome_text ) );
 
@@ -330,6 +361,11 @@ function cleverness_todo_install () {
 	      name varchar(100),
 	      sort tinyint(3) DEFAULT '0' NOT NULL,
 	      visibility tinyint(1) DEFAULT '0' NOT NULL
+	    );");
+		maybe_create_table($status_table_name, "CREATE TABLE ".$status_table_name." (
+	      id bigint(20),
+	      user bigint(20),
+	      status tinyint(1) DEFAULT '0' NOT NULL
 	    );");
 
 		$theoptions = get_option('cleverness_todo_settings');

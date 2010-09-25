@@ -3,16 +3,16 @@ Contributors: elusivelight
 Donate link: http://cleverness.org/plugins/to-do-list/
 Tags: to-do, to do list, to-do list, list, assign tasks, tasks, admin
 Requires at least: 2.8
-Tested up to: 3.0
+Tested up to: 3.0.1
 Stable tag: trunk
 
-Integrates a multi-featured to-do list into the WordPress administration area. Manage to-do list items on a individual or group basis with customizable settings.
+Integrates a multi-featured to-do list into the WordPress administration area. Manage to-do list items on a individual, group, or master list basis with customizable settings.
 
 == Description ==
 
 This plugin provides users with a to-do list feature.
 
-You can configure the plugin to have private to-do lists for each user or for all users to share a to-do list. The shared to-do list has a variety of settings available. You can assign tasks to a specific user (includes a setting to email a new task to the assigned user) and have only those tasks assigned viewable to a user. You can also assign different permission levels using capabilities. There are also settings to show deadline and progress fields. Category support is now included.
+You can configure the plugin to have private to-do lists for each user, for all users to share a to-do list, or a master list with individual completing of items. The shared to-do list has a variety of settings available. You can assign tasks to a specific user (includes a setting to email a new task to the assigned user) and have only those tasks assigned viewable to a user. You can also assign different permission levels using capabilities. There are also settings to show deadline and progress fields. Category support is now included.
 
 A new menu item is added to manage your list and it is also listed on a dashboard widget.
 
@@ -35,6 +35,9 @@ Cleverness To-Do List is distributed in the hope that it will be useful, but WIT
 You should have received a copy of the GNU General Public License along with this plugin. If not, see <http://www.gnu.org/licenses/>.
 
 == Frequently Asked Questions ==
+
+= I upgraded and the new tables or fields haven't been added to the database =
+If you did not do the automatic upgrade from the Plugins page, make sure you deactivate and then activate the plugin. The database changes are done on activation.
 
 = I enabled categories and now my items don't show up on the dashboard, sidebar, or using the shortcode. =
 This is because the items have not yet been assigned a category. Once you edit the item and select a category, they will appear.
@@ -88,6 +91,10 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 3. Settings Page
 
 == Changelog ==
+
+= 2.2 =
+* Added assign to sorting options
+* Added the master list view feature
 
 = 2.1.5 =
 * Fixed a typo in the show assigned user code in the widget
@@ -195,6 +202,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Fixed to work in WordPress 2.8
 
 == Upgrade Notice ==
+
+= 2.2 =
+Master list feature added
 
 = 2.1.5 =
 Bug fix

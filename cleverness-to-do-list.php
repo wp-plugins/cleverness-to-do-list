@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Cleverness To-Do List
-Version: 2.1.5
+Version: 2.2
 Description: Manage to-do list items on a individual or group basis with categories. Includes a dashboard widget and a sidebar widget.
 Author: C.M. Kendrick
 Author URI: http://cleverness.org
@@ -95,10 +95,11 @@ case 'purgetodo':
 
 /* Create admin page */
 function cleverness_todo_subpanel() {
-   	global $wpdb, $userdata, $cleverness_todo_option, $message;
+   	global $wpdb, $userdata, $cleverness_todo_option, $message, $current_user;
    	get_currentuserinfo();
 
-   	$table_name = $wpdb->prefix . 'todolist';
+   	$table_name = $wpdb->prefix.'todolist';
+	$status_table_name = $wpdb->prefix.'todolist_status';
    	$priority = array(0 => $cleverness_todo_option['priority_0'] , 1 => $cleverness_todo_option['priority_1'], 2 => $cleverness_todo_option['priority_2']);
 	?>
 
@@ -233,17 +234,31 @@ function cleverness_todo_subpanel() {
     	</tr>
 		</thead>
 		<?php
+		// individual view
 		if ( $cleverness_todo_option['list_view'] == '0' )
 			$sql = "SELECT * FROM $table_name WHERE status = 0 AND author = $userdata->ID";
+		//  group view - show only assigned - user can view all assigned tasks
 		elseif ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['show_only_assigned'] == '0' && (current_user_can($cleverness_todo_option['view_all_assigned_capability'])) )
 			$sql = "SELECT * FROM $table_name WHERE status = 0";
+		// group view - show only assigned
 		elseif ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['show_only_assigned'] == '0' )
 		   	$sql = "SELECT * FROM $table_name WHERE status = 0 AND assign = $userdata->ID";
+		// group view - show all
    		elseif ( $cleverness_todo_option['list_view'] == '1' )
 			$sql = "SELECT * FROM $table_name WHERE status = 0";
+		// master view with edit capablities
+		elseif ( $cleverness_todo_option['list_view'] == '2' && current_user_can($cleverness_todo_option['edit_capability']) )
+			$sql = "SELECT * FROM $table_name WHERE status = 0";
+		// master view
+		elseif ( $cleverness_todo_option['list_view'] == '2' ) {
+			$user = $current_user->ID;
+	   		$sql = "SELECT * FROM $table_name WHERE ( id = ANY ( SELECT id FROM $status_table_name WHERE user = $user AND status = 0 ) OR  id NOT IN( SELECT id FROM $status_table_name WHERE user = $user AND status = 1 ) ) AND status = 0";
+		}
+		// add sort order
 		$sql .= ' ORDER BY priority, '.$cleverness_todo_option['sort_order'];
 
    		$results = $wpdb->get_results($sql);
+
    		if ($results) {
 	   		foreach ($results as $result) {
 		   		$class = ('alternate' == $class) ? '' : 'alternate';
@@ -318,14 +333,27 @@ function cleverness_todo_subpanel() {
     	</tr>
 		</thead>
 		<?php
+		// individual view
 		if ( $cleverness_todo_option['list_view'] == '0' )
 			$sql = "SELECT * FROM $table_name WHERE status = 1 AND author = $userdata->ID";
+		// group view - show only assigned - view all assigned
 		elseif ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['show_only_assigned'] == '0' && (current_user_can($cleverness_todo_option['view_all_assigned_capability'])) )
 			$sql = "SELECT * FROM $table_name WHERE status = 1";
+		// group view - show only assigned
 		elseif ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['show_only_assigned'] == '0' )
 			$sql = "SELECT * FROM $table_name WHERE status = 1 AND assign = $userdata->ID";
+		// group view - show all
 		elseif ( $cleverness_todo_option['list_view'] == '1' )
 	   		$sql = "SELECT * FROM $table_name WHERE status = 1";
+				// master view with edit capablities
+		elseif ( $cleverness_todo_option['list_view'] == '2' && current_user_can($cleverness_todo_option['edit_capability']) )
+			$sql = "SELECT * FROM $table_name WHERE status = 1";
+		// master view
+		elseif ( $cleverness_todo_option['list_view'] == '2' ) {
+			$user = $current_user->ID;
+		   	$sql = "SELECT * FROM $table_name LEFT OUTER JOIN $status_table_name USING (id) WHERE ( $status_table_name.status = 1 AND $status_table_name.user = $user )";
+		}
+		// add sort order
 		if ( $cleverness_todo_option['show_completed_date'] == '1' )
 			$sql .= " ORDER BY completed DESC";
 		else

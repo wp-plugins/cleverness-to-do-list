@@ -26,7 +26,7 @@ function cleverness_todo_settings_page() {
 	</tbody>
 	</table>
 
-	<p><?php _e('<em>List View</em> sets how the to-do lists are viewed. The <em>Individual</em> setting allows each user to have their own private to-do list. The <em>Group</em> setting allows all users to share one to-do list.', 'cleverness-to-do-list'); ?></p>
+	<p><?php _e('<em>List View</em> sets how the to-do lists are viewed.<br /> The <em>Individual</em> setting allows each user to have their own private to-do list. The <em>Group</em> setting allows all users to share one to-do list. The <em>Master</em> setting allows you to have one master list for all users with indvidual completing of items.', 'cleverness-to-do-list'); ?></p>
 
     <table class="form-table">
 	<tbody>
@@ -36,6 +36,7 @@ function cleverness_todo_settings_page() {
 			<select id="cleverness_todo_settings[list_view]" name="cleverness_todo_settings[list_view]">
 				<option value="0"<?php if ( $options['list_view'] == '0' ) echo ' selected="selected"'; ?>><?php _e('Individual', 'cleverness-to-do-list'); ?>&nbsp;</option>
 				<option value="1"<?php if ( $options['list_view'] == '1' ) echo ' selected="selected"'; ?>><?php _e('Group', 'cleverness-to-do-list'); ?></option>
+				<option value="2"<?php if ( $options['list_view'] == '2' ) echo ' selected="selected"'; ?>><?php _e('Master', 'cleverness-to-do-list'); ?></option>
 			</select>
 		</td>
         </tr>
@@ -81,6 +82,7 @@ function cleverness_todo_settings_page() {
 				<option value="deadline"<?php if ( $options['sort_order'] == 'deadline' ) echo ' selected="selected"'; ?>><?php _e('Deadline', 'cleverness-to-do-list'); ?></option>
 				<option value="progress"<?php if ( $options['sort_order'] == 'progress' ) echo ' selected="selected"'; ?>><?php _e('Progress', 'cleverness-to-do-list'); ?></option>
 				<option value="cat_id"<?php if ( $options['sort_order'] == 'cat_id' ) echo ' selected="selected"'; ?>><?php _e('Category', 'cleverness-to-do-list'); ?></option>
+				<option value="assign"<?php if ( $options['sort_order'] == 'assign' ) echo ' selected="selected"'; ?>><?php _e('Assigned User', 'cleverness-to-do-list'); ?></option>
 			</select>
 			<br /><?php _e('Items are first sorted by priority', 'cleverness-to-do-list'); ?>
 		</td>
@@ -228,6 +230,12 @@ function cleverness_todo_settings_page() {
 			<input type="text" id="cleverness_todo_settings[user_roles]" name="cleverness_todo_settings[user_roles]" value="<?php if ( $options['user_roles'] != '' ) echo $options['user_roles']; else echo 'contributor, author, editor, administrator'; ?>" style="width: 300px;" /><br /><a href="http://codex.wordpress.org/Roles_and_Capabilities"><?php _e('Documentation on User Roles', 'cleverness-to-do-list'); ?></a>
 		</td>
         </tr>
+		</table>
+
+	<h3><?php _e('Permissions', 'cleverness-to-do-list'); ?></h3>
+	<p><?php _e('These settings are used in <em>Group</em> and <em>Master</em> views.', 'cleverness-to-do-list'); ?></p>
+	<p><em><?php _e('When using the Master view, you only want to allow regular users to view and complete items, otherwise they will be able to edit the Master list.', 'cleverness-to-do-list'); ?></em></p>
+	<table class="form-table">
 		<tr>
 		<th scope="row"><label for="cleverness_todo_settings[view_capability]"><?php _e('View To-Do Item Capability', 'cleverness-to-do-list'); ?></label></th>
         <td valign="top">

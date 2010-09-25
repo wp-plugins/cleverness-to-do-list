@@ -25,6 +25,7 @@ function cleverness_todo_help() {
 &#91;todolist title="Upcoming Articles" type="table" priorities="" deadline="" addedby=""&#93;</p>
 
 <h3><?php _e('Additional Information on Available Permissions', 'cleverness-to-do-list'); ?></h3>
+
 <ul>
 <li><strong><?php _e('View To-Do Item Capability', 'cleverness-to-do-list'); ?></strong> &#8211; <?php _e('This allows the selected capability to view to-do items', 'cleverness-to-do-list'); ?>.</li>
 <li><strong><?php _e('Complete To-Do Item Capability', 'cleverness-to-do-list'); ?></strong> &#8211; <?php _e('This allows the selected capability to mark to-do items as completed or uncompleted', 'cleverness-to-do-list'); ?>.</li>
