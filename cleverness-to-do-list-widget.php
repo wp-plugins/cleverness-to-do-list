@@ -12,7 +12,8 @@ class cleverness_todo_list_widget extends WP_Widget {
 	}
 
 	function widget( $args, $instance ) {
-		global $wpdb, $cleverness_todo_option;
+		global $wpdb, $cleverness_todo_option, $userdata;
+		get_currentuserinfo();
 		extract( $args );
 
 		$title = apply_filters('widget_title', $instance['title'] );
@@ -22,6 +23,8 @@ class cleverness_todo_list_widget extends WP_Widget {
 		$progress = $instance['progress'];
 		$category = $instance['category'];
 
+   		if ( $cleverness_todo_option['list_view'] == '0' && $userdata->ID != NULL )
+			$author = " AND author = $userdata->ID ";
 		echo $before_widget;
 
 		if ( $title )
@@ -33,12 +36,12 @@ class cleverness_todo_list_widget extends WP_Widget {
 		$sort = $cleverness_todo_option['sort_order'];
 
 		if ( $cleverness_todo_option['categories'] == '0' ) {
-			$sql = "SELECT * FROM $table_name WHERE status = 0 ORDER BY priority, $sort LIMIT $number";
+			$sql = "SELECT * FROM $table_name WHERE status = 0 $author ORDER BY priority, $sort LIMIT $number";
 		} else {
 			if ( $category != 'All' )
-				$sql = "SELECT * FROM $table_name WHERE status = 0 AND cat_id = $category ORDER BY priority, $sort LIMIT $number";
+				$sql = "SELECT * FROM $table_name WHERE status = 0 $author AND cat_id = $category ORDER BY priority, $sort LIMIT $number";
 			else
-				$sql = "SELECT * FROM $table_name LEFT JOIN $cat_table_name ON $table_name.cat_id = $cat_table_name.id WHERE status = 0 AND $cat_table_name.visibility = 0 ORDER BY cat_id, priority, $table_name.$sort LIMIT $number";
+				$sql = "SELECT * FROM $table_name LEFT JOIN $cat_table_name ON $table_name.cat_id = $cat_table_name.id WHERE status = 0 $author AND $cat_table_name.visibility = 0 ORDER BY cat_id, priority, $table_name.$sort LIMIT $number";
 			}
 
 		$results = $wpdb->get_results($sql);

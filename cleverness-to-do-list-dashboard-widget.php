@@ -81,14 +81,14 @@ function cleverness_todo_todo_in_activity_box() {
 				echo ' <small>['.$result->progress.'%]</small>';
 			if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['dashboard_author'] == '0' )
 				echo ' <small>- '.__('added by', 'cleverness-to-do-list').' '.$user_info->display_name.'</small>';
-			if (current_user_can($cleverness_todo_option['edit_capability']))
+			if (current_user_can($cleverness_todo_option['edit_capability']) || $cleverness_todo_option['list_view'] == '0')
 		   		echo ' <small>(<a href="admin.php?page=cleverness-to-do-list&amp;action=edittodo&amp;id='. $result->id . '">'. __('Edit', 'cleverness-to-do-list') . '</a>)</small>';
 			echo '</p>';
 			}
 	} else {
 		echo '<p>'.__('No items to do.', 'cleverness-to-do-list').'</p>';
 		}
-		if (current_user_can($cleverness_todo_option['add_capability']))
+		if (current_user_can($cleverness_todo_option['add_capability']) || $cleverness_todo_option['list_view'] == '0')
 			echo '<p style="text-align: right">'. '<a href="admin.php?page=cleverness-to-do-list#addtodo">'. __('New To-Do Item &raquo;', 'cleverness-to-do-list').'</a></p>';
 	}
 
@@ -98,7 +98,7 @@ function cleverness_todo_dashboard_setup() {
 	global $userdata, $cleverness_todo_option;
    	get_currentuserinfo();
 
-   	if (current_user_can($cleverness_todo_option['view_capability'])) {
+   	if (current_user_can($cleverness_todo_option['view_capability']) || $cleverness_todo_option['list_view'] == '0') {
 		wp_add_dashboard_widget('cleverness_todo', __( 'To-Do List', 'cleverness-to-do-list' ) . ' <a href="admin.php?page=cleverness-to-do-list">'. __('&raquo;', 'cleverness-to-do-list').'</a>', 'cleverness_todo_todo_in_activity_box' );
 		}
 	}

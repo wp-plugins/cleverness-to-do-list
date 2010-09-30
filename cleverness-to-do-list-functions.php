@@ -168,7 +168,7 @@ function cleverness_todo_insert_cat($catname, $catvisibility, $addcat_nonce) {
    	get_currentuserinfo();
 	if (!wp_verify_nonce($addcat_nonce, 'todoaddcat') ) die('Security check failed');
 
-	if ( $cleverness_todo_option['categories'] == '1' || current_user_can($cleverness_todo_option['add_cat_capability']) ) {
+	if ( $cleverness_todo_option['categories'] == '1' || (current_user_can($cleverness_todo_option['add_cat_capability']) || $cleverness_todo_option['list_view'] == '0' ) ) {
   	 	$cattable_name = $wpdb->prefix . 'todolist_cats';
    		$results = $wpdb->insert( $cattable_name, array( 'name' => $catname, 'visibility' => $catvisibility ) );
 		if ( $results ) $message = __('New category has been added.', 'cleverness-to-do-list');
@@ -188,7 +188,7 @@ function cleverness_todo_update_cat($id, $catname, $catvisibility, $updatecat_no
    	get_currentuserinfo();
 	if (!wp_verify_nonce($updatecat_nonce, 'todoupdatecat') ) die('Security check failed');
 
-   	if ( $cleverness_todo_option['categories'] == '1' || current_user_can($cleverness_todo_option['add_cat_capability']) ) {
+   	if ( $cleverness_todo_option['categories'] == '1' || ( current_user_can($cleverness_todo_option['add_cat_capability']) || $cleverness_todo_option['list_view'] == '0' ) ) {
 		$table_name = $wpdb->prefix . 'todolist_cats';
    		$results = $wpdb->update( $table_name, array( 'name' => $catname, 'visibility' => $catvisibility ), array( 'id' => $id ) );
 		if ( $results ) $message = __('Category has been updated.', 'cleverness-to-do-list');
@@ -208,7 +208,7 @@ function cleverness_todo_delete_cat($id) {
    	get_currentuserinfo();
 
    	$table_name = $wpdb->prefix . 'todolist_cats';
-   	if ( $cleverness_todo_option['categories'] == '1' || current_user_can($cleverness_todo_option['add_cat_capability']) ) {
+   	if ( $cleverness_todo_option['categories'] == '1' ||(  current_user_can($cleverness_todo_option['add_cat_capability']) || $cleverness_todo_option['list_view'] == '0' ) ) {
    		$delete = "DELETE FROM ".$table_name." WHERE id = '".$id."'";
    		$results = $wpdb->query( $delete );
 		if ( $results ) $message = __('Category has been deleted.', 'cleverness-to-do-list');
@@ -228,7 +228,7 @@ function cleverness_todo_get_todo_cat($id) {
    	get_currentuserinfo();
 
    	$table_name = $wpdb->prefix . 'todolist_cats';
-   	if ( $cleverness_todo_option['categories'] == '1' || current_user_can($cleverness_todo_option['add_cat_capability']) ) {
+   	if ( $cleverness_todo_option['categories'] == '1' || ( current_user_can($cleverness_todo_option['add_cat_capability'])  || $cleverness_todo_option['list_view'] == '0' )) {
    		$edit = "SELECT * FROM ".$table_name." WHERE id = '".$id."' LIMIT 1";
    		$result = $wpdb->get_row( $edit );
    		return $result;

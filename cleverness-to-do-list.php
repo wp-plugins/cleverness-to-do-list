@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Cleverness To-Do List
-Version: 2.2
+Version: 2.2.1
 Description: Manage to-do list items on a individual or group basis with categories. Includes a dashboard widget and a sidebar widget.
 Author: C.M. Kendrick
 Author URI: http://cleverness.org
@@ -216,7 +216,7 @@ function cleverness_todo_subpanel() {
 	<div class="wrap">
    		<div id="icon-plugins" class="icon32"></div>	<h2><?php _e('To-Do List', 'cleverness-to-do-list'); ?></h2>
 		<h3><?php _e('To-Do Items', 'cleverness-to-do-list'); ?>
-		<?php if (current_user_can($cleverness_todo_option['add_capability'])) : ?>
+		<?php if (current_user_can($cleverness_todo_option['add_capability']) || $cleverness_todo_option['list_view'] == '0') : ?>
 			(<a href="#addtd"><?php _e('Add New Item', 'cleverness-to-do-list'); ?></a>)
 		<?php endif; ?>
 		</h3>
@@ -230,7 +230,7 @@ function cleverness_todo_subpanel() {
 			<?php if ( $cleverness_todo_option['show_progress'] == '1' ) : ?><th><?php _e('Progress', 'cleverness-to-do-list'); ?></th><?php endif; ?>
 			<?php if ( $cleverness_todo_option['categories'] == '1' ) : ?><th><?php _e('Category', 'cleverness-to-do-list'); ?></th><?php endif; ?>
 	  		<?php if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['todo_author'] == '0' ) : ?><th><?php _e('Added By', 'cleverness-to-do-list'); ?></th><?php endif; ?>
-       		<?php if (current_user_can($cleverness_todo_option['edit_capability'])) : ?><th><?php _e('Action', 'cleverness-to-do-list'); ?></th><?php endif; ?>
+       		<?php if (current_user_can($cleverness_todo_option['edit_capability'])|| $cleverness_todo_option['list_view'] == '0') : ?><th><?php _e('Action', 'cleverness-to-do-list'); ?></th><?php endif; ?>
     	</tr>
 		</thead>
 		<?php
@@ -268,9 +268,9 @@ function cleverness_todo_subpanel() {
 		   		if ($result->priority == '0') $priority_class = ' todo-important';
 				if ($result->priority == '2') $priority_class = ' todo-low';
 				$edit = '';
-				if (current_user_can($cleverness_todo_option['edit_capability']))
+				if (current_user_can($cleverness_todo_option['edit_capability']) || $cleverness_todo_option['list_view'] == '0')
 		  			$edit = '<a href="admin.php?page=cleverness-to-do-list&amp;action=edittodo&amp;id='.$result->id.'" class="edit">'.__('Edit', 'cleverness-to-do-list').'</a>';
-				if (current_user_can($cleverness_todo_option['delete_capability']))
+				if (current_user_can($cleverness_todo_option['delete_capability']) || $cleverness_todo_option['list_view'] == '0')
 					$edit .= ' | <a href="admin.php?page=cleverness-to-do-list&amp;action=deletetodo&amp;id='.$result->id.'" class="delete">'.__('Delete', 'cleverness-to-do-list').'</a>';
 		   		echo '<tr id="cleverness_todo-'.$result->id.'" class="'.$class.$priority_class.'">
 			   	<td><input type="checkbox" id="td-'.$result->id.'" onclick="window.location = \'admin.php?page=cleverness-to-do-list&amp;action=completetodo&amp;id='.$result->id.'\';" />&nbsp;'.stripslashes($result->todotext).'</td>
@@ -294,7 +294,7 @@ function cleverness_todo_subpanel() {
 					}
 		   		if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['todo_author'] == '0' )
 		   			echo '<td>'.$user_info->display_name.'</td>';
-		   		if (current_user_can($cleverness_todo_option['edit_capability']))
+		   		if (current_user_can($cleverness_todo_option['edit_capability'])|| $cleverness_todo_option['list_view'] == '0')
 					echo '<td>'.$edit.'</td></tr>';
 	   		}
    		} else {
@@ -305,7 +305,7 @@ function cleverness_todo_subpanel() {
 			if ( $cleverness_todo_option['show_deadline'] == '1' ) $colspan += 1;
 			if ( $cleverness_todo_option['show_progress'] == '1' ) $colspan += 1;
 			if ( $cleverness_todo_option['categories'] == '1' ) $colspan += 1;
-			if ( current_user_can($cleverness_todo_option['edit_capability']) ) $colspan += 1;
+			if ( current_user_can($cleverness_todo_option['edit_capability']) || $cleverness_todo_option['list_view'] == '0' ) $colspan += 1;
 			echo 'colspan="'.$colspan.'"';
 	   		echo '>'.__('There is nothing to do...', 'cleverness-to-do-list').'</td></tr>';
    			}
@@ -315,7 +315,7 @@ function cleverness_todo_subpanel() {
 
 	<div class="wrap">
 		<h3><?php _e('Completed Items', 'cleverness-to-do-list'); ?>
-		<?php if (current_user_can($cleverness_todo_option['purge_capability'])) : ?>
+		<?php if (current_user_can($cleverness_todo_option['purge_capability']) || $cleverness_todo_option['list_view'] == '0') : ?>
 			(<a href="admin.php?page=cleverness-to-do-list&amp;action=purgetodo"><?php _e('Delete All', 'cleverness-to-do-list'); ?></a>)
 		<?php endif; ?>
 		</h3>
@@ -329,7 +329,7 @@ function cleverness_todo_subpanel() {
 			<?php if ( $cleverness_todo_option['show_completed_date'] == '1' ) : ?><th><?php _e('Completed', 'cleverness-to-do-list'); ?></th><?php endif; ?>
 			<?php if ( $cleverness_todo_option['categories'] == '1' ) : ?><th><?php _e('Category', 'cleverness-to-do-list'); ?></th><?php endif; ?>
 	   		<?php if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['todo_author'] == '0' ) : ?><th><?php _e('Added By', 'cleverness-to-do-list'); ?></th><?php endif; ?>
-       		<?php if (current_user_can($cleverness_todo_option['delete_capability'])) : ?><th><?php _e('Action', 'cleverness-to-do-list'); ?></th><?php endif; ?>
+       		<?php if (current_user_can($cleverness_todo_option['delete_capability']) || $cleverness_todo_option['list_view'] == '0') : ?><th><?php _e('Action', 'cleverness-to-do-list'); ?></th><?php endif; ?>
     	</tr>
 		</thead>
 		<?php
@@ -367,7 +367,7 @@ function cleverness_todo_subpanel() {
 		   		$prstr = $priority[ $result->priority ];
 		   		$user_info = get_userdata($result->author);
 				$edit = '';
-				if (current_user_can($cleverness_todo_option['delete_capability']))
+				if (current_user_can($cleverness_todo_option['delete_capability']) || $cleverness_todo_option['list_view'] == '0')
 		   			$edit = '<a href="admin.php?page=cleverness-to-do-list&amp;action=deletetodo&amp;id='.$result->id.'" class="delete">'.__('Delete', 'cleverness-to-do-list').'</a>';
 		   		echo '<tr id="cleverness_todo-'.$result->id.'" class="'.$class.'">
 			   	<td><input type="checkbox" id="td-'.$result->id.'" checked="checked" onclick="window.location = \'admin.php?page=cleverness-to-do-list&amp;action=uncompletetodo&amp;id='.$result->id.'\';" />&nbsp;'.stripslashes($result->todotext).'</td>
@@ -392,7 +392,7 @@ function cleverness_todo_subpanel() {
 					}
 		   		if ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['todo_author'] == '0' )
 		   			echo '<td>'.$user_info->display_name.'</td>';
-		  		if (current_user_can($cleverness_todo_option['delete_capability']))
+		  		if (current_user_can($cleverness_todo_option['delete_capability']) || $cleverness_todo_option['list_view'] == '0')
 					 echo '<td>'.$edit.'</td>
 			 	</tr>';
 	  	 		}
@@ -404,7 +404,7 @@ function cleverness_todo_subpanel() {
 			if ( $cleverness_todo_option['show_deadline'] == '1' ) $colspan += 1;
 			if ( $cleverness_todo_option['show_completed_date'] == '1' ) $colspan += 1;
 			if ( $cleverness_todo_option['categories'] == '1' ) $colspan += 1;
-			if ( current_user_can($cleverness_todo_option['delete_capability']) ) $colspan += 1;
+			if ( current_user_can($cleverness_todo_option['delete_capability']) || $cleverness_todo_option['list_view'] == '0' ) $colspan += 1;
 			echo 'colspan="'.$colspan.'"';
 	  	 	echo '>'.__('There are no completed items', 'cleverness-to-do-list').'</td></tr>';
    		}
@@ -412,7 +412,7 @@ function cleverness_todo_subpanel() {
    		</table>
 	</div>
 
-	<?php if (current_user_can($cleverness_todo_option['add_capability'])) : ?>
+	<?php if (current_user_can($cleverness_todo_option['add_capability']) || $cleverness_todo_option['list_view'] == '0') : ?>
 	<div class="wrap">
    	 	<h3><?php _e('Add New To-Do Item', 'cleverness-to-do-list') ?></h3>
     	<form name="addtodo" id="addtodo" action="admin.php?page=cleverness-to-do-list" method="post">
@@ -518,6 +518,7 @@ function cleverness_todo_admin_menu() {
 	if (function_exists('add_menu_page')) {
 		global $userdata, $cleverness_todo_option;
    		get_currentuserinfo();
+
         add_menu_page( __('To-Do List', 'cleverness-to-do-list'), __('To-Do List', 'cleverness-to-do-list'), $cleverness_todo_option['view_capability'], 'cleverness-to-do-list', 'cleverness_todo_subpanel');
 		if ( $cleverness_todo_option['categories'] == '1' )
 			add_submenu_page( 'cleverness-to-do-list', __('To-Do List Categories', 'cleverness-to-do-list'), __('Categories', 'cleverness-to-do-list'), $cleverness_todo_option['add_cat_capability'], 'cleverness-to-do-list-cats', 'cleverness_todo_categories');
@@ -529,7 +530,7 @@ function cleverness_todo_admin_menu() {
 /* Add plugin info to admin footer */
 function cleverness_todo_admin_footer() {
 	$plugin_data = get_plugin_data( __FILE__ );
-	printf('%1$s plugin | Version %2$s | by %3$s<br />', $plugin_data['Title'], $plugin_data['Version'], $plugin_data['Author']);
+	printf(__("%1$s plugin | Version %2$s | by %3$s<br />", 'cleverness-to-do-list'), $plugin_data['Title'], $plugin_data['Version'], $plugin_data['Author']);
 	}
 
 /* Add CSS file to admin header */

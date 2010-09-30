@@ -6,7 +6,7 @@ Requires at least: 2.8
 Tested up to: 3.0.1
 Stable tag: trunk
 
-Integrates a multi-featured to-do list into the WordPress administration area. Manage to-do list items on a individual, group, or master list basis with customizable settings.
+Integrates a multi-featured to-do list into the WordPress administration area that is very customizable.
 
 == Description ==
 
@@ -17,6 +17,8 @@ You can configure the plugin to have private to-do lists for each user, for all 
 A new menu item is added to manage your list and it is also listed on a dashboard widget.
 
 A sidebar widget is available as well as shortcode to display the to-do list items on your site.
+
+[Plugin Website](http://cleverness.org/plugins/to-do-list/)
 
 == Installation ==
 
@@ -91,6 +93,10 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 3. Settings Page
 
 == Changelog ==
+
+= 2.2.1 =
+* Added updated Spanish translation (contributed by [Ricardo](http://yabocs.avytes.com/))
+* Changed shortcode and widget so that if the list is individual and a user is logged in, it will show their own list
 
 = 2.2 =
 * Added assign to sorting options
@@ -171,7 +177,7 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Added a check to prevent blank to-do items
 
 = 1.3.1 =
-* Fixed an incompability with PHP 4
+* Fixed an incompatibility with PHP 4
 * Added a call to the userdata global in the complete function
 
 = 1.3 =
@@ -202,6 +208,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Fixed to work in WordPress 2.8
 
 == Upgrade Notice ==
+
+= 2.2.1 =
+Spanish translation updated, bug fix
 
 = 2.2 =
 Master list feature added
