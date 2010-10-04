@@ -94,6 +94,11 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 
+= 2.2.2 =
+* Added Assign ability to Individual view
+* HTML is now allowed in tasks
+* Added error message displays for inserting, updating, and deleting items
+
 = 2.2.1 =
 * Added updated Spanish translation (contributed by [Ricardo](http://yabocs.avytes.com/))
 * Changed shortcode and widget so that if the list is individual and a user is logged in, it will show their own list
@@ -208,6 +213,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Fixed to work in WordPress 2.8
 
 == Upgrade Notice ==
+
+= 2.2.2 =
+Two small features added
 
 = 2.2.1 =
 Spanish translation updated, bug fix

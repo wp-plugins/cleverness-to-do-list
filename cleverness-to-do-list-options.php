@@ -183,6 +183,10 @@ function cleverness_todo_settings_page() {
 			</select>
 		</td>
 		</tr>
+	</table>
+
+	<h3><?php _e('Assigned Tasks Settings', 'cleverness-to-do-list'); ?></h3>
+	<table class="form-table">
 		<tr>
 		<th scope="row"><label for="cleverness_todo_settings[assign]"><?php _e('Assign Tasks to Users', 'cleverness-to-do-list'); ?></label></th>
         <td valign="top">

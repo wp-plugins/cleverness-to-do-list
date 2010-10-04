@@ -23,8 +23,12 @@ class cleverness_todo_list_widget extends WP_Widget {
 		$progress = $instance['progress'];
 		$category = $instance['category'];
 
-   		if ( $cleverness_todo_option['list_view'] == '0' && $userdata->ID != NULL )
-			$author = " AND author = $userdata->ID ";
+   		if ( $cleverness_todo_option['list_view'] == '0' && $userdata->ID != NULL ) {
+			if ( $cleverness_todo_option['assign'] == '0' )
+				$author = "AND ( author = $userdata->ID || assign = $userdata->ID )";
+			else
+				$author = " AND author = $userdata->ID ";
+			}
 		echo $before_widget;
 
 		if ( $title )

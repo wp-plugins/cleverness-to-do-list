@@ -22,8 +22,12 @@ function cleverness_todo_todo_in_activity_box() {
 	$cat_id = $cleverness_todo_option['dashboard_cat'];
 
 	// individual view
-	if ( $cleverness_todo_option['list_view'] == '0' )
-		$sql = "SELECT * FROM $table_name WHERE status = 0 AND author = $userdata->ID";
+	if ( $cleverness_todo_option['list_view'] == '0' ) {
+		if ( $cleverness_todo_option['assign'] == '0' )
+			$sql = "SELECT * FROM $table_name WHERE status = 0 AND ( author = $userdata->ID || assign = $userdata->ID )";
+		else
+			$sql = "SELECT * FROM $table_name WHERE status = 0 AND author = $userdata->ID";
+		}
 	// group view - show only assigned - show all assigned
 	elseif ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['show_only_assigned'] == '0' && (current_user_can($cleverness_todo_option['view_all_assigned_capability'])) )
 		$sql = "SELECT * FROM $table_name WHERE status = 0";

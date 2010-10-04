@@ -2,6 +2,7 @@
 /* Insert new to-do item into the database */
 function cleverness_todo_insert($todotext, $priority, $assign, $deadline, $progress, $category) {
 	global $wpdb, $userdata, $cleverness_todo_option;
+	require_once (ABSPATH . WPINC . '/pluggable.php');
    	get_currentuserinfo();
 
 	if ( $cleverness_todo_option['list_view'] == '0' || current_user_can($cleverness_todo_option['add_capability']) ) {
@@ -10,6 +11,9 @@ function cleverness_todo_insert($todotext, $priority, $assign, $deadline, $progr
 		if ( $results ) $message = __('New To-Do item has been added.', 'cleverness-to-do-list');
 		else {
 			$message = __('There was a problem adding the item to the database.', 'cleverness-to-do-list');
+			$wpdb->show_errors();
+			$wpdb->print_error();
+			$wpdb->hide_errors();
 			}
 	} else {
 		$message = __('You do not have sufficient privileges to do that.', 'cleverness-to-do-list');
@@ -49,6 +53,9 @@ function cleverness_todo_update($id, $priority, $todotext, $assign, $deadline, $
 		if ( $results ) $message = __('To-Do item has been updated.', 'cleverness-to-do-list');
 		else {
 			$message = __('There was a problem editing the item.', 'cleverness-to-do-list');
+			$wpdb->show_errors();
+			$wpdb->print_error();
+			$wpdb->hide_errors();
 			}
 	} else {
 		$message = __('You do not have sufficient privileges to do that.', 'cleverness-to-do-list');
@@ -69,6 +76,9 @@ function cleverness_todo_delete($id) {
 		if ( $results ) $message = __('To-Do item has been deleted.', 'cleverness-to-do-list');
 		else {
 			$message = __('There was a problem deleting the item.', 'cleverness-to-do-list');
+			$wpdb->show_errors();
+			$wpdb->print_error();
+			$wpdb->hide_errors();
 			}
    	} else {
 		$message = __('You do not have sufficient privileges to do that.', 'cleverness-to-do-list');
@@ -147,7 +157,7 @@ function cleverness_todo_purge() {
    	$table_name = $wpdb->prefix . 'todolist';
    	if ( $cleverness_todo_option['list_view'] == '0' || current_user_can($cleverness_todo_option['purge_capability']) ) {
    		if ( $cleverness_todo_option['list_view'] == '0' )
-   			$purge = "DELETE FROM ".$table_name." WHERE status = '1' AND author = '".$userdata->ID."'";
+   			$purge = "DELETE FROM ".$table_name." WHERE status = '1' AND ( author = '".$userdata->ID."' || assign = '".$userdata->ID."' )";
 	   	elseif ( $cleverness_todo_option['list_view'] == '1' || $cleverness_todo_option['list_view'] == '2' )
 			$purge = "DELETE FROM ".$table_name." WHERE status = '1'";
    		$results = $wpdb->query( $purge );
