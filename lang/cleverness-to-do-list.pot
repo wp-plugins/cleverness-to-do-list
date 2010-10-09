@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cleverness To-Do List\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-03 20:06-0500\n"
-"PO-Revision-Date: 2010-10-03 20:06-0500\n"
+"POT-Creation-Date: 2010-10-08 20:08-0500\n"
+"PO-Revision-Date: 2010-10-08 20:08-0500\n"
 "Last-Translator: C.M. Kendrick <cindy@cleverness.org>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -108,16 +108,16 @@ msgstr ""
 
 #: ../cleverness-to-do-list-dashboard-widget.php:15
 #: ../cleverness-to-do-list-functions.php:19
-#: ../cleverness-to-do-list-functions.php:61
-#: ../cleverness-to-do-list-functions.php:84
-#: ../cleverness-to-do-list-functions.php:129
-#: ../cleverness-to-do-list-functions.php:146
-#: ../cleverness-to-do-list-functions.php:169
-#: ../cleverness-to-do-list-functions.php:189
-#: ../cleverness-to-do-list-functions.php:209
-#: ../cleverness-to-do-list-functions.php:229
-#: ../cleverness-to-do-list-functions.php:246
-#: ../cleverness-to-do-list-functions.php:263
+#: ../cleverness-to-do-list-functions.php:68
+#: ../cleverness-to-do-list-functions.php:91
+#: ../cleverness-to-do-list-functions.php:136
+#: ../cleverness-to-do-list-functions.php:153
+#: ../cleverness-to-do-list-functions.php:176
+#: ../cleverness-to-do-list-functions.php:196
+#: ../cleverness-to-do-list-functions.php:216
+#: ../cleverness-to-do-list-functions.php:236
+#: ../cleverness-to-do-list-functions.php:253
+#: ../cleverness-to-do-list-functions.php:270
 msgid "You do not have sufficient privileges to do that."
 msgstr ""
 
@@ -163,97 +163,109 @@ msgstr ""
 msgid "There was a problem adding the item to the database."
 msgstr ""
 
-#: ../cleverness-to-do-list-functions.php:53
+#: ../cleverness-to-do-list-functions.php:42
+msgid "A email has been sent to the assigned user."
+msgstr ""
+
+#: ../cleverness-to-do-list-functions.php:44
+msgid "The email failed to send to the assigned user."
+msgstr ""
+
+#: ../cleverness-to-do-list-functions.php:47
+msgid "No email has been sent."
+msgstr ""
+
+#: ../cleverness-to-do-list-functions.php:60
 msgid "To-Do item has been updated."
 msgstr ""
 
-#: ../cleverness-to-do-list-functions.php:55
+#: ../cleverness-to-do-list-functions.php:62
 msgid "There was a problem editing the item."
 msgstr ""
 
-#: ../cleverness-to-do-list-functions.php:76
+#: ../cleverness-to-do-list-functions.php:83
 msgid "To-Do item has been deleted."
 msgstr ""
 
-#: ../cleverness-to-do-list-functions.php:78
+#: ../cleverness-to-do-list-functions.php:85
 msgid "There was a problem deleting the item."
 msgstr ""
 
-#: ../cleverness-to-do-list-functions.php:103
-#: ../cleverness-to-do-list-functions.php:121
+#: ../cleverness-to-do-list-functions.php:110
+#: ../cleverness-to-do-list-functions.php:128
 msgid "completed"
 msgstr ""
 
-#: ../cleverness-to-do-list-functions.php:104
-#: ../cleverness-to-do-list-functions.php:122
+#: ../cleverness-to-do-list-functions.php:111
+#: ../cleverness-to-do-list-functions.php:129
 msgid "uncompleted"
 msgstr ""
 
-#: ../cleverness-to-do-list-functions.php:105
-#: ../cleverness-to-do-list-functions.php:123
+#: ../cleverness-to-do-list-functions.php:112
+#: ../cleverness-to-do-list-functions.php:130
 msgid "To-Do item has been marked as "
 msgstr ""
 
-#: ../cleverness-to-do-list-functions.php:107
-#: ../cleverness-to-do-list-functions.php:125
+#: ../cleverness-to-do-list-functions.php:114
+#: ../cleverness-to-do-list-functions.php:132
 msgid "There was a problem changing the status of the item."
 msgstr ""
 
-#: ../cleverness-to-do-list-functions.php:164
+#: ../cleverness-to-do-list-functions.php:171
 msgid "Completed To-Do items have been deleted."
 msgstr ""
 
-#: ../cleverness-to-do-list-functions.php:166
+#: ../cleverness-to-do-list-functions.php:173
 msgid "There was a problem removing the completed items."
 msgstr ""
 
-#: ../cleverness-to-do-list-functions.php:184
+#: ../cleverness-to-do-list-functions.php:191
 msgid "New category has been added."
 msgstr ""
 
-#: ../cleverness-to-do-list-functions.php:186
+#: ../cleverness-to-do-list-functions.php:193
 msgid "There was a problem adding the category to the database."
 msgstr ""
 
-#: ../cleverness-to-do-list-functions.php:204
+#: ../cleverness-to-do-list-functions.php:211
 msgid "Category has been updated."
 msgstr ""
 
-#: ../cleverness-to-do-list-functions.php:206
+#: ../cleverness-to-do-list-functions.php:213
 msgid "There was a problem editing the category."
 msgstr ""
 
-#: ../cleverness-to-do-list-functions.php:224
+#: ../cleverness-to-do-list-functions.php:231
 msgid "Category has been deleted."
 msgstr ""
 
-#: ../cleverness-to-do-list-functions.php:226
+#: ../cleverness-to-do-list-functions.php:233
 msgid "There was a problem deleting the category."
 msgstr ""
 
-#: ../cleverness-to-do-list-functions.php:317
+#: ../cleverness-to-do-list-functions.php:324
 msgid "Add your first To-Do List item"
 msgstr ""
 
-#: ../cleverness-to-do-list-functions.php:335
+#: ../cleverness-to-do-list-functions.php:342
 msgid "Important"
 msgstr ""
 
-#: ../cleverness-to-do-list-functions.php:336
+#: ../cleverness-to-do-list-functions.php:343
 msgid "Normal"
 msgstr ""
 
-#: ../cleverness-to-do-list-functions.php:337
+#: ../cleverness-to-do-list-functions.php:344
 msgid "Low"
 msgstr ""
 
-#: ../cleverness-to-do-list-functions.php:349
-#: ../cleverness-to-do-list-functions.php:386
+#: ../cleverness-to-do-list-functions.php:356
+#: ../cleverness-to-do-list-functions.php:393
 msgid "The following item has been assigned to you."
 msgstr ""
 
-#: ../cleverness-to-do-list-functions.php:350
-#: ../cleverness-to-do-list-functions.php:387
+#: ../cleverness-to-do-list-functions.php:357
+#: ../cleverness-to-do-list-functions.php:394
 msgid "A to-do list item has been assigned to you"
 msgstr ""
 
