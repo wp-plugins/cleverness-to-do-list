@@ -1,6 +1,6 @@
 <?php
 /* Insert new to-do item into the database */
-function cleverness_todo_insert($todotext, $priority, $assign, $deadline, $progress, $category) {
+function cleverness_todo_insert($todotext, $priority, $assign = 0, $deadline, $progress = 0, $category = 0) {
 	global $wpdb, $userdata, $cleverness_todo_option;
 	require_once (ABSPATH . WPINC . '/pluggable.php');
    	get_currentuserinfo();
@@ -38,12 +38,19 @@ function cleverness_todo_email_user($todotext, $priority, $assign, $deadline) {
 		$email_message .= "\r\n".$todotext."\r\n";
 		if ( $deadline != '' )
 			$email_message .= __('Deadline:', 'cleverness-to-do-list').' '.$deadline."\r\n";
-  		wp_mail($email, $subject, $email_message, $headers);
+  		if ( wp_mail($email, $subject, $email_message, $headers) )
+			$message = __('A email has been sent to the assigned user.', 'cleverness-to-do-list').'<br /><br />';
+		else
+			$message = __('The email failed to send to the assigned user.', 'cleverness-to-do-list').'<br /><br />';
+		return $message;
+	} else {
+		$message = __('No email has been sent.', 'cleverness-to-do-list').'<br /><br />';
+		return $message;
 	}
 }
 
 /* Update to-do list item */
-function cleverness_todo_update($id, $priority, $todotext, $assign, $deadline, $progress, $category) {
+function cleverness_todo_update($id, $priority, $todotext, $assign = 0, $deadline, $progress = 0, $category = 0) {
    	global $wpdb, $userdata, $cleverness_todo_option;
    	get_currentuserinfo();
 

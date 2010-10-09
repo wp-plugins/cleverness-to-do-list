@@ -94,6 +94,10 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 
+= 2.2.3 =
+* Added default values to assign and priorty variables
+* Email an assigned task function now returns success or fail messages
+
 = 2.2.2 =
 * Added Assign ability to Individual view
 * HTML is now allowed in tasks
@@ -213,6 +217,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Fixed to work in WordPress 2.8
 
 == Upgrade Notice ==
+
+= 2.2.3 =
+Bug fix
 
 = 2.2.2 =
 Two small features added
