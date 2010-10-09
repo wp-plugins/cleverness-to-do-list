@@ -206,6 +206,12 @@ function cleverness_todo_settings_page() {
 		</td>
 		</tr>
 		<tr>
+		<th scope="row"><label for="cleverness_todo_settings[email_from]"><?php _e('From for Email Assigned Task to User', 'cleverness-to-do-list'); ?></label></th>
+        <td valign="top">
+			<textarea id="cleverness_todo_settings[email_from]" name="cleverness_todo_settings[email_from]"><?php echo $options['email_from']; ?></textarea>
+		</td>
+		</tr>
+		<tr>
 		<th scope="row"><label for="cleverness_todo_settings[email_subject]"><?php _e('Subject for Email Assigned Task to User', 'cleverness-to-do-list'); ?></label></th>
         <td valign="top">
 			<textarea id="cleverness_todo_settings[email_subject]" name="cleverness_todo_settings[email_subject]"><?php echo $options['email_subject']; ?></textarea>

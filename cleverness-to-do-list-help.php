@@ -20,7 +20,7 @@ function cleverness_todo_help() {
 <li><strong>list_type</strong> &#8211; <?php _e('default is <em>ol</em> (ordered list). Use <em>ul</em> to show an unordered list', 'cleverness-to-do-list'); ?>.</li>
 <li><strong>category</strong> &#8211; <?php _e('default is <em>all</em>. Use the category ID to show a specific category', 'cleverness-to-do-list'); ?>.</li>
 </ul>
-<p><strong<?php _e('>Example:', 'cleverness-to-do-list'); ?></strong><br />
+<p><strong><?php _e('Example:', 'cleverness-to-do-list'); ?></strong><br />
 <?php _e('Table view with the title of Upcoming Articles and showing the progress and who the item was assigned to.', 'cleverness-to-do-list'); ?><br />
 &#91;todolist title="Upcoming Articles" type="table" priorities="" deadline="" addedby=""&#93;</p>
 

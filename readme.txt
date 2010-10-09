@@ -94,6 +94,11 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 
+= 2.2.4 =
+* Removed site title from email subject
+* Added ability to change From value for email
+* Added French translation by Thibault Guerpillon
+
 = 2.2.3 =
 * Added default values to assign and priorty variables
 * Email an assigned task function now returns success or fail messages
@@ -311,3 +316,5 @@ Russian translation by [Almaz](http://alm.net.ru)
 German translation by Ascobol
 
 Japanese translation by [Takemi Tasaki](http://route58.org)
+
+French translation by Thibault Guerpillon

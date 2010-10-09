@@ -30,8 +30,8 @@ function cleverness_todo_email_user($todotext, $priority, $assign, $deadline) {
    	get_currentuserinfo();
 
    	if ( current_user_can($cleverness_todo_option['assign_capability']) && $assign != '' && $assign != '-1' ) {
-		$headers = 'From: '.html_entity_decode(get_bloginfo('name')).' <'.get_bloginfo('admin_email').'>' . "\r\n\\";
-		$subject = html_entity_decode(get_bloginfo('name')).': '. $cleverness_todo_option['email_subject'];
+		$headers = 'From: '.$cleverness_todo_option['email_from'].' <'.get_bloginfo('admin_email').'>' . "\r\n\\";
+		$subject = $cleverness_todo_option['email_subject'];
 		$assign_user = get_userdata($assign);
 		$email = $assign_user->user_email;
 		$email_message = $cleverness_todo_option['email_text'];
@@ -288,7 +288,7 @@ function cleverness_todo_install () {
    	global $wpdb, $userdata;
    	get_currentuserinfo();
 
-	$cleverness_todo_db_version = '1.7';
+	$cleverness_todo_db_version = '1.8';
 
 	$table_name = $wpdb->prefix.'todolist';
 	$cat_table_name = $wpdb->prefix.'todolist_cats';
@@ -392,6 +392,7 @@ function cleverness_todo_install () {
 		if ( $theoptions['dashboard_cat'] == '' ) $theoptions['dashboard_cat'] = 'All';
 		if ( $theoptions['email_text'] == '' ) $theoptions['email_text'] = __('The following item has been assigned to you.', 'cleverness-to-do-list');
 		if ( $theoptions['email_subject'] == '' ) $theoptions['email_subject'] = __('A to-do list item has been assigned to you', 'cleverness-to-do-list');
+		if ( $theoptions['email_from'] == '' ) $theoptions['email_from'] = html_entity_decode(get_bloginfo('name'));
 		update_option( 'cleverness_todo_settings', $theoptions);
 
     	update_option( 'cleverness_todo_db_version', $cleverness_todo_db_version );
