@@ -2,12 +2,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cleverness To-Do List\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-28 17:45-0500\n"
-"PO-Revision-Date: 2010-05-15 00:23+0900\n"
+"POT-Creation-Date: 2010-10-09 19:04-0500\n"
+"PO-Revision-Date: 2010-10-09 19:04-0500\n"
 "Last-Translator: route58 <admin@route58.org>\n"
 "Language-Team: route58 (http://route58.org/) <admin@route58.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
@@ -16,240 +16,810 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../cleverness-to-do-list-options.php:6
-msgid "To-Do List Settings"
+#: ../cleverness-to-do-list-categories.php:19
+#, fuzzy
+msgid "Category name cannot be blank."
+msgstr "空欄には出来ません。"
+
+#: ../cleverness-to-do-list-categories.php:45
+#: ../cleverness-to-do-list.php:535
+#, fuzzy
+msgid "To-Do List Categories"
 msgstr "To-Doリスト設定"
 
-#: ../cleverness-to-do-list-options.php:12
-msgid "<em>List View</em> sets how the to-do lists are viewed. The <em>Individual</em> setting allows each user to have their own private to-do list. The <em>Group</em> setting allows all users to share one to-do list."
-msgstr "リストビューはTo-Doリストの表示を指定します。「個別」は各ユーザー毎のTo-Doリストを表示します。「グループ」は全てのユーザーでシェアしているTo-Doリストを表示します。"
+#: ../cleverness-to-do-list-categories.php:56
+#, fuzzy
+msgid "Edit Category"
+msgstr "ユーザーの編集"
 
-#: ../cleverness-to-do-list-options.php:17
-msgid "List View"
-msgstr "リストビュー"
+#: ../cleverness-to-do-list-categories.php:60
+#: ../cleverness-to-do-list-categories.php:88
+msgid "Category Name"
+msgstr ""
 
-#: ../cleverness-to-do-list-options.php:20
-msgid "Individual"
-msgstr "個別"
+#: ../cleverness-to-do-list-categories.php:64
+#: ../cleverness-to-do-list-categories.php:92
+#: ../cleverness-to-do-list-categories.php:113
+#: ../cleverness-to-do-list-categories.php:121
+msgid "Visibility"
+msgstr ""
 
-#: ../cleverness-to-do-list-options.php:21
-msgid "Group"
-msgstr "グループ"
+#: ../cleverness-to-do-list-categories.php:67
+#: ../cleverness-to-do-list-categories.php:95
+#: ../cleverness-to-do-list-categories.php:136
+msgid "Public"
+msgstr ""
 
-#: ../cleverness-to-do-list-options.php:31
-#: ../cleverness-to-do-list-options.php:67
-#: ../cleverness-to-do-list-widget.php:93
-msgid "Show Deadline"
-msgstr "期限の表示"
+#: ../cleverness-to-do-list-categories.php:68
+#: ../cleverness-to-do-list-categories.php:96
+#: ../cleverness-to-do-list-categories.php:136
+msgid "Private"
+msgstr ""
 
-#: ../cleverness-to-do-list-options.php:34
-#: ../cleverness-to-do-list-options.php:43
-#: ../cleverness-to-do-list-options.php:70
-#: ../cleverness-to-do-list-options.php:112
-#: ../cleverness-to-do-list-options.php:121
-#: ../cleverness-to-do-list-options.php:130
-#: ../cleverness-to-do-list-options.php:138
-#: ../cleverness-to-do-list-options.php:148
-msgid "No"
-msgstr "いいえ"
+#: ../cleverness-to-do-list-categories.php:70
+#: ../cleverness-to-do-list-categories.php:98
+msgid "Private categories are not visable using the sidebar widgets or shortcode."
+msgstr ""
 
-#: ../cleverness-to-do-list-options.php:35
-#: ../cleverness-to-do-list-options.php:44
-#: ../cleverness-to-do-list-options.php:71
-#: ../cleverness-to-do-list-options.php:111
-#: ../cleverness-to-do-list-options.php:120
-#: ../cleverness-to-do-list-options.php:129
-#: ../cleverness-to-do-list-options.php:139
-#: ../cleverness-to-do-list-options.php:147
-msgid "Yes"
-msgstr "はい"
+#: ../cleverness-to-do-list-categories.php:77
+msgid "Edit Category &raquo;"
+msgstr ""
 
-#: ../cleverness-to-do-list-options.php:40
-#: ../cleverness-to-do-list-widget.php:96
-msgid "Show Progress"
-msgstr "進捗状況"
+#: ../cleverness-to-do-list-categories.php:80
+#, fuzzy
+msgid "&laquo; Return to To-Do List Categories"
+msgstr "&laquo; To-Doリストに戻る"
 
-#: ../cleverness-to-do-list-options.php:51
-msgid "Dashboard Widget Settings"
-msgstr "ダッシュボード設定"
+#: ../cleverness-to-do-list-categories.php:84
+#, fuzzy
+msgid "Add New Category"
+msgstr "新しいTo-Doを追加"
 
-#: ../cleverness-to-do-list-options.php:55
-msgid "Number of List Items to Show"
-msgstr "To-Do数の表示"
+#: ../cleverness-to-do-list-categories.php:104
+#, fuzzy
+msgid "Add Category &raquo;"
+msgstr "To-Doの追加 &raquo;"
 
-#: ../cleverness-to-do-list-options.php:58
-msgid "1"
-msgstr "1"
+#: ../cleverness-to-do-list-categories.php:107
+msgid "Existing Categories"
+msgstr ""
 
-#: ../cleverness-to-do-list-options.php:59
-msgid "5"
-msgstr "5"
+#: ../cleverness-to-do-list-categories.php:111
+#: ../cleverness-to-do-list-categories.php:119
+#: ../cleverness-to-do-list-options.php:80
+msgid "ID"
+msgstr ""
 
-#: ../cleverness-to-do-list-options.php:60
-msgid "10"
-msgstr "10"
+#: ../cleverness-to-do-list-categories.php:112
+#: ../cleverness-to-do-list-categories.php:120
+msgid "Name"
+msgstr ""
 
-#: ../cleverness-to-do-list-options.php:61
-msgid "15"
-msgstr "15"
+#: ../cleverness-to-do-list-categories.php:114
+#: ../cleverness-to-do-list-categories.php:122
+#: ../cleverness-to-do-list.php:236
+#: ../cleverness-to-do-list.php:339
+msgid "Action"
+msgstr "アクション"
 
-#: ../cleverness-to-do-list-options.php:62
-msgid "20"
-msgstr "20"
+#: ../cleverness-to-do-list-categories.php:137
+#: ../cleverness-to-do-list-dashboard-widget.php:89
+#: ../cleverness-to-do-list.php:279
+msgid "Edit"
+msgstr "編集"
 
-#: ../cleverness-to-do-list-options.php:78
-msgid "Priority Label Settings"
-msgstr "優先度ラベルの設定"
+#: ../cleverness-to-do-list-categories.php:138
+#: ../cleverness-to-do-list.php:281
+#: ../cleverness-to-do-list.php:382
+msgid "Delete"
+msgstr "削除"
 
-#: ../cleverness-to-do-list-options.php:79
-msgid "The highest priority list items are shown in red in the lists. The lowest priority list items are shown in a lighter grey."
-msgstr "優先度の高いものは赤字で、低いものはライトグレーで表示されます。"
+#: ../cleverness-to-do-list-dashboard-widget.php:15
+#: ../cleverness-to-do-list-functions.php:19
+#: ../cleverness-to-do-list-functions.php:68
+#: ../cleverness-to-do-list-functions.php:91
+#: ../cleverness-to-do-list-functions.php:136
+#: ../cleverness-to-do-list-functions.php:153
+#: ../cleverness-to-do-list-functions.php:176
+#: ../cleverness-to-do-list-functions.php:196
+#: ../cleverness-to-do-list-functions.php:216
+#: ../cleverness-to-do-list-functions.php:236
+#: ../cleverness-to-do-list-functions.php:253
+#: ../cleverness-to-do-list-functions.php:270
+msgid "You do not have sufficient privileges to do that."
+msgstr "実行権限がありません。"
 
-#: ../cleverness-to-do-list-options.php:83
-msgid "Highest Priority Label"
-msgstr "優先度 - 高"
+#: ../cleverness-to-do-list-dashboard-widget.php:79
+msgid "assigned to"
+msgstr "担当"
 
-#: ../cleverness-to-do-list-options.php:89
-msgid "Middle Priority Label"
-msgstr "優先度 - 中"
+#: ../cleverness-to-do-list-dashboard-widget.php:83
+#: ../cleverness-to-do-list-functions.php:40
+msgid "Deadline:"
+msgstr "期限："
 
-#: ../cleverness-to-do-list-options.php:95
-msgid "Lowest Priority Label"
-msgstr "優先度 - 低"
+#: ../cleverness-to-do-list-dashboard-widget.php:87
+msgid "added by"
+msgstr "by"
 
-#: ../cleverness-to-do-list-options.php:103
-msgid "Group View Settings"
-msgstr "グループビューの設定"
+#: ../cleverness-to-do-list-dashboard-widget.php:93
+#: ../cleverness-to-do-list-widget.php:75
+msgid "No items to do."
+msgstr "やることはありません。。。考えよう！"
 
-#: ../cleverness-to-do-list-options.php:104
-msgid "These settings are only used when <em>List View</em> is set to <em>Group</em>."
-msgstr "これらの設定はリストビューがグループの場合に適用されます。"
+#: ../cleverness-to-do-list-dashboard-widget.php:96
+msgid "New To-Do Item &raquo;"
+msgstr "新しいTo-Do &raquo;"
 
-#: ../cleverness-to-do-list-options.php:108
-msgid "Show <em>Added By</em> on Dashboard Widget"
-msgstr "追加したユーザーをダッシュボードに表示する"
+#: ../cleverness-to-do-list-dashboard-widget.php:106
+#: ../cleverness-to-do-list-widget.php:97
+#: ../cleverness-to-do-list.php:118
+#: ../cleverness-to-do-list.php:220
+#: ../cleverness-to-do-list.php:533
+msgid "To-Do List"
+msgstr "やることリスト"
 
-#: ../cleverness-to-do-list-options.php:117
-msgid "Show <em>Added By</em> on To-Do List page"
-msgstr "追加したユーザーをTo-Do Listページに表示する"
+#: ../cleverness-to-do-list-dashboard-widget.php:106
+msgid "&raquo;"
+msgstr "&raquo;"
 
-#: ../cleverness-to-do-list-options.php:126
-msgid "Assign Tasks to Users"
-msgstr "タスクをユーザーに割り当てる"
+#: ../cleverness-to-do-list-functions.php:11
+msgid "New To-Do item has been added."
+msgstr "新しいTo-Doが追加されました。"
 
-#: ../cleverness-to-do-list-options.php:135
-msgid "Email Assigned Task to User"
-msgstr "割り当てたタスクをユーザーにメールする"
+#: ../cleverness-to-do-list-functions.php:13
+msgid "There was a problem adding the item to the database."
+msgstr ""
 
-#: ../cleverness-to-do-list-options.php:144
-msgid "Show Each User Only Their Assigned Tasks"
-msgstr "割り当てられたタスクだけをユーザーに表示する"
+#: ../cleverness-to-do-list-functions.php:42
+#, fuzzy
+msgid "A email has been sent to the assigned user."
+msgstr "タスクが割り当てられました。"
 
-#: ../cleverness-to-do-list-options.php:153
+#: ../cleverness-to-do-list-functions.php:44
+msgid "The email failed to send to the assigned user."
+msgstr ""
+
+#: ../cleverness-to-do-list-functions.php:47
+#, fuzzy
+msgid "No email has been sent."
+msgstr "To-Doが削除されました。"
+
+#: ../cleverness-to-do-list-functions.php:60
+msgid "To-Do item has been updated."
+msgstr "To-Doが更新されました。"
+
+#: ../cleverness-to-do-list-functions.php:62
+#, fuzzy
+msgid "There was a problem editing the item."
+msgstr "現在To-Doリストはありません。"
+
+#: ../cleverness-to-do-list-functions.php:83
+msgid "To-Do item has been deleted."
+msgstr "To-Doが削除されました。"
+
+#: ../cleverness-to-do-list-functions.php:85
+#, fuzzy
+msgid "There was a problem deleting the item."
+msgstr "やっつけたTo-Doはありません。"
+
+#: ../cleverness-to-do-list-functions.php:110
+#: ../cleverness-to-do-list-functions.php:128
+#, fuzzy
+msgid "completed"
+msgstr "やっつけたTo-Do"
+
+#: ../cleverness-to-do-list-functions.php:111
+#: ../cleverness-to-do-list-functions.php:129
+#, fuzzy
+msgid "uncompleted"
+msgstr "やっつけたTo-Do"
+
+#: ../cleverness-to-do-list-functions.php:112
+#: ../cleverness-to-do-list-functions.php:130
+#, fuzzy
+msgid "To-Do item has been marked as "
+msgstr "終了のチェックが入りました。"
+
+#: ../cleverness-to-do-list-functions.php:114
+#: ../cleverness-to-do-list-functions.php:132
+msgid "There was a problem changing the status of the item."
+msgstr ""
+
+#: ../cleverness-to-do-list-functions.php:171
+msgid "Completed To-Do items have been deleted."
+msgstr "やっつけたTo-Doが削除されました。"
+
+#: ../cleverness-to-do-list-functions.php:173
+#, fuzzy
+msgid "There was a problem removing the completed items."
+msgstr "やっつけたTo-Doはありません。"
+
+#: ../cleverness-to-do-list-functions.php:191
+#, fuzzy
+msgid "New category has been added."
+msgstr "新しいTo-Doが追加されました。"
+
+#: ../cleverness-to-do-list-functions.php:193
+msgid "There was a problem adding the category to the database."
+msgstr ""
+
+#: ../cleverness-to-do-list-functions.php:211
+#, fuzzy
+msgid "Category has been updated."
+msgstr "To-Doが更新されました。"
+
+#: ../cleverness-to-do-list-functions.php:213
+msgid "There was a problem editing the category."
+msgstr ""
+
+#: ../cleverness-to-do-list-functions.php:231
+#, fuzzy
+msgid "Category has been deleted."
+msgstr "To-Doが削除されました。"
+
+#: ../cleverness-to-do-list-functions.php:233
+msgid "There was a problem deleting the category."
+msgstr ""
+
+#: ../cleverness-to-do-list-functions.php:324
+msgid "Add your first To-Do List item"
+msgstr "最初のTo-Doを書いてみましょう！"
+
+#: ../cleverness-to-do-list-functions.php:342
+msgid "Important"
+msgstr ""
+
+#: ../cleverness-to-do-list-functions.php:343
+msgid "Normal"
+msgstr ""
+
+#: ../cleverness-to-do-list-functions.php:344
+msgid "Low"
+msgstr ""
+
+#: ../cleverness-to-do-list-functions.php:356
+#: ../cleverness-to-do-list-functions.php:393
+#, fuzzy
+msgid "The following item has been assigned to you."
+msgstr "タスクが割り当てられました。"
+
+#: ../cleverness-to-do-list-functions.php:357
+#: ../cleverness-to-do-list-functions.php:394
+#, fuzzy
+msgid "A to-do list item has been assigned to you"
+msgstr "タスクが割り当てられました。"
+
+#: ../cleverness-to-do-list-help.php:6
+#: ../cleverness-to-do-list.php:537
+#, fuzzy
+msgid "To-Do List Help"
+msgstr "やることリスト"
+
+#: ../cleverness-to-do-list-help.php:7
+msgid "Shortcode Documentation"
+msgstr ""
+
+#: ../cleverness-to-do-list-help.php:9
+msgid "Several options are available:"
+msgstr ""
+
+#: ../cleverness-to-do-list-help.php:11
+#: ../cleverness-to-do-list-help.php:19
+msgid "default is no title"
+msgstr ""
+
+#: ../cleverness-to-do-list-help.php:12
+msgid "you can chose <em>list</em> or <em>table</em> view. Default is <em>list</em>"
+msgstr ""
+
+#: ../cleverness-to-do-list-help.php:13
+msgid "default is <em>show</em>. Use a blank value to hide (only applies to table view)"
+msgstr ""
+
+#: ../cleverness-to-do-list-help.php:14
+#: ../cleverness-to-do-list-help.php:15
+#: ../cleverness-to-do-list-help.php:16
+#: ../cleverness-to-do-list-help.php:17
+msgid "default is <em>show</em>. Use a blank value to hide"
+msgstr ""
+
+#: ../cleverness-to-do-list-help.php:18
+msgid "default is blank. Set to <em>show</em> to display completed items"
+msgstr ""
+
+#: ../cleverness-to-do-list-help.php:20
+msgid "default is <em>ol</em> (ordered list). Use <em>ul</em> to show an unordered list"
+msgstr ""
+
+#: ../cleverness-to-do-list-help.php:21
+msgid "default is <em>all</em>. Use the category ID to show a specific category"
+msgstr ""
+
+#: ../cleverness-to-do-list-help.php:23
+msgid "Example:"
+msgstr ""
+
+#: ../cleverness-to-do-list-help.php:24
+msgid "Table view with the title of Upcoming Articles and showing the progress and who the item was assigned to."
+msgstr ""
+
+#: ../cleverness-to-do-list-help.php:27
+msgid "Additional Information on Available Permissions"
+msgstr ""
+
+#: ../cleverness-to-do-list-help.php:30
+#: ../cleverness-to-do-list-options.php:250
 msgid "View To-Do Item Capability"
 msgstr "To-Doの効力を表示"
 
-#: ../cleverness-to-do-list-options.php:156
-#: ../cleverness-to-do-list-options.php:169
-#: ../cleverness-to-do-list-options.php:182
-#: ../cleverness-to-do-list-options.php:195
-#: ../cleverness-to-do-list-options.php:208
-#: ../cleverness-to-do-list-options.php:222
-#: ../cleverness-to-do-list-options.php:235
-#: ../cleverness-to-do-list-options.php:248
-msgid "Edit Posts"
-msgstr "編集"
+#: ../cleverness-to-do-list-help.php:30
+msgid "This allows the selected capability to view to-do items"
+msgstr ""
 
-#: ../cleverness-to-do-list-options.php:157
-#: ../cleverness-to-do-list-options.php:170
-#: ../cleverness-to-do-list-options.php:183
-#: ../cleverness-to-do-list-options.php:196
-#: ../cleverness-to-do-list-options.php:209
-#: ../cleverness-to-do-list-options.php:223
-#: ../cleverness-to-do-list-options.php:236
-#: ../cleverness-to-do-list-options.php:249
-msgid "Publish Posts"
-msgstr "公開"
-
-#: ../cleverness-to-do-list-options.php:158
-#: ../cleverness-to-do-list-options.php:171
-#: ../cleverness-to-do-list-options.php:184
-#: ../cleverness-to-do-list-options.php:197
-#: ../cleverness-to-do-list-options.php:210
-#: ../cleverness-to-do-list-options.php:224
-#: ../cleverness-to-do-list-options.php:237
-#: ../cleverness-to-do-list-options.php:250
-msgid "Edit Others Posts"
-msgstr "ほかのリストを編集"
-
-#: ../cleverness-to-do-list-options.php:159
-#: ../cleverness-to-do-list-options.php:172
-#: ../cleverness-to-do-list-options.php:185
-#: ../cleverness-to-do-list-options.php:198
-#: ../cleverness-to-do-list-options.php:211
-#: ../cleverness-to-do-list-options.php:225
-#: ../cleverness-to-do-list-options.php:238
-#: ../cleverness-to-do-list-options.php:251
-msgid "Publish Pages"
-msgstr "ページを公開"
-
-#: ../cleverness-to-do-list-options.php:160
-#: ../cleverness-to-do-list-options.php:173
-#: ../cleverness-to-do-list-options.php:186
-#: ../cleverness-to-do-list-options.php:199
-#: ../cleverness-to-do-list-options.php:212
-#: ../cleverness-to-do-list-options.php:226
-#: ../cleverness-to-do-list-options.php:239
-#: ../cleverness-to-do-list-options.php:252
-msgid "Edit Users"
-msgstr "ユーザーの編集"
-
-#: ../cleverness-to-do-list-options.php:161
-#: ../cleverness-to-do-list-options.php:174
-#: ../cleverness-to-do-list-options.php:187
-#: ../cleverness-to-do-list-options.php:200
-#: ../cleverness-to-do-list-options.php:213
-#: ../cleverness-to-do-list-options.php:227
-#: ../cleverness-to-do-list-options.php:240
-#: ../cleverness-to-do-list-options.php:253
-msgid "Manage Options"
-msgstr "オプションの編集"
-
-#: ../cleverness-to-do-list-options.php:166
+#: ../cleverness-to-do-list-help.php:31
+#: ../cleverness-to-do-list-options.php:263
 msgid "Complete To-Do Item Capability"
 msgstr "やっつけたTo-Doの確認"
 
-#: ../cleverness-to-do-list-options.php:179
+#: ../cleverness-to-do-list-help.php:31
+msgid "This allows the selected capability to mark to-do items as completed or uncompleted"
+msgstr ""
+
+#: ../cleverness-to-do-list-help.php:32
+#: ../cleverness-to-do-list-options.php:276
 msgid "Add To-Do Item Capability"
 msgstr "To-Doの効力を追加"
 
-#: ../cleverness-to-do-list-options.php:192
+#: ../cleverness-to-do-list-help.php:32
+msgid "This allows the selected capability to add new to-do items"
+msgstr ""
+
+#: ../cleverness-to-do-list-help.php:34
+#: ../cleverness-to-do-list-options.php:289
 msgid "Edit To-Do Item Capability"
 msgstr "To-Doの効力を編集"
 
-#: ../cleverness-to-do-list-options.php:205
+#: ../cleverness-to-do-list-help.php:34
+msgid "This allows the selected capability to edit existing to-do items"
+msgstr ""
+
+#: ../cleverness-to-do-list-help.php:35
+#: ../cleverness-to-do-list-options.php:302
 msgid "Assign To-Do Item Capability"
 msgstr "To-Doの効力を割り当て"
 
-#: ../cleverness-to-do-list-options.php:218
+#: ../cleverness-to-do-list-help.php:35
+msgid "This allows the selected capability to assign to-do items to individual users"
+msgstr ""
+
+#: ../cleverness-to-do-list-help.php:36
+#: ../cleverness-to-do-list-options.php:315
 msgid "View All Assigned Tasks Capability"
 msgstr "割り当てたタスクの効力を全て表示"
 
-#: ../cleverness-to-do-list-options.php:221
-msgid "None"
-msgstr "なし"
+#: ../cleverness-to-do-list-help.php:36
+msgid "This allows the selected capability to view all tasks even if <em>Show Each User Only Their Assigned Tasks</em> is set to <em>Yes</em>"
+msgstr ""
 
-#: ../cleverness-to-do-list-options.php:232
+#: ../cleverness-to-do-list-help.php:38
+#: ../cleverness-to-do-list-options.php:329
 msgid "Delete To-Do Item Capability"
 msgstr "To-Doの効力を削除"
 
-#: ../cleverness-to-do-list-options.php:245
+#: ../cleverness-to-do-list-help.php:38
+msgid "This allows the selected capability to delete individual to-do items"
+msgstr ""
+
+#: ../cleverness-to-do-list-help.php:39
+#: ../cleverness-to-do-list-options.php:342
 msgid "Purge To-Do Items Capability"
 msgstr "To-Doの効力を抹消"
 
-#: ../cleverness-to-do-list-options.php:260
+#: ../cleverness-to-do-list-help.php:39
+msgid "This allows the selected capability to purge all the completed to-do items"
+msgstr ""
+
+#: ../cleverness-to-do-list-help.php:40
+#: ../cleverness-to-do-list-options.php:355
+#, fuzzy
+msgid "Add Categories Capability"
+msgstr "To-Doの効力を追加"
+
+#: ../cleverness-to-do-list-help.php:40
+msgid "This allows the selected capability to add new categories"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:7
+#: ../cleverness-to-do-list.php:536
+msgid "To-Do List Settings"
+msgstr "To-Doリスト設定"
+
+#: ../cleverness-to-do-list-options.php:13
+msgid "Category support is turned off by default. If you would like to organize your to-do list into categories, enable it here."
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:18
+#: ../cleverness-to-do-list.php:535
+msgid "Categories"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:21
+msgid "Disable"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:22
+msgid "Enable"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:29
+#, fuzzy
+msgid "<em>List View</em> sets how the to-do lists are viewed.<br /> The <em>Individual</em> setting allows each user to have their own private to-do list. The <em>Group</em> setting allows all users to share one to-do list. The <em>Master</em> setting allows you to have one master list for all users with indvidual completing of items."
+msgstr "リストビューはTo-Doリストの表示を指定します。「個別」は各ユーザー毎のTo-Doリストを表示します。「グループ」は全てのユーザーでシェアしているTo-Doリストを表示します。"
+
+#: ../cleverness-to-do-list-options.php:34
+msgid "List View"
+msgstr "リストビュー"
+
+#: ../cleverness-to-do-list-options.php:37
+msgid "Individual"
+msgstr "個別"
+
+#: ../cleverness-to-do-list-options.php:38
+msgid "Group"
+msgstr "グループ"
+
+#: ../cleverness-to-do-list-options.php:39
+msgid "Master"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:44
+#: ../cleverness-to-do-list-options.php:109
+#: ../cleverness-to-do-list-widget.php:141
+msgid "Show Deadline"
+msgstr "期限の表示"
+
+#: ../cleverness-to-do-list-options.php:47
+#: ../cleverness-to-do-list-options.php:56
+#: ../cleverness-to-do-list-options.php:65
+#: ../cleverness-to-do-list-options.php:112
+#: ../cleverness-to-do-list-options.php:173
+#: ../cleverness-to-do-list-options.php:182
+#: ../cleverness-to-do-list-options.php:195
+#: ../cleverness-to-do-list-options.php:203
+#: ../cleverness-to-do-list-options.php:231
+msgid "No"
+msgstr "いいえ"
+
+#: ../cleverness-to-do-list-options.php:48
+#: ../cleverness-to-do-list-options.php:57
+#: ../cleverness-to-do-list-options.php:66
+#: ../cleverness-to-do-list-options.php:113
+#: ../cleverness-to-do-list-options.php:172
+#: ../cleverness-to-do-list-options.php:181
+#: ../cleverness-to-do-list-options.php:194
+#: ../cleverness-to-do-list-options.php:204
+#: ../cleverness-to-do-list-options.php:230
+msgid "Yes"
+msgstr "はい"
+
+#: ../cleverness-to-do-list-options.php:53
+#: ../cleverness-to-do-list-widget.php:144
+msgid "Show Progress"
+msgstr "進捗状況"
+
+#: ../cleverness-to-do-list-options.php:62
+msgid "Show Date Completed"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:71
+msgid "Date Format"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:73
+msgid "Documentation on Date Formatting"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:77
+msgid "Sort Order"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:81
+msgid "Alphabetical"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:82
+#: ../cleverness-to-do-list-shortcode.php:43
+#: ../cleverness-to-do-list-shortcode.php:113
+#: ../cleverness-to-do-list.php:160
+#: ../cleverness-to-do-list.php:232
+#: ../cleverness-to-do-list.php:335
+#: ../cleverness-to-do-list.php:464
+msgid "Deadline"
+msgstr "期限"
+
+#: ../cleverness-to-do-list-options.php:83
+#: ../cleverness-to-do-list-shortcode.php:44
+#: ../cleverness-to-do-list.php:165
+#: ../cleverness-to-do-list.php:233
+#: ../cleverness-to-do-list.php:470
+msgid "Progress"
+msgstr "進捗状況"
+
+#: ../cleverness-to-do-list-options.php:84
+#: ../cleverness-to-do-list-options.php:118
+#: ../cleverness-to-do-list-shortcode.php:45
+#: ../cleverness-to-do-list-shortcode.php:115
+#: ../cleverness-to-do-list.php:193
+#: ../cleverness-to-do-list.php:234
+#: ../cleverness-to-do-list.php:337
+#: ../cleverness-to-do-list.php:498
+msgid "Category"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:85
+#, fuzzy
+msgid "Assigned User"
+msgstr "担当"
+
+#: ../cleverness-to-do-list-options.php:87
+msgid "Items are first sorted by priority"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:93
+msgid "Dashboard Widget Settings"
+msgstr "ダッシュボード設定"
+
+#: ../cleverness-to-do-list-options.php:97
+msgid "Number of List Items to Show"
+msgstr "To-Do数の表示"
+
+#: ../cleverness-to-do-list-options.php:100
+msgid "1"
+msgstr "1"
+
+#: ../cleverness-to-do-list-options.php:101
+msgid "5"
+msgstr "5"
+
+#: ../cleverness-to-do-list-options.php:102
+msgid "10"
+msgstr "10"
+
+#: ../cleverness-to-do-list-options.php:103
+msgid "15"
+msgstr "15"
+
+#: ../cleverness-to-do-list-options.php:104
+msgid "20"
+msgstr "20"
+
+#: ../cleverness-to-do-list-options.php:121
+#: ../cleverness-to-do-list-widget.php:120
+msgid "All"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:139
+msgid "Priority Label Settings"
+msgstr "優先度ラベルの設定"
+
+#: ../cleverness-to-do-list-options.php:140
+msgid "The highest priority list items are shown in red in the lists. The lowest priority list items are shown in a lighter grey."
+msgstr "優先度の高いものは赤字で、低いものはライトグレーで表示されます。"
+
+#: ../cleverness-to-do-list-options.php:144
+msgid "Highest Priority Label"
+msgstr "優先度 - 高"
+
+#: ../cleverness-to-do-list-options.php:150
+msgid "Middle Priority Label"
+msgstr "優先度 - 中"
+
+#: ../cleverness-to-do-list-options.php:156
+msgid "Lowest Priority Label"
+msgstr "優先度 - 低"
+
+#: ../cleverness-to-do-list-options.php:164
+msgid "Group View Settings"
+msgstr "グループビューの設定"
+
+#: ../cleverness-to-do-list-options.php:165
+msgid "These settings are only used when <em>List View</em> is set to <em>Group</em>."
+msgstr "これらの設定はリストビューがグループの場合に適用されます。"
+
+#: ../cleverness-to-do-list-options.php:169
+msgid "Show <em>Added By</em> on Dashboard Widget"
+msgstr "追加したユーザーをダッシュボードに表示する"
+
+#: ../cleverness-to-do-list-options.php:178
+msgid "Show <em>Added By</em> on To-Do List page"
+msgstr "追加したユーザーをTo-Do Listページに表示する"
+
+#: ../cleverness-to-do-list-options.php:188
+#, fuzzy
+msgid "Assigned Tasks Settings"
+msgstr "タスクをユーザーに割り当てる"
+
+#: ../cleverness-to-do-list-options.php:191
+msgid "Assign Tasks to Users"
+msgstr "タスクをユーザーに割り当てる"
+
+#: ../cleverness-to-do-list-options.php:200
+msgid "Email Assigned Task to User"
+msgstr "割り当てたタスクをユーザーにメールする"
+
+#: ../cleverness-to-do-list-options.php:209
+#, fuzzy
+msgid "From for Email Assigned Task to User"
+msgstr "割り当てたタスクをユーザーにメールする"
+
+#: ../cleverness-to-do-list-options.php:215
+#, fuzzy
+msgid "Subject for Email Assigned Task to User"
+msgstr "割り当てたタスクをユーザーにメールする"
+
+#: ../cleverness-to-do-list-options.php:221
+#, fuzzy
+msgid "Text in Email Assigned Task to User"
+msgstr "割り当てたタスクをユーザーにメールする"
+
+#: ../cleverness-to-do-list-options.php:227
+msgid "Show Each User Only Their Assigned Tasks"
+msgstr "割り当てられたタスクだけをユーザーに表示する"
+
+#: ../cleverness-to-do-list-options.php:236
+msgid "User Roles"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:238
+msgid "This is used in displaying the list of users to-do items can be assigned to."
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:239
+msgid "Separate each role with a comma."
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:240
+msgid "Documentation on User Roles"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:245
+msgid "Permissions"
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:246
+#, fuzzy
+msgid "These settings are used in <em>Group</em> and <em>Master</em> views."
+msgstr "これらの設定はリストビューがグループの場合に適用されます。"
+
+#: ../cleverness-to-do-list-options.php:247
+msgid "When using the Master view, you only want to allow regular users to view and complete items, otherwise they will be able to edit the Master list."
+msgstr ""
+
+#: ../cleverness-to-do-list-options.php:253
+#: ../cleverness-to-do-list-options.php:266
+#: ../cleverness-to-do-list-options.php:279
+#: ../cleverness-to-do-list-options.php:292
+#: ../cleverness-to-do-list-options.php:305
+#: ../cleverness-to-do-list-options.php:319
+#: ../cleverness-to-do-list-options.php:332
+#: ../cleverness-to-do-list-options.php:345
+#: ../cleverness-to-do-list-options.php:358
+msgid "Edit Posts"
+msgstr "編集"
+
+#: ../cleverness-to-do-list-options.php:254
+#: ../cleverness-to-do-list-options.php:267
+#: ../cleverness-to-do-list-options.php:280
+#: ../cleverness-to-do-list-options.php:293
+#: ../cleverness-to-do-list-options.php:306
+#: ../cleverness-to-do-list-options.php:320
+#: ../cleverness-to-do-list-options.php:333
+#: ../cleverness-to-do-list-options.php:346
+#: ../cleverness-to-do-list-options.php:359
+msgid "Publish Posts"
+msgstr "公開"
+
+#: ../cleverness-to-do-list-options.php:255
+#: ../cleverness-to-do-list-options.php:268
+#: ../cleverness-to-do-list-options.php:281
+#: ../cleverness-to-do-list-options.php:294
+#: ../cleverness-to-do-list-options.php:307
+#: ../cleverness-to-do-list-options.php:321
+#: ../cleverness-to-do-list-options.php:334
+#: ../cleverness-to-do-list-options.php:347
+#: ../cleverness-to-do-list-options.php:360
+msgid "Edit Others Posts"
+msgstr "ほかのリストを編集"
+
+#: ../cleverness-to-do-list-options.php:256
+#: ../cleverness-to-do-list-options.php:269
+#: ../cleverness-to-do-list-options.php:282
+#: ../cleverness-to-do-list-options.php:295
+#: ../cleverness-to-do-list-options.php:308
+#: ../cleverness-to-do-list-options.php:322
+#: ../cleverness-to-do-list-options.php:335
+#: ../cleverness-to-do-list-options.php:348
+#: ../cleverness-to-do-list-options.php:361
+msgid "Publish Pages"
+msgstr "ページを公開"
+
+#: ../cleverness-to-do-list-options.php:257
+#: ../cleverness-to-do-list-options.php:270
+#: ../cleverness-to-do-list-options.php:283
+#: ../cleverness-to-do-list-options.php:296
+#: ../cleverness-to-do-list-options.php:309
+#: ../cleverness-to-do-list-options.php:323
+#: ../cleverness-to-do-list-options.php:336
+#: ../cleverness-to-do-list-options.php:349
+#: ../cleverness-to-do-list-options.php:362
+msgid "Edit Users"
+msgstr "ユーザーの編集"
+
+#: ../cleverness-to-do-list-options.php:258
+#: ../cleverness-to-do-list-options.php:271
+#: ../cleverness-to-do-list-options.php:284
+#: ../cleverness-to-do-list-options.php:297
+#: ../cleverness-to-do-list-options.php:310
+#: ../cleverness-to-do-list-options.php:324
+#: ../cleverness-to-do-list-options.php:337
+#: ../cleverness-to-do-list-options.php:350
+#: ../cleverness-to-do-list-options.php:363
+msgid "Manage Options"
+msgstr "オプションの編集"
+
+#: ../cleverness-to-do-list-options.php:318
+#: ../cleverness-to-do-list.php:138
+#: ../cleverness-to-do-list.php:446
+msgid "None"
+msgstr "なし"
+
+#: ../cleverness-to-do-list-options.php:370
 msgid "Save Changes"
 msgstr "変更を保存"
+
+#: ../cleverness-to-do-list-shortcode.php:40
+#: ../cleverness-to-do-list-shortcode.php:110
+#: ../cleverness-to-do-list.php:229
+#: ../cleverness-to-do-list.php:332
+msgid "Item"
+msgstr "To-Do"
+
+#: ../cleverness-to-do-list-shortcode.php:41
+#: ../cleverness-to-do-list-shortcode.php:111
+#: ../cleverness-to-do-list.php:123
+#: ../cleverness-to-do-list.php:230
+#: ../cleverness-to-do-list.php:333
+#: ../cleverness-to-do-list.php:432
+msgid "Priority"
+msgstr "優先度"
+
+#: ../cleverness-to-do-list-shortcode.php:42
+#: ../cleverness-to-do-list-shortcode.php:112
+#: ../cleverness-to-do-list.php:231
+#: ../cleverness-to-do-list.php:334
+msgid "Assigned To"
+msgstr "担当"
+
+#: ../cleverness-to-do-list-shortcode.php:46
+#: ../cleverness-to-do-list-shortcode.php:116
+#: ../cleverness-to-do-list.php:235
+#: ../cleverness-to-do-list.php:338
+msgid "Added By"
+msgstr "By"
+
+#: ../cleverness-to-do-list-shortcode.php:102
+#: ../cleverness-to-do-list-shortcode.php:170
+#: ../cleverness-to-do-list-shortcode.php:224
+#: ../cleverness-to-do-list-shortcode.php:264
+msgid "There are no items listed."
+msgstr "現在To-Doリストはありません。"
+
+#: ../cleverness-to-do-list-shortcode.php:114
+#: ../cleverness-to-do-list.php:336
+#, fuzzy
+msgid "Completed"
+msgstr "やっつけたTo-Do"
 
 #: ../cleverness-to-do-list-widget.php:9
 msgid "Lists To-Do Items"
@@ -259,37 +829,27 @@ msgstr "To-Do一覧"
 msgid "To-Do List Widget"
 msgstr "To-Doリストウィジェット"
 
-#: ../cleverness-to-do-list-widget.php:39
+#: ../cleverness-to-do-list-widget.php:65
 msgid "Deadline: "
 msgstr "期限："
 
-#: ../cleverness-to-do-list-widget.php:44
+#: ../cleverness-to-do-list-widget.php:70
 msgid "Assigned to "
 msgstr "担当"
 
-#: ../cleverness-to-do-list-widget.php:49
-#: ../cleverness-to-do-list.php:691
-msgid "No items to do."
-msgstr "やることはありません。。。考えよう！"
-
-#: ../cleverness-to-do-list-widget.php:69
-#: ../cleverness-to-do-list.php:335
-#: ../cleverness-to-do-list.php:406
-#: ../cleverness-to-do-list.php:794
-#: ../cleverness-to-do-list.php:795
-#: ../cleverness-to-do-list.php:812
-msgid "To-Do List"
-msgstr "やることリスト"
-
-#: ../cleverness-to-do-list-widget.php:73
+#: ../cleverness-to-do-list-widget.php:101
 msgid "Title:"
 msgstr "件名"
 
-#: ../cleverness-to-do-list-widget.php:78
+#: ../cleverness-to-do-list-widget.php:106
 msgid "Number of Items to Display:"
 msgstr "表示するTo-Doの数"
 
-#: ../cleverness-to-do-list-widget.php:90
+#: ../cleverness-to-do-list-widget.php:118
+msgid "Category:"
+msgstr ""
+
+#: ../cleverness-to-do-list-widget.php:138
 msgid "Show Assigned To"
 msgstr "担当を表示する"
 
@@ -297,196 +857,84 @@ msgstr "担当を表示する"
 msgid "To-Do List requires WordPress 2.8 or newer. <a href=\"http://codex.wordpress.org/Upgrading_WordPress\">Please update.</a>"
 msgstr "本プラグインはWordPress 2.8以上が対象です。 <a href=\"http://codex.wordpress.org/Upgrading_WordPress\">Wordpressをアップデート</a>してください。"
 
-#: ../cleverness-to-do-list.php:163
-msgid "A task has been assigned to you"
-msgstr "タスクが割り当てられました。"
-
-#: ../cleverness-to-do-list.php:166
-msgid "Task:"
-msgstr "タスク："
-
-#: ../cleverness-to-do-list.php:167
-msgid "Priority:"
-msgstr "優先度："
-
-#: ../cleverness-to-do-list.php:169
-#: ../cleverness-to-do-list.php:681
-msgid "Deadline:"
-msgstr "期限："
-
-#: ../cleverness-to-do-list.php:170
-msgid "Website:"
-msgstr "ウェブサイト："
-
-#: ../cleverness-to-do-list.php:171
-msgid "Website Login:"
-msgstr "ログイン："
-
-#: ../cleverness-to-do-list.php:257
-msgid "Add your first To-Do List item"
-msgstr "最初のTo-Doを書いてみましょう！"
-
-#: ../cleverness-to-do-list.php:312
-msgid "New To-Do item has been added."
-msgstr "新しいTo-Doが追加されました。"
-
-#: ../cleverness-to-do-list.php:313
-msgid "To-Do item has been marked completed."
-msgstr "終了のチェックが入りました。"
-
-#: ../cleverness-to-do-list.php:314
-msgid "To-Do item has been deleted."
-msgstr "To-Doが削除されました。"
-
-#: ../cleverness-to-do-list.php:315
-msgid "To-Do item has been updated."
-msgstr "To-Doが更新されました。"
-
-#: ../cleverness-to-do-list.php:316
-msgid "To-Do database table has been installed."
-msgstr "To-Doデータベースが構築されました。"
-
-#: ../cleverness-to-do-list.php:317
-msgid "Completed To-Do items have been deleted."
-msgstr "やっつけたTo-Doが削除されました。"
-
-#: ../cleverness-to-do-list.php:318
-msgid "To-Do item has been marked uncompleted."
-msgstr "To-Doは未完扱いとなりました。"
-
-#: ../cleverness-to-do-list.php:319
-msgid "You do not have sufficient privileges to do that."
-msgstr "実行権限がありません。"
-
-#: ../cleverness-to-do-list.php:320
+#: ../cleverness-to-do-list.php:57
 msgid "To-Do cannot be blank."
 msgstr "空欄には出来ません。"
 
-#: ../cleverness-to-do-list.php:336
-#: ../cleverness-to-do-list.php:395
+#: ../cleverness-to-do-list.php:119
+#: ../cleverness-to-do-list.php:209
 msgid "Edit To-Do Item"
 msgstr "編集"
 
-#: ../cleverness-to-do-list.php:340
-#: ../cleverness-to-do-list.php:416
-#: ../cleverness-to-do-list.php:494
-#: ../cleverness-to-do-list.php:555
-#: ../cleverness-to-do-list.php:720
-msgid "Priority"
-msgstr "優先度"
-
-#: ../cleverness-to-do-list.php:352
-#: ../cleverness-to-do-list.php:566
+#: ../cleverness-to-do-list.php:135
+#: ../cleverness-to-do-list.php:443
 msgid "Assign To"
 msgstr "担当"
 
-#: ../cleverness-to-do-list.php:357
-#: ../cleverness-to-do-list.php:418
-#: ../cleverness-to-do-list.php:496
-#: ../cleverness-to-do-list.php:598
-#: ../cleverness-to-do-list.php:722
-msgid "Deadline"
-msgstr "期限"
-
-#: ../cleverness-to-do-list.php:362
-#: ../cleverness-to-do-list.php:419
-#: ../cleverness-to-do-list.php:603
-#: ../cleverness-to-do-list.php:723
-msgid "Progress"
-msgstr "進捗状況"
-
-#: ../cleverness-to-do-list.php:389
-#: ../cleverness-to-do-list.php:630
+#: ../cleverness-to-do-list.php:203
+#: ../cleverness-to-do-list.php:508
 msgid "To-Do"
 msgstr "内容"
 
-#: ../cleverness-to-do-list.php:397
+#: ../cleverness-to-do-list.php:211
 msgid "&laquo; Return to To-Do List"
 msgstr "&laquo; To-Doリストに戻る"
 
-#: ../cleverness-to-do-list.php:407
+#: ../cleverness-to-do-list.php:221
 msgid "To-Do Items"
 msgstr "To-Do"
 
-#: ../cleverness-to-do-list.php:409
+#: ../cleverness-to-do-list.php:223
 msgid "Add New Item"
 msgstr "新しいTo-Doを追加"
 
-#: ../cleverness-to-do-list.php:415
-#: ../cleverness-to-do-list.php:493
-#: ../cleverness-to-do-list.php:719
-msgid "Item"
-msgstr "To-Do"
-
-#: ../cleverness-to-do-list.php:417
-#: ../cleverness-to-do-list.php:495
-#: ../cleverness-to-do-list.php:721
-msgid "Assigned To"
-msgstr "担当"
-
-#: ../cleverness-to-do-list.php:420
-#: ../cleverness-to-do-list.php:497
-#: ../cleverness-to-do-list.php:724
-msgid "Added By"
-msgstr "By"
-
-#: ../cleverness-to-do-list.php:421
-#: ../cleverness-to-do-list.php:498
-msgid "Action"
-msgstr "アクション"
-
-#: ../cleverness-to-do-list.php:445
-#: ../cleverness-to-do-list.php:687
-msgid "Edit"
-msgstr "編集"
-
-#: ../cleverness-to-do-list.php:447
-#: ../cleverness-to-do-list.php:518
-msgid "Delete"
-msgstr "削除"
-
-#: ../cleverness-to-do-list.php:478
+#: ../cleverness-to-do-list.php:317
 msgid "There is nothing to do..."
 msgstr "現在やることはありません。。。考えよう！"
 
-#: ../cleverness-to-do-list.php:485
+#: ../cleverness-to-do-list.php:324
 msgid "Completed Items"
 msgstr "やっつけたTo-Do"
 
-#: ../cleverness-to-do-list.php:487
+#: ../cleverness-to-do-list.php:326
 msgid "Delete All"
 msgstr "やっつけたTo-Doを全て削除"
 
-#: ../cleverness-to-do-list.php:543
+#: ../cleverness-to-do-list.php:420
 msgid "There are no completed items"
 msgstr "やっつけたTo-Doはありません。"
 
-#: ../cleverness-to-do-list.php:551
+#: ../cleverness-to-do-list.php:428
 msgid "Add New To-Do Item"
 msgstr "To-Doの追加"
 
-#: ../cleverness-to-do-list.php:636
+#: ../cleverness-to-do-list.php:514
 msgid "Add To-Do Item &raquo;"
 msgstr "To-Doの追加 &raquo;"
 
-#: ../cleverness-to-do-list.php:677
-msgid "assigned to"
-msgstr "担当"
+#: ../cleverness-to-do-list.php:536
+#: ../cleverness-to-do-list.php:575
+msgid "Settings"
+msgstr ""
 
-#: ../cleverness-to-do-list.php:685
-msgid "added by"
-msgstr "by"
+#: ../cleverness-to-do-list.php:537
+msgid "Help"
+msgstr ""
 
-#: ../cleverness-to-do-list.php:694
-msgid "New To-Do Item &raquo;"
-msgstr "新しいTo-Do &raquo;"
+#~ msgid "Task:"
+#~ msgstr "タスク："
 
-#: ../cleverness-to-do-list.php:766
-#: ../cleverness-to-do-list.php:781
-msgid "There are no items listed."
-msgstr "現在To-Doリストはありません。"
+#~ msgid "Priority:"
+#~ msgstr "優先度："
 
-#: ../cleverness-to-do-list.php:812
-msgid "&raquo;"
-msgstr "&raquo;"
+#~ msgid "Website:"
+#~ msgstr "ウェブサイト："
 
+#~ msgid "Website Login:"
+#~ msgstr "ログイン："
+
+#~ msgid "To-Do database table has been installed."
+#~ msgstr "To-Doデータベースが構築されました。"
+
+#~ msgid "To-Do item has been marked uncompleted."
+#~ msgstr "To-Doは未完扱いとなりました。"
