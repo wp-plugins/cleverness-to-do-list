@@ -94,13 +94,16 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 
+= 2.2.5 =
+* Language files were not successfully committed to the SVN on last update
+
 = 2.2.4 =
 * Removed site title from email subject
 * Added ability to change From value for email
 * Added French translation by Thibault Guerpillon
 
 = 2.2.3 =
-* Added default values to assign and priorty variables
+* Added default values to assign and priority variables
 * Email an assigned task function now returns success or fail messages
 
 = 2.2.2 =
@@ -222,6 +225,12 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Fixed to work in WordPress 2.8
 
 == Upgrade Notice ==
+
+= 2.2.5 =
+Bug fix
+
+= 2.2.4 =
+Bug fix
 
 = 2.2.3 =
 Bug fix
