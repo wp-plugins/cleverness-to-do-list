@@ -29,19 +29,24 @@ function cleverness_todo_email_user($todotext, $priority, $assign, $deadline) {
 	require_once (ABSPATH . WPINC . '/pluggable.php');
    	get_currentuserinfo();
 
-   	if ( current_user_can($cleverness_todo_option['assign_capability']) && $assign != '' && $assign != '-1' ) {
+   	if ( current_user_can($cleverness_todo_option['assign_capability']) && $assign != '' && $assign != '-1' && $assign != '0') {
 		$headers = 'From: '.$cleverness_todo_option['email_from'].' <'.get_bloginfo('admin_email').'>' . "\r\n\\";
 		$subject = $cleverness_todo_option['email_subject'];
 		$assign_user = get_userdata($assign);
 		$email = $assign_user->user_email;
 		$email_message = $cleverness_todo_option['email_text'];
-		$email_message .= "\r\n".$todotext."\r\n";
+		$email_message .= "\r\n\\".$todotext."\r\n\\";
 		if ( $deadline != '' )
-			$email_message .= __('Deadline:', 'cleverness-to-do-list').' '.$deadline."\r\n";
+			$email_message .= __('Deadline:', 'cleverness-to-do-list').' '.$deadline."\r\n\\";
   		if ( wp_mail($email, $subject, $email_message, $headers) )
 			$message = __('A email has been sent to the assigned user.', 'cleverness-to-do-list').'<br /><br />';
 		else
-			$message = __('The email failed to send to the assigned user.', 'cleverness-to-do-list').'<br /><br />';
+			$message = __('The email failed to send to the assigned user.', 'cleverness-to-do-list')
+			$message .= '<br />
+			To: '.$email.'<br />
+			Subject: '.$subject.'<br />
+			Message: '.$message.'<br />
+			Headers: '.$headers.'<br /><br />';
 		return $message;
 	} else {
 		$message = __('No email has been sent.', 'cleverness-to-do-list').'<br /><br />';

@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Cleverness To-Do List
-Version: 2.2.5
+Version: 2.2.6
 Description: Manage to-do list items on a individual or group basis with categories. Includes a dashboard widget and a sidebar widget.
 Author: C.M. Kendrick
 Author URI: http://cleverness.org
@@ -44,9 +44,15 @@ case 'addtodo':
 	if ( $_POST['cleverness_todo_description'] != '' ) {
 		$todotext = $_POST['cleverness_todo_description'];
 		$priority = $_POST['cleverness_todo_priority'];
-		$assign = $_POST['cleverness_todo_assign'];
+		if ( $_POST['cleverness_todo_assign'] != '' )
+			$assign = $_POST['cleverness_todo_assign'];
+		else
+			$assign = 0;
 		$deadline = $_POST['cleverness_todo_deadline'];
-		$progress = $_POST['cleverness_todo_progress'];
+		if ( $_POST['cleverness_todo_progress'] != '' )
+			$progress = $_POST['cleverness_todo_progress'];
+		else
+			$progress = 0;
 		$category = $_POST['cleverness_todo_category'];
 		require_once (ABSPATH . WPINC . '/pluggable.php');
 		if (!wp_verify_nonce($_REQUEST['_wpnonce'], 'todoadd') ) die('Security check failed');

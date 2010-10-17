@@ -94,6 +94,10 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 
+= 2.2.6 =
+* Added value check for assign and priority variables
+* Echoing the email values to the screen on failed email sending, for troubleshooting
+
 = 2.2.5 =
 * Language files were not successfully committed to the SVN on last update
 
@@ -225,6 +229,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Fixed to work in WordPress 2.8
 
 == Upgrade Notice ==
+
+= 2.2.6 =
+Bug fix
 
 = 2.2.5 =
 Bug fix
