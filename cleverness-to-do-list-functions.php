@@ -41,7 +41,7 @@ function cleverness_todo_email_user($todotext, $priority, $assign, $deadline) {
   		if ( wp_mail($email, $subject, $email_message, $headers) )
 			$message = __('A email has been sent to the assigned user.', 'cleverness-to-do-list').'<br /><br />';
 		else
-			$message = __('The email failed to send to the assigned user.', 'cleverness-to-do-list')
+			$message = __('The email failed to send to the assigned user.', 'cleverness-to-do-list');
 			$message .= '<br />
 			To: '.$email.'<br />
 			Subject: '.$subject.'<br />
