@@ -229,7 +229,7 @@ function cleverness_todo_display_items($atts) {
 		   	if ( $completed_title != '' ) $display_todo .= '<h3>'.$completed_title.'</h3>';
 			$display_todo .= '<'.$list_type.'>';
 			if ( $cleverness_todo_option['categories'] == '0' ) {
-				$sql = "SELECT * FROM $table_name WHERE status = 1 $author ORDER BY ORDER BY completed DESC, $sort";
+				$sql = "SELECT * FROM $table_name WHERE status = 1 $author ORDER BY completed DESC, $sort";
 			} else {
 				if ( $category != 'all' )
 					$sql = "SELECT * FROM $table_name WHERE status = 1 $author AND cat_id = $category ORDER BY ORDER BY completed DESC, $sort";

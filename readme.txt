@@ -3,7 +3,7 @@ Contributors: elusivelight
 Donate link: http://cleverness.org/plugins/to-do-list/
 Tags: to-do, to do list, to-do list, list, assign tasks, tasks, admin
 Requires at least: 2.8
-Tested up to: 3.0.1
+Tested up to: 3.0.2
 Stable tag: trunk
 
 Integrates a multi-featured to-do list into the WordPress administration area that is very customizable.
@@ -93,6 +93,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 3. Settings Page
 
 == Changelog ==
+
+= 2.2.8 =
+* Fix issue where completed items would not show using list in the shortcode
 
 = 2.2.7 =
 * Fixed fatal error
@@ -232,6 +235,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Fixed to work in WordPress 2.8
 
 == Upgrade Notice ==
+
+= 2.2.8 =
+Bug fix
 
 = 2.2.7 =
 Bug fix
