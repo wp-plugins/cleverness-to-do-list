@@ -3,7 +3,7 @@
 function cleverness_todo_help() {
 ?>
 <div class="wrap">
-<div id="icon-plugins" class="icon32"></div> <h2><?php _e('To-Do List Help', 'cleverness-to-do-list'); ?></h2>
+<div class="icon32"><img src="<?php echo CTDL_PLUGIN_URL; ?>/images/cleverness-todo-icon.png" alt="" /></div> <h2><?php _e('To-Do List Help', 'cleverness-to-do-list'); ?></h2>
 <h3><?php _e('Shortcode Documentation', 'cleverness-to-do-list'); ?></h3>
 <p>&#91;todolist&#93;</p>
 <p><?php _e('Several options are available:', 'cleverness-to-do-list'); ?></p>

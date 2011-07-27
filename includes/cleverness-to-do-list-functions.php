@@ -1,4 +1,22 @@
 <?php
+/* Check if User Has Permission */
+function cleverness_todo_user_can($type, $action) {
+   	global $cleverness_todo_option;
+
+	switch ($type) {
+		case 'category':
+			// check if categories are enabled and the user has the capability or the list view is individual
+   			if ( $cleverness_todo_option['categories'] == '1' && ( current_user_can($cleverness_todo_option[$action.'_capability']) || $cleverness_todo_option['list_view'] == '0' ) ) {
+   				return true;
+   			} else {
+   				return false;
+			}
+			break;
+		case 'todo':
+			break;
+			}
+}
+
 /* Insert new to-do item into the database */
 function cleverness_todo_insert($todotext, $priority, $assign = 0, $deadline, $progress = 0, $category = 0) {
 	global $wpdb, $userdata, $cleverness_todo_option;
@@ -65,9 +83,6 @@ function cleverness_todo_update($id, $priority, $todotext, $assign = 0, $deadlin
 		if ( $results ) $message = __('To-Do item has been updated.', 'cleverness-to-do-list');
 		else {
 			$message = __('There was a problem editing the item.', 'cleverness-to-do-list');
-			$wpdb->show_errors();
-			$wpdb->print_error();
-			$wpdb->hide_errors();
 			}
 	} else {
 		$message = __('You do not have sufficient privileges to do that.', 'cleverness-to-do-list');
@@ -184,107 +199,69 @@ function cleverness_todo_purge() {
 	}
 
 /* Insert new to-do category into the database */
-function cleverness_todo_insert_cat($catname, $catvisibility, $addcat_nonce) {
-	global $wpdb, $userdata, $cleverness_todo_option;
-	require_once (ABSPATH . WPINC . '/pluggable.php');
-   	get_currentuserinfo();
-	if (!wp_verify_nonce($addcat_nonce, 'todoaddcat') ) die('Security check failed');
+function cleverness_todo_insert_cat() {
+	global $wpdb;
 
-	if ( $cleverness_todo_option['categories'] == '1' || (current_user_can($cleverness_todo_option['add_cat_capability']) || $cleverness_todo_option['list_view'] == '0' ) ) {
-  	 	$cattable_name = $wpdb->prefix . 'todolist_cats';
-   		$results = $wpdb->insert( $cattable_name, array( 'name' => $catname, 'visibility' => $catvisibility ) );
-		if ( $results ) $message = __('New category has been added.', 'cleverness-to-do-list');
-		else {
-			$message = __('There was a problem adding the category to the database.', 'cleverness-to-do-list');
-			}
-	} else {
-		$message = __('You do not have sufficient privileges to do that.', 'cleverness-to-do-list');
-		}
-	return $message;
+   	$results = $wpdb->insert( CTDL_CATS_TABLE, array( 'name' => $_POST['cleverness_todo_cat_name'], 'visibility' => $_POST['cleverness_todo_cat_visibility'] ) );
+	$success = ( $results === FALSE ? 0 : 1 );
+	return $success;
 	}
 
 /* Update to-do list category */
-function cleverness_todo_update_cat($id, $catname, $catvisibility, $updatecat_nonce) {
-   	global $wpdb, $userdata, $cleverness_todo_option;
-	require_once (ABSPATH . WPINC . '/pluggable.php');
-   	get_currentuserinfo();
-	if (!wp_verify_nonce($updatecat_nonce, 'todoupdatecat') ) die('Security check failed');
+function cleverness_todo_update_cat() {
+   	global $wpdb;
 
-   	if ( $cleverness_todo_option['categories'] == '1' || ( current_user_can($cleverness_todo_option['add_cat_capability']) || $cleverness_todo_option['list_view'] == '0' ) ) {
-		$table_name = $wpdb->prefix . 'todolist_cats';
-   		$results = $wpdb->update( $table_name, array( 'name' => $catname, 'visibility' => $catvisibility ), array( 'id' => $id ) );
-		if ( $results ) $message = __('Category has been updated.', 'cleverness-to-do-list');
-		else {
-			$message = __('There was a problem editing the category.', 'cleverness-to-do-list');
-			}
-	} else {
-		$message = __('You do not have sufficient privileges to do that.', 'cleverness-to-do-list');
-		}
-	return $message;
+   	$results = $wpdb->update( CTDL_CATS_TABLE,
+	array( 'name' => $_POST['cleverness_todo_cat_name'], 'visibility' => $_POST['cleverness_todo_cat_visibility'] ),
+	array( 'id' => absint($_POST['cleverness_todo_cat_id']) ) );
+	$success = ( $results === FALSE ? 0 : 1 );
+	return $success;
 	}
 
 /* Delete to-do list category */
-function cleverness_todo_delete_cat($id) {
-   	global $wpdb, $userdata, $cleverness_todo_option;
-	require_once (ABSPATH . WPINC . '/pluggable.php');
-   	get_currentuserinfo();
+function cleverness_todo_delete_cat() {
+   	global $wpdb;
 
-   	$table_name = $wpdb->prefix . 'todolist_cats';
-   	if ( $cleverness_todo_option['categories'] == '1' ||(  current_user_can($cleverness_todo_option['add_cat_capability']) || $cleverness_todo_option['list_view'] == '0' ) ) {
-   		$delete = "DELETE FROM ".$table_name." WHERE id = '".$id."'";
-   		$results = $wpdb->query( $delete );
-		if ( $results ) $message = __('Category has been deleted.', 'cleverness-to-do-list');
-		else {
-			$message = __('There was a problem deleting the category.', 'cleverness-to-do-list');
-			}
-   	} else {
-		$message = __('You do not have sufficient privileges to do that.', 'cleverness-to-do-list');
-		}
-	return $message;
+   	$delete = 'DELETE FROM ' . CTDL_CATS_TABLE . ' WHERE id = "%d"';
+   	$results = $wpdb->query( $wpdb->prepare($delete, $_POST['cleverness_todo_cat_id']) );
+	$success = ( $results === FALSE ? 0 : 1 );
+	return $success;
 	}
 
-/* Get to-do list category */
-function cleverness_todo_get_todo_cat($id) {
-   	global $wpdb, $userdata, $cleverness_todo_option;
-	require_once (ABSPATH . WPINC . '/pluggable.php');
-   	get_currentuserinfo();
+/* Get a to-do list category */
+function cleverness_todo_get_todo_cat() {
+   	global $wpdb;
 
-   	$table_name = $wpdb->prefix . 'todolist_cats';
-   	if ( $cleverness_todo_option['categories'] == '1' || ( current_user_can($cleverness_todo_option['add_cat_capability'])  || $cleverness_todo_option['list_view'] == '0' )) {
-   		$edit = "SELECT * FROM ".$table_name." WHERE id = '".$id."' LIMIT 1";
-   		$result = $wpdb->get_row( $edit );
-   		return $result;
-	} else {
-		$message = __('You do not have sufficient privileges to do that.', 'cleverness-to-do-list');
-		}
-	return $message;
+   	$edit = "SELECT id, name, visibility FROM ".CTDL_CATS_TABLE." WHERE id = '%d' LIMIT 1";
+   	$result = $wpdb->get_row( $wpdb->prepare($edit, $_POST['cleverness_todo_cat_id']) );
+   	return $result;
 	}
 
 /* Get to-do list categories */
 function cleverness_todo_get_cats() {
-   	global $wpdb, $userdata, $cleverness_todo_option;
-	require_once (ABSPATH . WPINC . '/pluggable.php');
-   	get_currentuserinfo();
+   	global $wpdb, $cleverness_todo_option;
 
-   	$table_name = $wpdb->prefix . 'todolist_cats';
+	// check if categories are enabled
    	if ( $cleverness_todo_option['categories'] == '1' ) {
-   		$sql = "SELECT id, name FROM ".$table_name;
-   		$results = $wpdb->get_results( $sql );
+
+   		$sql = "SELECT id, name, visibility FROM ".CTDL_CATS_TABLE.' ORDER BY name';
+   		$results = $wpdb->get_results( $wpdb->prepare($sql) );
    		return $results;
+
+	// if categories are not enabled
 	} else {
-		$message = __('You do not have sufficient privileges to do that.', 'cleverness-to-do-list');
+		$message = __('Categories are not enabled.', 'cleverness-to-do-list');
 		}
+
 	return $message;
 	}
 
 /* Get to-do category name */
 function cleverness_todo_get_cat_name($id) {
-   	global $wpdb, $userdata, $cleverness_todo_option;
+   	global $wpdb;
 
-   	$table_name = $wpdb->prefix . 'todolist_cats';
-
-   	$cat = "SELECT name FROM ".$table_name." WHERE id = '".$id."' LIMIT 1";
-   	$result = $wpdb->get_row( $cat );
+   	$cat = "SELECT name FROM ".CTDL_CATS_TABLE." WHERE id = '%d' LIMIT 1";
+   	$result = $wpdb->get_row( $wpdb->prepare($cat, $id) );
    	return $result;
 	}
 
@@ -293,8 +270,9 @@ function cleverness_todo_install () {
    	global $wpdb, $userdata;
    	get_currentuserinfo();
 
-	$cleverness_todo_db_version = '1.8';
+	$cleverness_todo_db_version = '1.9';
 
+// PUT IN GLOBAL VARS!!!!!!!!!!!!!!
 	$table_name = $wpdb->prefix.'todolist';
 	$cat_table_name = $wpdb->prefix.'todolist_cats';
 	$status_table_name = $wpdb->prefix.'todolist_status';
@@ -331,7 +309,6 @@ function cleverness_todo_install () {
 
 		$new_options = array(
 		'list_view' => '0',
-		'dashboard_author' => '0',
 		'todo_author' => '0',
 		'assign' => '1',
 		'show_only_assigned' => '1',
@@ -343,12 +320,10 @@ function cleverness_todo_install () {
 		'complete_capability' => 'publish_posts',
 		'assign_capability' => 'manage_options',
 		'view_all_assigned_capability' => 'manage_options',
-		'dashboard_number' => '10',
 		'priority_0' => __('Important', 'cleverness-to-do-list'),
 		'priority_1' => __('Normal', 'cleverness-to-do-list'),
 		'priority_2' => __('Low', 'cleverness-to-do-list'),
 		'show_deadline' => '0',
-		'show_dashboard_deadline' => '0',
 		'show_progress' => '0',
 		'email_assigned' => '0',
 		'show_completed_date' => '0',
@@ -357,11 +332,20 @@ function cleverness_todo_install () {
 		'categories' => '0',
 		'sort_order' => 'id',
 		'add_cat_capability' => 'manage_options',
-		'dashboard_cat' => 'All',
 		'email_text' => __('The following item has been assigned to you.', 'cleverness-to-do-list'),
-		'email_subject' => __('A to-do list item has been assigned to you', 'cleverness-to-do-list')
+		'email_subject' => __('A to-do list item has been assigned to you', 'cleverness-to-do-list'),
+		'email_from' => html_entity_decode(get_bloginfo('name'))
    		);
+
+		$dashboard_options = array(
+			'dashboard_number' => '10',
+			'show_dashboard_deadline' => '0',
+			'dashboard_cat' => 'All',
+			'dashboard_author' => '0'
+		);
+
    		add_option( 'cleverness_todo_settings', $new_options );
+		add_option( 'cleverness_todo_dashboard_settings', $dashboard_options );
 		add_option( 'cleverness_todo_db_version', $cleverness_todo_db_version );
 		}
 
@@ -394,14 +378,38 @@ function cleverness_todo_install () {
 		if ( $theoptions['categories'] == '' ) $theoptions['categories'] = '0';
 		if ( $theoptions['sort_order'] == '' ) $theoptions['sort_order'] = 'id';
 		if ( $theoptions['add_cat_capability'] == '' ) $theoptions['add_cat_capability'] = 'manage_options';
-		if ( $theoptions['dashboard_cat'] == '' ) $theoptions['dashboard_cat'] = 'All';
 		if ( $theoptions['email_text'] == '' ) $theoptions['email_text'] = __('The following item has been assigned to you.', 'cleverness-to-do-list');
 		if ( $theoptions['email_subject'] == '' ) $theoptions['email_subject'] = __('A to-do list item has been assigned to you', 'cleverness-to-do-list');
 		if ( $theoptions['email_from'] == '' ) $theoptions['email_from'] = html_entity_decode(get_bloginfo('name'));
 		update_option( 'cleverness_todo_settings', $theoptions);
 
+		$dash_options = get_option('cleverness_todo_dashboard_settings');
+		if ( $dash_options['dashboard_number'] == '' ) {
+			$dash_options['dashboard_number'] = '10';
+		} else {
+			$dash_options['dashboard_number'] = $theoptions['dashboard_number'];
+			}
+		if ( $dash_options['show_dashboard_deadline'] == '' ) {
+			$dash_options['show_dashboard_deadline'] = '0';
+		} else {
+			$dash_options['show_dashboard_deadline'] = $theoptions['show_dashboard_deadline'];
+			}
+		if ( $dash_options['dashboard_cat'] == '' ) {
+			$dash_options['dashboard_cat'] = 'All';
+		} else {
+			$dash_options['dashboard_cat'] = $theoptions['dashboard_cat'];
+			}
+		if ( $dash_options['dashboard_author'] == '' ) {
+			$dash_options['dashboard_author'] = '0';
+		} else {
+			$dash_options['dashboard_author'] = $theoptions['dashboard_author'];
+			}
+		update_option( 'cleverness_todo_dashboard_settings', $dash_options );
+
     	update_option( 'cleverness_todo_db_version', $cleverness_todo_db_version );
 		delete_option( 'atd_db_version' );
 		}
 	}
+
+
 ?>

@@ -12,22 +12,47 @@ Plugin URI: http://cleverness.org/plugins/to-do-list/
 Based on the ToDo plugin by Abstract Dimensions with a patch by WordPress by Example.
 */
 
+/*
+register_activation_hook( __FILE__, 'boj_myplugin_install' );
+
+function boj_myplugin_install() {
+    if ( version_compare( get_bloginfo( 'version' ), '3.1', '<' ) ) {
+        deactivate_plugins( basename( __FILE__ ) ); // Deactivate our plugin
+    }
+}*/
+
 global $wp_version;
 
-$exit_msg = __('To-Do List requires WordPress 2.8 or newer. <a href="http://codex.wordpress.org/Upgrading_WordPress">Please update.</a>', 'cleverness-to-do-list');
+$exit_msg = __('To-Do List requires WordPress 3.0 or newer. <a href="http://codex.wordpress.org/Upgrading_WordPress">Please update.</a>', 'cleverness-to-do-list');
 
-if (version_compare($wp_version, "2.8", "<")) {
+if (version_compare($wp_version, "3.0", "<")) {
 	exit($exit_msg);
   	}
 
-include 'cleverness-to-do-list-options.php';
-include 'cleverness-to-do-list-dashboard-widget.php';
-include 'cleverness-to-do-list-widget.php';
-include 'cleverness-to-do-list-shortcode.php';
-include 'cleverness-to-do-list-categories.php';
-include 'cleverness-to-do-list-help.php';
-include_once 'cleverness-to-do-list-functions.php';
+define( 'CTDL_BASENAME', plugin_basename(__FILE__) );
+define( 'CTDL_PLUGIN_DIR', plugin_dir_path( __FILE__) );
+define( 'CTDL_PLUGIN_URL', plugins_url('', __FILE__) );
+if ( ! function_exists( 'is_plugin_active_for_network' ) )
+   require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+if ( is_plugin_active_for_network( CTDL_BASENAME ) ) {
+	$prefix = $wpdb->base_prefix;
+} else {
+	$prefix = $wpdb->prefix;
+}
+define( 'CTDL_TODO_TABLE', $prefix.'todolist' );
+define( 'CTDL_CATS_TABLE', $prefix.'todolist_cats' );
+define( 'CTDL_STATUS_TABLE', $prefix.'todolist_status' );
 
+include_once(CTDL_PLUGIN_DIR . 'includes/cleverness-to-do-list-options.php');
+include_once(CTDL_PLUGIN_DIR . 'includes/cleverness-to-do-list-dashboard-widget.php');
+include_once(CTDL_PLUGIN_DIR . 'includes/cleverness-to-do-list-widget.php');
+include_once(CTDL_PLUGIN_DIR . 'includes/cleverness-to-do-list-shortcode.php');
+include_once(CTDL_PLUGIN_DIR . 'includes/cleverness-to-do-list-categories.php');
+include_once(CTDL_PLUGIN_DIR . 'includes/cleverness-to-do-list-help.php');
+include_once(CTDL_PLUGIN_DIR . 'includes/cleverness-to-do-list-functions.php');
+
+
+/* 	WANT TO BE ABLE TO REMOVE OPTION FROM GLOBAL */
 $cleverness_todo_option = get_option('cleverness_todo_settings');
 
 $action = '';
@@ -41,19 +66,15 @@ case 'setuptodo':
 	break;
 
 case 'addtodo':
+	$message = '';
 	if ( $_POST['cleverness_todo_description'] != '' ) {
 		$todotext = $_POST['cleverness_todo_description'];
 		$priority = $_POST['cleverness_todo_priority'];
-		if ( $_POST['cleverness_todo_assign'] != '' )
-			$assign = $_POST['cleverness_todo_assign'];
-		else
-			$assign = 0;
-		$deadline = $_POST['cleverness_todo_deadline'];
-		if ( $_POST['cleverness_todo_progress'] != '' )
-			$progress = $_POST['cleverness_todo_progress'];
-		else
-			$progress = 0;
-		$category = $_POST['cleverness_todo_category'];
+		$assign = (  isset($_POST['cleverness_todo_assign']) ?  $_POST['cleverness_todo_assign'] : 0 );
+		$deadline = (  isset($_POST['cleverness_todo_deadline']) ?  $_POST['cleverness_todo_deadline'] : '' );
+		$progress = (  isset($_POST['cleverness_todo_progress']) ?  $_POST['cleverness_todo_progress'] : 0 );
+		$category = (  isset($_POST['cleverness_todo_category']) ?  $_POST['cleverness_todo_category'] : '' );
+
 		require_once (ABSPATH . WPINC . '/pluggable.php');
 		if (!wp_verify_nonce($_REQUEST['_wpnonce'], 'todoadd') ) die('Security check failed');
 		if ( $cleverness_todo_option['email_assigned'] == '1' && $cleverness_todo_option['assign'] == '0' )
@@ -68,27 +89,27 @@ case 'updatetodo':
 	$id = $_POST['id'];
 	$todotext = $_POST['cleverness_todo_description'];
 	$priority = $_POST['cleverness_todo_priority'];
-	$assign = $_POST['cleverness_todo_assign'];
-	$deadline = $_POST['cleverness_todo_deadline'];
-	$progress = $_POST['cleverness_todo_progress'];
-	$category = $_POST['cleverness_todo_category'];
+	$assign = (  isset($_POST['cleverness_todo_assign']) ?  $_POST['cleverness_todo_assign'] : 0 );
+	$deadline = (  isset($_POST['cleverness_todo_deadline']) ?  $_POST['cleverness_todo_deadline'] : '' );
+	$progress = (  isset($_POST['cleverness_todo_progress']) ?  $_POST['cleverness_todo_progress'] : 0 );
+	$category = (  isset($_POST['cleverness_todo_category']) ?  $_POST['cleverness_todo_category'] : '' );
 	require_once (ABSPATH . WPINC . '/pluggable.php');
 	if (!wp_verify_nonce($_REQUEST['_wpnonce'], 'todoupdate') ) die('Security check failed');
 	$message = cleverness_todo_update($id, $priority, $todotext, $assign, $deadline, $progress, $category);
 	break;
 
 case 'deletetodo':
-	$id = attribute_escape($_GET['id']);
+	$id = intval($_GET['id']);
 	$message = cleverness_todo_delete($id);
 	break;
 
 case 'completetodo':
-	$id = attribute_escape($_GET['id']);
+	$id = intval($_GET['id']);
 	$message = cleverness_todo_complete($id, '1');
 	break;
 
 case 'uncompletetodo':
-	$id = attribute_escape($_GET['id']);
+	$id = intval($_GET['id']);
 	$message = cleverness_todo_complete($id, '0');
 	break;
 
@@ -115,15 +136,16 @@ function cleverness_todo_subpanel() {
 
 	<?php
 	/* Display this section if editing an existing to-do item */
-	if ($_GET['action'] == 'edittodo') {
+	$action = ( isset($_GET['action']) ? $_GET['action'] : '' );
+	if ($action == 'edittodo') {
     	$id = $_GET['id'];
     	$todo = cleverness_todo_get_todo($id);
 	?>
 
 	<div class="wrap">
- 		<div id="icon-plugins" class="icon32"></div> <h2><?php _e('To-Do List', 'cleverness-to-do-list'); ?></h2>
+ 		<div class="icon32"><img src="<?php echo CTDL_PLUGIN_URL; ?>/images/cleverness-todo-icon.png" alt="" /></div> <h2><?php _e('To-Do List', 'cleverness-to-do-list'); ?></h2>
  		<h3><?php _e('Edit To-Do Item', 'cleverness-to-do-list') ?></h3>
- 		<form name="edittodo" action="admin.php?page=cleverness-to-do-list" method="post">
+ 		<form name="edittodo" action="" method="post">
 	  		<table class="form-table">
 			<tr>
 		  		<th scope="row"><label for="cleverness_todo_priority"><?php _e('Priority', 'cleverness-to-do-list') ?></label></th>
@@ -164,10 +186,10 @@ function cleverness_todo_subpanel() {
 			<?php endif; ?>
 			<?php if ($cleverness_todo_option['show_deadline'] == '1') : ?>
 				<th scope="row"><label for="cleverness_todo_deadline"><?php _e('Deadline', 'cleverness-to-do-list') ?></label></th>
-				<td><input type="text" name="cleverness_todo_deadline" id="cleverness_todo_deadline" value="<?php echo wp_specialchars($todo->deadline, 1); ?>" /></td>
+				<td><input type="text" name="cleverness_todo_deadline" id="cleverness_todo_deadline" value="<?php echo esc_html($todo->deadline, 1); ?>" /></td>
 			</tr>
 			<?php endif; ?>
-			<?php if ($cleverness_todo_option['show_progress'] == '1') : ?>
+			<?php if ($cleverness_todo_option['show_progress'] == '1') : // MAKE INTO LOOP!!!!!!!!!!!!!!!!! ?>
 				<th scope="row"><label for="cleverness_todo_progress"><?php _e('Progress', 'cleverness-to-do-list') ?></label></th>
 				<td><select name="cleverness_todo_progress">
 					<option value="0" <?php if ($todo->progress == 0) { echo "selected"; } ?>>0</option>
@@ -207,7 +229,7 @@ function cleverness_todo_subpanel() {
 			<?php endif; ?>
 	   		<tr>
 				<th scope="row" valign="top"><label for="cleverness_todo_description"><?php _e('To-Do', 'cleverness-to-do-list') ?></label></th>
-				<td><textarea name="cleverness_todo_description" rows="5" cols="50"><?php echo stripslashes(wp_specialchars($todo->todotext, 1)); ?></textarea></td>
+				<td><textarea name="cleverness_todo_description" rows="5" cols="50"><?php echo stripslashes(esc_html($todo->todotext, 1)); ?></textarea></td>
 			</tr>
 			</table>
 			<?php wp_nonce_field( 'todoupdate' ) ?>
@@ -223,7 +245,7 @@ function cleverness_todo_subpanel() {
 	?>
 
 	<div class="wrap">
-   		<div id="icon-plugins" class="icon32"></div>	<h2><?php _e('To-Do List', 'cleverness-to-do-list'); ?></h2>
+   		<div class="icon32"><img src="<?php echo CTDL_PLUGIN_URL; ?>/images/cleverness-todo-icon.png" alt="" /></div>	<h2><?php _e('To-Do List', 'cleverness-to-do-list'); ?></h2>
 		<h3><?php _e('To-Do Items', 'cleverness-to-do-list'); ?>
 		<?php if (current_user_can($cleverness_todo_option['add_capability']) || $cleverness_todo_option['list_view'] == '0') : ?>
 			(<a href="#addtd"><?php _e('Add New Item', 'cleverness-to-do-list'); ?></a>)
@@ -271,10 +293,11 @@ function cleverness_todo_subpanel() {
 		$sql .= ' ORDER BY priority, '.$cleverness_todo_option['sort_order'];
 
    		$results = $wpdb->get_results($sql);
+		$class = '';
 
    		if ($results) {
 	   		foreach ($results as $result) {
-		   		$class = ('alternate' == $class) ? '' : 'alternate';
+		   		$class = ('alternate' == $class ? '' : 'alternate');
 		   		$prstr = $priority[ $result->priority ];
 		   		$priority_class = '';
 		   		$user_info = get_userdata($result->author);
@@ -432,7 +455,7 @@ function cleverness_todo_subpanel() {
 	<?php if (current_user_can($cleverness_todo_option['add_capability']) || $cleverness_todo_option['list_view'] == '0') : ?>
 	<div class="wrap">
    	 	<h3><?php _e('Add New To-Do Item', 'cleverness-to-do-list') ?></h3>
-    	<form name="addtodo" id="addtodo" action="admin.php?page=cleverness-to-do-list" method="post">
+    	<form name="addtodo" id="addtodo" action="" method="post">
 	  		<table class="form-table">
 			<tr>
 		  		<th scope="row"><label for="cleverness_todo_priority"><?php _e('Priority', 'cleverness-to-do-list') ?></label></th>
@@ -533,12 +556,12 @@ function cleverness_todo_get_users($role) {
 /* Add Page under admin and Add Settings Page */
 function cleverness_todo_admin_menu() {
 	if (function_exists('add_menu_page')) {
-		global $userdata, $cleverness_todo_option;
+		global $userdata, $cleverness_todo_option, $cleverness_todo_cat_page;
    		get_currentuserinfo();
 
-        add_menu_page( __('To-Do List', 'cleverness-to-do-list'), __('To-Do List', 'cleverness-to-do-list'), $cleverness_todo_option['view_capability'], 'cleverness-to-do-list', 'cleverness_todo_subpanel');
+        add_menu_page( __('To-Do List', 'cleverness-to-do-list'), __('To-Do List', 'cleverness-to-do-list'), $cleverness_todo_option['view_capability'], 'cleverness-to-do-list', 'cleverness_todo_subpanel', CTDL_PLUGIN_URL.'/images/cleverness-todo-icon-sm.png');
 		if ( $cleverness_todo_option['categories'] == '1' )
-			add_submenu_page( 'cleverness-to-do-list', __('To-Do List Categories', 'cleverness-to-do-list'), __('Categories', 'cleverness-to-do-list'), $cleverness_todo_option['add_cat_capability'], 'cleverness-to-do-list-cats', 'cleverness_todo_categories');
+			$cleverness_todo_cat_page = add_submenu_page( 'cleverness-to-do-list', __('To-Do List Categories', 'cleverness-to-do-list'), __('Categories', 'cleverness-to-do-list'), $cleverness_todo_option['add_cat_capability'], 'cleverness-to-do-list-cats', 'cleverness_todo_categories');
 		add_submenu_page( 'cleverness-to-do-list', __('To-Do List Settings', 'cleverness-to-do-list'), __('Settings', 'cleverness-to-do-list'), 'manage_options', 'cleverness-to-do-list-options', 'cleverness_todo_settings_page');
 		add_submenu_page( 'cleverness-to-do-list', __('To-Do List Help', 'cleverness-to-do-list'), __('Help', 'cleverness-to-do-list'), $cleverness_todo_option['view_capability'], 'cleverness-to-do-list-help', 'cleverness_todo_help');
         }
@@ -547,13 +570,13 @@ function cleverness_todo_admin_menu() {
 /* Add plugin info to admin footer */
 function cleverness_todo_admin_footer() {
 	$plugin_data = get_plugin_data( __FILE__ );
-	printf(__("%1$s plugin | Version %2$s | by %3$s<br />", 'cleverness-to-do-list'), $plugin_data['Title'], $plugin_data['Version'], $plugin_data['Author']);
+	printf(__("%s plugin | Version %s | by %s<br />", 'cleverness-to-do-list'), $plugin_data['Title'], $plugin_data['Version'], $plugin_data['Author']);
 	}
 
 /* Add CSS file to admin header */
 function cleverness_todo_admin_add_css() {
-		$cleverness_style_url = WP_PLUGIN_URL . '/'.plugin_basename(dirname( __FILE__ )).'/admin.css';
-        $cleverness_style_file = WP_PLUGIN_DIR . '/'.plugin_basename(dirname( __FILE__ )).'/admin.css';
+		$cleverness_style_url = CTDL_PLUGIN_URL . '/css/admin.css';
+		$cleverness_style_file = CTDL_PLUGIN_DIR . '/css/admin.css';
         if ( file_exists($cleverness_style_file) ) {
             wp_register_style('cleverness_todo_style_sheet', $cleverness_style_url);
             wp_enqueue_style( 'cleverness_todo_style_sheet');
@@ -562,7 +585,7 @@ function cleverness_todo_admin_add_css() {
 
 /* Translation Support */
 function cleverness_todo_load_translation_file() {
-	$plugin_path = plugin_basename( dirname( __FILE__ ) .'/lang' );
+	$plugin_path = CTDL_BASENAME .'/lang';
 	load_plugin_textdomain( 'cleverness-to-do-list', '', $plugin_path );
 }
 
@@ -571,11 +594,10 @@ function cleverness_todo_register_settings() {
   register_setting( 'cleverness-todo-settings-group', 'cleverness_todo_settings' );
 }
 
-
 /* Add Settings link to plugin */
 function cleverness_add_settings_link($links, $file) {
 	static $this_plugin;
-	if (!$this_plugin) $this_plugin = plugin_basename(__FILE__);
+	if (!$this_plugin) $this_plugin = CTDL_BASENAME;
 
 	if ($file == $this_plugin){
 		$settings_link = '<a href="admin.php?page=cleverness-to-do-list-options">'.__('Settings', 'cleverness-to-do-list').'</a>';
@@ -588,7 +610,7 @@ add_filter('plugin_action_links', 'cleverness_add_settings_link', 10, 2 );
 
 /* Add Action Hooks */
 if (function_exists('add_action')) {
-	add_action('activate_'.plugin_basename(__FILE__),'cleverness_todo_install');
+	add_action('activate_'.CTDL_BASENAME,'cleverness_todo_install');
    	add_action('admin_menu', 'cleverness_todo_admin_menu');
    	add_action('admin_init', 'cleverness_todo_register_settings');
    	add_action('wp_dashboard_setup', 'cleverness_todo_dashboard_setup');
@@ -596,4 +618,7 @@ if (function_exists('add_action')) {
   	add_action('widgets_init', 'cleverness_todo_widget');
    	add_action('init', 'cleverness_todo_load_translation_file');
 	}
+
+
+
 ?>
