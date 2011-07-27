@@ -4,7 +4,7 @@ Donate link: http://cleverness.org/plugins/to-do-list/
 Tags: to-do, to do list, to-do list, list, assign tasks, tasks, admin
 Requires at least: 2.8
 Tested up to: 3.0.2
-Stable tag: tags/2.2.8
+Stable tag: 2.2.8
 
 Integrates a multi-featured to-do list into the WordPress administration area that is very customizable.
 
