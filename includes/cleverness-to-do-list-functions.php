@@ -13,9 +13,69 @@ function cleverness_todo_user_can($type, $action) {
 			}
 			break;
 		case 'todo':
+			if ( current_user_can($cleverness_todo_option[$action.'_capability']) || $cleverness_todo_option['list_view'] == '0' ) {
+   				return true;
+   			} else {
+   				return false;
+			}
 			break;
 			}
 }
+
+/* Get to-do list items */
+function cleverness_todo_get_todos($user, $limit = 0) {
+   	global $wpdb;
+
+	$cleverness_todo_settings = get_option('cleverness_todo_settings');
+	$cleverness_todo_dashboard_settings = get_option('cleverness_todo_dashboard_settings');
+	$cat_id = $cleverness_todo_dashboard_settings['dashboard_cat'];
+
+	$select = 'SELECT id, author, priority, todotext, assign, progress, deadline, cat_id FROM '.CTDL_TODO_TABLE.' WHERE status = 0';
+
+	// individual view
+	if ( $cleverness_todo_settings['list_view'] == '0' ) {
+		if ( $cleverness_todo_settings['assign'] == '0' )
+			$select .= $wpdb->prepare(" AND ( author = %d || assign = %d )", $user, $user);
+		else
+			$select .= $wpdb->prepare(" AND author = %d", $user);
+		}
+
+	// group view - show only assigned - show all assigned
+	elseif ( $cleverness_todo_settings['list_view'] == '1' && $cleverness_todo_settings['show_only_assigned'] == '0' && (current_user_can($cleverness_todo_settings['view_all_assigned_capability'])) )
+		$select = $select;
+	// group view - show only assigned
+	elseif ( $cleverness_todo_settings['list_view'] == '1' && $cleverness_todo_settings['show_only_assigned'] == '0' )
+		$select = $wpdb->prepare(" AND assign = %d", $user);
+	// group view - show all
+	elseif ( $cleverness_todo_settings['list_view'] == '1' )
+		$select = $select;
+	// master view with edit capablities
+	elseif ( $cleverness_todo_settings['list_view'] == '2' && current_user_can($cleverness_todo_settings['edit_capability']) )
+			$select = $select;
+	// master view
+	elseif ( $cleverness_todo_settings['list_view'] == '2' ) {
+		   	$select = $wpdb->prepare(" AND ( id = ANY ( SELECT id FROM ".CTDL_STATUS_TABLE." WHERE user = %d AND status = 0) OR id NOT IN( SELECT id FROM ".CTDL_STATUS_TABLE." WHERE user = %d AND status = 1 ) )", $user, $user);
+		}
+
+// MAKE IT SO IT ONLY HAPPENS ON THE DASHBOARD!!!!!
+	// show only one category
+	if ( $cleverness_todo_settings['categories'] == '1' && $cat_id != 'All' ) {
+			$select .= $wpdb->prepare(" AND cat_id = %d ", $cat_id);
+		}
+		
+	// order by sort order - no categories
+	if ( $cleverness_todo_settings['categories'] == '0' )
+		$select .= $wpdb->prepare(" ORDER BY priority, %s", $cleverness_todo_settings['sort_order']);
+	// order by categories then sort order
+	else
+		$select .= $wpdb->prepare(" ORDER BY cat_id, priority, %s", $cleverness_todo_settings['sort_order']);
+	if ( $limit != 0 ) $select .= $wpdb->prepare("  LIMIT %d", $limit);
+	echo $select;
+   	$result = $wpdb->get_results( $select, OBJECT_K );
+   	return $result;
+	}
+
+
 
 /* Insert new to-do item into the database */
 function cleverness_todo_insert($todotext, $priority, $assign = 0, $deadline, $progress = 0, $category = 0) {
@@ -91,26 +151,13 @@ function cleverness_todo_update($id, $priority, $todotext, $assign = 0, $deadlin
 	}
 
 /* Delete to-do list item */
-function cleverness_todo_delete($id) {
-   	global $wpdb, $userdata, $cleverness_todo_option;
-	require_once (ABSPATH . WPINC . '/pluggable.php');
-   	get_currentuserinfo();
+function cleverness_todo_delete() {
+   	global $wpdb;
 
-   	$table_name = $wpdb->prefix . 'todolist';
-   	if ( $cleverness_todo_option['list_view'] == '0' || current_user_can($cleverness_todo_option['delete_capability']) ) {
-   		$delete = "DELETE FROM ".$table_name." WHERE id = '".$id."'";
-   		$results = $wpdb->query( $delete );
-		if ( $results ) $message = __('To-Do item has been deleted.', 'cleverness-to-do-list');
-		else {
-			$message = __('There was a problem deleting the item.', 'cleverness-to-do-list');
-			$wpdb->show_errors();
-			$wpdb->print_error();
-			$wpdb->hide_errors();
-			}
-   	} else {
-		$message = __('You do not have sufficient privileges to do that.', 'cleverness-to-do-list');
-		}
-	return $message;
+   	$delete = 'DELETE FROM ' . CTDL_TODO_TABLE . ' WHERE id = "%d"';
+   	$results = $wpdb->query( $wpdb->prepare($delete, $_POST['cleverness_todo_id']) );
+	$success = ( $results === FALSE ? 0 : 1 );
+	return $success;
 	}
 
 /* Mark to-do list item as completed or uncompleted */
@@ -159,20 +206,12 @@ function cleverness_todo_complete($id, $status) {
 	}
 
 /* Get to-do list item */
-function cleverness_todo_get_todo($id) {
-   	global $wpdb, $userdata, $cleverness_todo_option;
-	require_once (ABSPATH . WPINC . '/pluggable.php');
-   	get_currentuserinfo();
+function cleverness_todo_get_todo() {
+   	global $wpdb;
 
-   	$table_name = $wpdb->prefix . 'todolist';
-   	if ( $cleverness_todo_option['list_view'] == '0' || current_user_can($cleverness_todo_option['edit_capability']) ) {
-   		$edit = "SELECT * FROM ".$table_name." WHERE id = '".$id."' LIMIT 1";
-   		$result = $wpdb->get_row( $edit );
-   		return $result;
-	} else {
-		$message = __('You do not have sufficient privileges to do that.', 'cleverness-to-do-list');
-		}
-	return $message;
+   	$select = "SELECT id, todotext, priority FROM ".CTDL_TODO_TABLE." WHERE id = '%d' LIMIT 1";
+   	$result = $wpdb->get_row( $wpdb->prepare($select, $_POST['cleverness_todo_id']) );
+   	return $result;
 	}
 
 /* Delete all completed to-do list items */
@@ -232,8 +271,8 @@ function cleverness_todo_delete_cat() {
 function cleverness_todo_get_todo_cat() {
    	global $wpdb;
 
-   	$edit = "SELECT id, name, visibility FROM ".CTDL_CATS_TABLE." WHERE id = '%d' LIMIT 1";
-   	$result = $wpdb->get_row( $wpdb->prepare($edit, $_POST['cleverness_todo_cat_id']) );
+   	$select = "SELECT id, name, visibility FROM ".CTDL_CATS_TABLE." WHERE id = '%d' LIMIT 1";
+   	$result = $wpdb->get_row( $wpdb->prepare($select, $_POST['cleverness_todo_cat_id']) );
    	return $result;
 	}
 

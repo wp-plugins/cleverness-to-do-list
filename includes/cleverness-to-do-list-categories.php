@@ -113,13 +113,13 @@ function cleverness_todo_cat_init() {
 	global $cleverness_todo_cat_page;
 
 	wp_register_script( 'cleverness_todo_category_js', CTDL_PLUGIN_URL.'/js/categories.js', '', 1.0, true );
-	add_action('admin_print_styles-' . $cleverness_todo_cat_page, 'cleverness_todo_add_js');
+	add_action('admin_print_styles-' . $cleverness_todo_cat_page, 'cleverness_todo_cat_add_js');
 	add_action('wp_ajax_cleverness_todo_cat_get', 'cleverness_todo_cat_get_callback');
 	add_action('wp_ajax_cleverness_todo_cat_update', 'cleverness_todo_cat_update_callback');
 	add_action('wp_ajax_cleverness_todo_cat_delete', 'cleverness_todo_cat_delete_callback');
 }
 
-function cleverness_todo_add_js() {
+function cleverness_todo_cat_add_js() {
 	wp_enqueue_script( 'cleverness_todo_category_js' );
 	wp_enqueue_script( 'jquery-color' );
 	wp_localize_script( 'cleverness_todo_category_js', 'cltdcat', cleverness_to_do_get_js_vars());

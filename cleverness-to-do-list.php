@@ -125,14 +125,12 @@ function cleverness_todo_subpanel() {
    	global $wpdb, $userdata, $cleverness_todo_option, $message, $current_user;
    	get_currentuserinfo();
 
-   	$table_name = $wpdb->prefix.'todolist';
-	$status_table_name = $wpdb->prefix.'todolist_status';
+   	$table_name = $wpdb->prefix.'todolist'; // REMOVE
+	$status_table_name = $wpdb->prefix.'todolist_status'; // REMOVE
    	$priority = array(0 => $cleverness_todo_option['priority_0'] , 1 => $cleverness_todo_option['priority_1'], 2 => $cleverness_todo_option['priority_2']);
 	?>
 
-	<?php if ( isset($message) ) : ?>
-		<div id="message" class="updated fade"><p><?php echo $message; ?></p></div>
-	<?php endif; ?>
+	<div id="message"><?php if ( $cleverness_todo_message != '' ) echo '<p class="error below-h2">'.$cleverness_todo_message.'</p>'; ?></div>
 
 	<?php
 	/* Display this section if editing an existing to-do item */
@@ -265,39 +263,17 @@ function cleverness_todo_subpanel() {
     	</tr>
 		</thead>
 		<?php
-   		// individual view
-		if ( $cleverness_todo_option['list_view'] == '0' ) {
-	   		if ( $cleverness_todo_option['assign'] == '0' )
-				$sql = "SELECT * FROM $table_name WHERE status = 0 AND ( author = $userdata->ID || assign = $userdata->ID )";
-	   		else
-				$sql = "SELECT * FROM $table_name WHERE status = 0 AND author = $userdata->ID";
-			}
-		//  group view - show only assigned - user can view all assigned tasks
-		elseif ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['show_only_assigned'] == '0' && (current_user_can($cleverness_todo_option['view_all_assigned_capability'])) )
-			$sql = "SELECT * FROM $table_name WHERE status = 0";
-		// group view - show only assigned
-		elseif ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['show_only_assigned'] == '0' )
-		   	$sql = "SELECT * FROM $table_name WHERE status = 0 AND assign = $userdata->ID";
-		// group view - show all
-   		elseif ( $cleverness_todo_option['list_view'] == '1' )
-			$sql = "SELECT * FROM $table_name WHERE status = 0";
-		// master view with edit capablities
-		elseif ( $cleverness_todo_option['list_view'] == '2' && current_user_can($cleverness_todo_option['edit_capability']) )
-			$sql = "SELECT * FROM $table_name WHERE status = 0";
-		// master view
-		elseif ( $cleverness_todo_option['list_view'] == '2' ) {
+   		if ( $cleverness_todo_settings['list_view'] == '2' ) {
 			$user = $current_user->ID;
-	   		$sql = "SELECT * FROM $table_name WHERE ( id = ANY ( SELECT id FROM $status_table_name WHERE user = $user AND status = 0 ) OR  id NOT IN( SELECT id FROM $status_table_name WHERE user = $user AND status = 1 ) ) AND status = 0";
+		} else {
+			$user = $userdata->ID;
 		}
-		// add sort order
-		$sql .= ' ORDER BY priority, '.$cleverness_todo_option['sort_order'];
 
-   		$results = $wpdb->get_results($sql);
-		$class = '';
+		// get to-do items
+		$results = cleverness_todo_get_todos($user);
 
    		if ($results) {
 	   		foreach ($results as $result) {
-		   		$class = ('alternate' == $class ? '' : 'alternate');
 		   		$prstr = $priority[ $result->priority ];
 		   		$priority_class = '';
 		   		$user_info = get_userdata($result->author);
@@ -305,11 +281,11 @@ function cleverness_todo_subpanel() {
 				if ($result->priority == '2') $priority_class = ' todo-low';
 				$edit = '';
 				if (current_user_can($cleverness_todo_option['edit_capability']) || $cleverness_todo_option['list_view'] == '0')
-		  			$edit = '<a href="admin.php?page=cleverness-to-do-list&amp;action=edittodo&amp;id='.$result->id.'" class="edit">'.__('Edit', 'cleverness-to-do-list').'</a>';
+		  			$edit = '<input class="edit-todo button-secondary" type="button" value="'. __( 'Edit' ).'" />';
 				if (current_user_can($cleverness_todo_option['delete_capability']) || $cleverness_todo_option['list_view'] == '0')
-					$edit .= ' | <a href="admin.php?page=cleverness-to-do-list&amp;action=deletetodo&amp;id='.$result->id.'" class="delete">'.__('Delete', 'cleverness-to-do-list').'</a>';
-		   		echo '<tr id="cleverness_todo-'.$result->id.'" class="'.$class.$priority_class.'">
-			   	<td><input type="checkbox" id="td-'.$result->id.'" onclick="window.location = \'admin.php?page=cleverness-to-do-list&amp;action=completetodo&amp;id='.$result->id.'\';" />&nbsp;'.stripslashes($result->todotext).'</td>
+					$edit .= ' | <input class="delete-todo button-secondary" type="button" value="'. __( 'Delete' ).'" />';
+		   		echo '<tr id="todo-'.$result->id.'" class="'.$priority_class.'">';
+				echo '<td><input type="checkbox" id="cltd-'.$result->id.'" class="todo-checkbox" />&nbsp;'.stripslashes($result->todotext).'</td>
 			   	<td>'.$prstr.'</td>';
 				if ( $cleverness_todo_option['assign'] == '0' ) {
 					$assign_user = '';
@@ -606,6 +582,8 @@ function cleverness_add_settings_link($links, $file) {
 	return $links;
 }
 
+// NEED TO ONLY LOAD CSS AND JS ON PLUGIN PAGE
+
 add_filter('plugin_action_links', 'cleverness_add_settings_link', 10, 2 );
 
 /* Add Action Hooks */
@@ -619,6 +597,83 @@ if (function_exists('add_action')) {
    	add_action('init', 'cleverness_todo_load_translation_file');
 	}
 
+/* JS and Ajax Setup */
+// returns various JavaScript vars needed for the scripts
+function cleverness_todo_get_js_vars() {
+	return array(
+	'SUCCESS_MSG' => __('To-Do Deleted.', 'cleverness-to-do-list'),
+	'ERROR_MSG' => __('There was a problem performing that action.', 'cleverness-to-do-list'),
+	'PERMISSION_MSG' => __('You do not have sufficient privileges to do that.', 'cleverness-to-do-list'),
+	'EDIT_TODO' => __('Edit To-Do', 'cleverness-to-do-list'),
+	'PUBLIC' => __('Public', 'cleverness-to-do-list'),
+	'PRIVATE' => __('Private', 'cleverness-to-do-list'),
+	'CONFIRMATION_MSG' => __("You are about to permanently delete the selected item. \n 'Cancel' to stop, 'OK' to delete.", 'cleverness-to-do-list'),
+	'NONCE' => wp_create_nonce('cleverness-todo')
+	);
+}
+/* end JS Setup */
 
+add_action( 'admin_init', 'cleverness_todo_init' );
 
+function cleverness_todo_init() {
+	wp_register_script( 'cleverness_todo_js', CTDL_PLUGIN_URL.'/js/todos.js', '', 1.0, true );
+	wp_register_script( 'cleverness_todo_complete_js', CTDL_PLUGIN_URL.'/js/complete-todo.js', '', 1.0, true );
+	add_action('admin_print_scripts', 'cleverness_todo_add_js');
+	add_action('wp_ajax_cleverness_todo_complete', 'cleverness_todo_complete_callback');
+	add_action('wp_ajax_cleverness_todo_delete', 'cleverness_todo_delete_callback');
+	add_action('wp_ajax_cleverness_todo_get', 'cleverness_todo_get_callback');
+}
+
+function cleverness_todo_add_js() {
+	wp_enqueue_script( 'cleverness_todo_complete_js' );
+	wp_enqueue_script( 'cleverness_todo_js' );
+	wp_enqueue_script( 'jquery-color' );
+	wp_localize_script( 'cleverness_todo_js', 'cltd', cleverness_todo_get_js_vars());
+    }
+
+function cleverness_todo_complete_callback() {
+	$cleverness_todo_settings = get_option('cleverness_todo_settings');
+
+	if ( $cleverness_todo_settings['list_view'] == '0' || current_user_can($cleverness_todo_settings['complete_capability']) ) {
+		$cleverness_id = intval($_POST['cleverness_id']);
+		$cleverness_status = intval($_POST['cleverness_status']);
+		$message = cleverness_todo_complete($cleverness_id, $cleverness_status);
+	} else {
+		$message = __('You do not have sufficient privileges to do that.', 'cleverness-to-do-list');
+	}
+
+	die(); // this is required to return a proper result
+}
+
+/* Get To-Do Ajax */
+function cleverness_todo_get_callback() {
+	$cleverness_todo_permission = cleverness_todo_user_can( 'todo', 'add_todo' );
+
+	if ( $cleverness_todo_permission === true ) {
+		$cleverness_todo = cleverness_todo_get_todo();
+	} else {
+		$cleverness_todo_status = 2;
+		}
+
+	echo json_encode( array( 'cleverness_todo_todotext' => $cleverness_todo->todotext, 'cleverness_todo_priority' => $cleverness_todo->priority ) );
+
+	die(); // this is required to return a proper result
+}
+/* end Get To-Do Ajax */
+
+/* Delete To-Do Ajax */
+function cleverness_todo_delete_callback() {
+	check_ajax_referer( 'cleverness-todo' );
+	$cleverness_todo_permission = cleverness_todo_user_can( 'todo', 'add_todo' );
+
+	if ( $cleverness_todo_permission === true ) {
+		$cleverness_todo_status = cleverness_todo_delete();
+	} else {
+		$cleverness_todo_status = 2;
+		}
+
+	echo $cleverness_todo_status;
+	die(); // this is required to return a proper result
+}
+/* end Delete To-Do Ajax */
 ?>
