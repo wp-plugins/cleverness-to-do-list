@@ -23,14 +23,14 @@ function cleverness_todo_user_can($type, $action) {
 }
 
 /* Get to-do list items */
-function cleverness_todo_get_todos($user, $limit = 0) {
+function cleverness_todo_get_todos($user, $limit = 0, $status = 0) {
    	global $wpdb;
 
 	$cleverness_todo_settings = get_option('cleverness_todo_settings');
 	$cleverness_todo_dashboard_settings = get_option('cleverness_todo_dashboard_settings');
 	$cat_id = $cleverness_todo_dashboard_settings['dashboard_cat'];
 
-	$select = 'SELECT id, author, priority, todotext, assign, progress, deadline, cat_id FROM '.CTDL_TODO_TABLE.' WHERE status = 0';
+	$select = 'SELECT id, author, priority, todotext, assign, progress, deadline, cat_id FROM '.CTDL_TODO_TABLE.' WHERE status = '.absint($status);
 
 	// individual view
 	if ( $cleverness_todo_settings['list_view'] == '0' ) {
@@ -54,7 +54,11 @@ function cleverness_todo_get_todos($user, $limit = 0) {
 			$select = $select;
 	// master view
 	elseif ( $cleverness_todo_settings['list_view'] == '2' ) {
+		if ($status == 0 ) {
 		   	$select = $wpdb->prepare(" AND ( id = ANY ( SELECT id FROM ".CTDL_STATUS_TABLE." WHERE user = %d AND status = 0) OR id NOT IN( SELECT id FROM ".CTDL_STATUS_TABLE." WHERE user = %d AND status = 1 ) )", $user, $user);
+		} elseif ( $status == 1 ) {
+		   	$select = $wpdb->prepare(" LEFT OUTER JOIN ".CTDL_STATUS_TABLE." USING (id) WHERE ( ".CTDL_STATUS_TABLE.".status = 1 AND ".CTDL_STATUS_TABLE.".user = %d )", $user);
+			}
 		}
 
 // MAKE IT SO IT ONLY HAPPENS ON THE DASHBOARD!!!!!
@@ -62,7 +66,7 @@ function cleverness_todo_get_todos($user, $limit = 0) {
 	if ( $cleverness_todo_settings['categories'] == '1' && $cat_id != 'All' ) {
 			$select .= $wpdb->prepare(" AND cat_id = %d ", $cat_id);
 		}
-		
+
 	// order by sort order - no categories
 	if ( $cleverness_todo_settings['categories'] == '0' )
 		$select .= $wpdb->prepare(" ORDER BY priority, %s", $cleverness_todo_settings['sort_order']);

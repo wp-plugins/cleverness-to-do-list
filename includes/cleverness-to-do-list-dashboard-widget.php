@@ -140,18 +140,17 @@ function cleverness_todo_dashboard_init() {
 function cleverness_todo_dashboard_add_js() {
 	wp_enqueue_script( 'cleverness_todo_dashboard_complete_js' );
     }
-
+/*
 function cleverness_todo_dashboard_complete_callback() {
-	$cleverness_todo_settings = get_option('cleverness_todo_settings');
 	$cleverness_todo_permission = cleverness_todo_user_can( 'todo', 'complete' );
 
 	if ( $cleverness_todo_permission === true ) {
 		$cleverness_widget_id = intval($_POST['cleverness_id']);
-		$message = cleverness_todo_complete($cleverness_widget_id, '1');
+		$message = cleverness_todo_complete($cleverness_widget_id, '0');
 	} else {
 		$message = __('You do not have sufficient privileges to do that.', 'cleverness-to-do-list');
 	}
 
 	die(); // this is required to return a proper result
-}
+}*/
 ?>

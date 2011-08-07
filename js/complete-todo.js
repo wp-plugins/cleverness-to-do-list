@@ -3,11 +3,11 @@ jQuery(document).ready(function($) {
 // add nonce
 
 	$('.todo-checkbox').click(function () {
-		var status = '';
+		var status = 1;
 		var id = $(this).attr('id').substr(5);
+		var blah = $(this).attr('id');
 		var todoid = '#todo-' + id;
-		if (this.checked) status = 0;
-		else status = 1;
+		if ($(this).prop('checked') == false ) status = 0;
 
 		var data = {
 		action: 'cleverness_todo_complete',

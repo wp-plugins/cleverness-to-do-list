@@ -12,20 +12,11 @@ Plugin URI: http://cleverness.org/plugins/to-do-list/
 Based on the ToDo plugin by Abstract Dimensions with a patch by WordPress by Example.
 */
 
-/*
-register_activation_hook( __FILE__, 'boj_myplugin_install' );
-
-function boj_myplugin_install() {
-    if ( version_compare( get_bloginfo( 'version' ), '3.1', '<' ) ) {
-        deactivate_plugins( basename( __FILE__ ) ); // Deactivate our plugin
-    }
-}*/
-
 global $wp_version;
 
-$exit_msg = __('To-Do List requires WordPress 3.0 or newer. <a href="http://codex.wordpress.org/Upgrading_WordPress">Please update.</a>', 'cleverness-to-do-list');
+$exit_msg = __('To-Do List requires WordPress 3.2 or newer. <a href="http://codex.wordpress.org/Upgrading_WordPress">Please update.</a>', 'cleverness-to-do-list');
 
-if (version_compare($wp_version, "3.0", "<")) {
+if (version_compare($wp_version, "3.2", "<")) {
 	exit($exit_msg);
   	}
 
@@ -98,11 +89,6 @@ case 'updatetodo':
 	$message = cleverness_todo_update($id, $priority, $todotext, $assign, $deadline, $progress, $category);
 	break;
 
-case 'deletetodo':
-	$id = intval($_GET['id']);
-	$message = cleverness_todo_delete($id);
-	break;
-
 case 'completetodo':
 	$id = intval($_GET['id']);
 	$message = cleverness_todo_complete($id, '1');
@@ -136,7 +122,7 @@ function cleverness_todo_subpanel() {
 	/* Display this section if editing an existing to-do item */
 	$action = ( isset($_GET['action']) ? $_GET['action'] : '' );
 	if ($action == 'edittodo') {
-    	$id = $_GET['id'];
+    	$id = absint($_GET['id']);
     	$todo = cleverness_todo_get_todo($id);
 	?>
 
@@ -153,7 +139,7 @@ function cleverness_todo_subpanel() {
 					<option value="1" <?php if ($todo->priority == 1) { echo "selected"; } ?>><?php echo $cleverness_todo_option['priority_1']; ?></option>
 					<option value="2" <?php if ($todo->priority == 2) { echo "selected"; } ?>><?php echo $cleverness_todo_option['priority_2']; ?></option>
 					</select>
-					<input type="hidden" name="id" value="<?php echo $todo->id ?>" />
+					<input type="hidden" name="id" value="<?php echo absint($todo->id); ?>" />
 				</td>
 			</tr>
 			<?php if ($cleverness_todo_option['assign'] == '0' && current_user_can($cleverness_todo_option['assign_capability'])) : ?>
@@ -283,7 +269,7 @@ function cleverness_todo_subpanel() {
 				if (current_user_can($cleverness_todo_option['edit_capability']) || $cleverness_todo_option['list_view'] == '0')
 		  			$edit = '<input class="edit-todo button-secondary" type="button" value="'. __( 'Edit' ).'" />';
 				if (current_user_can($cleverness_todo_option['delete_capability']) || $cleverness_todo_option['list_view'] == '0')
-					$edit .= ' | <input class="delete-todo button-secondary" type="button" value="'. __( 'Delete' ).'" />';
+					$edit .= ' <input class="delete-todo button-secondary" type="button" value="'. __( 'Delete' ).'" />';
 		   		echo '<tr id="todo-'.$result->id.'" class="'.$priority_class.'">';
 				echo '<td><input type="checkbox" id="cltd-'.$result->id.'" class="todo-checkbox" />&nbsp;'.stripslashes($result->todotext).'</td>
 			   	<td>'.$prstr.'</td>';
@@ -346,37 +332,8 @@ function cleverness_todo_subpanel() {
 		</thead>
 		<?php
 		// individual view
-		if ( $cleverness_todo_option['list_view'] == '0' ) {
-			if ( $cleverness_todo_option['assign'] == '0' )
-				$sql = "SELECT * FROM $table_name WHERE status = 1 AND ( author = $userdata->ID || assign = $userdata->ID )";
-	   		else
-				$sql = "SELECT * FROM $table_name WHERE status = 1 AND author = $userdata->ID";
-			}
-		// group view - show only assigned - view all assigned
-		elseif ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['show_only_assigned'] == '0' && (current_user_can($cleverness_todo_option['view_all_assigned_capability'])) )
-			$sql = "SELECT * FROM $table_name WHERE status = 1";
-		// group view - show only assigned
-		elseif ( $cleverness_todo_option['list_view'] == '1' && $cleverness_todo_option['show_only_assigned'] == '0' )
-			$sql = "SELECT * FROM $table_name WHERE status = 1 AND assign = $userdata->ID";
-		// group view - show all
-		elseif ( $cleverness_todo_option['list_view'] == '1' )
-	   		$sql = "SELECT * FROM $table_name WHERE status = 1";
-				// master view with edit capablities
-		elseif ( $cleverness_todo_option['list_view'] == '2' && current_user_can($cleverness_todo_option['edit_capability']) )
-			$sql = "SELECT * FROM $table_name WHERE status = 1";
-		// master view
-		elseif ( $cleverness_todo_option['list_view'] == '2' ) {
-			$user = $current_user->ID;
-		   	$sql = "SELECT * FROM $table_name LEFT OUTER JOIN $status_table_name USING (id) WHERE ( $status_table_name.status = 1 AND $status_table_name.user = $user )";
-		}
-		// add sort order
-		if ( $cleverness_todo_option['show_completed_date'] == '1' )
-			$sql .= " ORDER BY completed DESC";
-		else
-			$sql .= " ORDER BY priority";
-		$sql .= ', '.$cleverness_todo_option['sort_order'];
+		$results = cleverness_todo_get_todos($user, 0, 1);
 
-   		$results = $wpdb->get_results($sql);
    		if ($results) {
 	   		foreach ($results as $result) {
 		   		$class = ('alternate' == $class) ? '' : 'alternate';
@@ -384,9 +341,9 @@ function cleverness_todo_subpanel() {
 		   		$user_info = get_userdata($result->author);
 				$edit = '';
 				if (current_user_can($cleverness_todo_option['delete_capability']) || $cleverness_todo_option['list_view'] == '0')
-		   			$edit = '<a href="admin.php?page=cleverness-to-do-list&amp;action=deletetodo&amp;id='.$result->id.'" class="delete">'.__('Delete', 'cleverness-to-do-list').'</a>';
-		   		echo '<tr id="cleverness_todo-'.$result->id.'" class="'.$class.'">
-			   	<td><input type="checkbox" id="td-'.$result->id.'" checked="checked" onclick="window.location = \'admin.php?page=cleverness-to-do-list&amp;action=uncompletetodo&amp;id='.$result->id.'\';" />&nbsp;'.stripslashes($result->todotext).'</td>
+		   			$edit = '<input class="delete-todo button-secondary" type="button" value="'. __( 'Delete' ).'" />';
+		   		echo '<tr id="todo-'.$result->id.'" class="'.$class.'">
+			   	<td><input type="checkbox" id="cltd-'.$result->id.'" class="todo-checkbox" checked="checked" />&nbsp;'.stripslashes($result->todotext).'</td>
 			   	<td>'.$prstr.'</td>';
 				if ( $cleverness_todo_option['assign'] == '0' ) {
 					$assign_user = '';
@@ -428,7 +385,8 @@ function cleverness_todo_subpanel() {
    		</table>
 	</div>
 
-	<?php if (current_user_can($cleverness_todo_option['add_capability']) || $cleverness_todo_option['list_view'] == '0') : ?>
+	<?php // add new to-do
+	if (current_user_can($cleverness_todo_option['add_capability']) || $cleverness_todo_option['list_view'] == '0') : ?>
 	<div class="wrap">
    	 	<h3><?php _e('Add New To-Do Item', 'cleverness-to-do-list') ?></h3>
     	<form name="addtodo" id="addtodo" action="" method="post">
@@ -632,15 +590,15 @@ function cleverness_todo_add_js() {
     }
 
 function cleverness_todo_complete_callback() {
-	$cleverness_todo_settings = get_option('cleverness_todo_settings');
+	$cleverness_todo_permission = cleverness_todo_user_can( 'todo', 'complete_todo' );
 
-	if ( $cleverness_todo_settings['list_view'] == '0' || current_user_can($cleverness_todo_settings['complete_capability']) ) {
+	if ( $cleverness_todo_permission === true ) {
 		$cleverness_id = intval($_POST['cleverness_id']);
 		$cleverness_status = intval($_POST['cleverness_status']);
-		$message = cleverness_todo_complete($cleverness_id, $cleverness_status);
+		$cleverness_todo_status = cleverness_todo_complete($cleverness_id, $cleverness_status);
 	} else {
-		$message = __('You do not have sufficient privileges to do that.', 'cleverness-to-do-list');
-	}
+		$cleverness_todo_status = 2;
+		}
 
 	die(); // this is required to return a proper result
 }
