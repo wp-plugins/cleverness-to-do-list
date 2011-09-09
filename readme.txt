@@ -1,5 +1,5 @@
 === Plugin Name ===
-Contributors: elusivelight
+Contributors: elusivelight, bas_der_gruene
 Donate link: http://cleverness.org/plugins/to-do-list/
 Tags: to-do, to do list, to-do list, list, assign tasks, tasks, admin
 Requires at least: 2.8
@@ -94,8 +94,10 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Changelog ==
 = 2.3 =
+* Integrated code from bas_der_gruene (Janne Fleischer): widget options, assign additional users, and to-do list comments
 * Moved dashboard widgets settings to the dashboard widget
 * Added ajax to dashboard widget
+* HTML in tasks has been fixed
 
 = 2.2.8 =
 * Fix issue where completed items would not show using list in the shortcode

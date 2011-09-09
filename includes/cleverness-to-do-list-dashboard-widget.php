@@ -16,7 +16,7 @@ function cleverness_todo_dashboard_widget() {
 	$limit = $cleverness_todo_dashboard_settings['dashboard_number'];
 
 	// get to-do items
-	$results = cleverness_todo_get_todos($user, $limit);
+	$results = cleverness_todo_get_todos($user, $limit, 0, 1);
 
 	if ($results) {
 		$catid = '';
@@ -129,6 +129,20 @@ function cleverness_todo_dashboard_setup() {
 	}
 
 /* JS and Ajax Setup */
+// returns various JavaScript vars needed for the scripts
+function cleverness_todo_get_js_vars() {
+	return array(
+	'SUCCESS_MSG' => __('To-Do Deleted.', 'cleverness-to-do-list'),
+	'ERROR_MSG' => __('There was a problem performing that action.', 'cleverness-to-do-list'),
+	'PERMISSION_MSG' => __('You do not have sufficient privileges to do that.', 'cleverness-to-do-list'),
+	'EDIT_TODO' => __('Edit To-Do', 'cleverness-to-do-list'),
+	'PUBLIC' => __('Public', 'cleverness-to-do-list'),
+	'PRIVATE' => __('Private', 'cleverness-to-do-list'),
+	'CONFIRMATION_MSG' => __("You are about to permanently delete the selected item. \n 'Cancel' to stop, 'OK' to delete.", 'cleverness-to-do-list'),
+	'NONCE' => wp_create_nonce('cleverness-todo'),
+	'AJAX_URL' => admin_url('admin-ajax.php')
+	);
+	}
 add_action( 'admin_init', 'cleverness_todo_dashboard_init' );
 
 function cleverness_todo_dashboard_init() {
@@ -139,8 +153,9 @@ function cleverness_todo_dashboard_init() {
 
 function cleverness_todo_dashboard_add_js() {
 	wp_enqueue_script( 'cleverness_todo_dashboard_complete_js' );
+	wp_localize_script( 'cleverness_todo_dashboard_complete_js', 'cltd', cleverness_todo_get_js_vars());
     }
-/*
+
 function cleverness_todo_dashboard_complete_callback() {
 	$cleverness_todo_permission = cleverness_todo_user_can( 'todo', 'complete' );
 
@@ -152,5 +167,5 @@ function cleverness_todo_dashboard_complete_callback() {
 	}
 
 	die(); // this is required to return a proper result
-}*/
+}
 ?>

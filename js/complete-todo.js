@@ -5,7 +5,6 @@ jQuery(document).ready(function($) {
 	$('.todo-checkbox').click(function () {
 		var status = 1;
 		var id = $(this).attr('id').substr(5);
-		var blah = $(this).attr('id');
 		var todoid = '#todo-' + id;
 		if ($(this).prop('checked') == false ) status = 0;
 
@@ -15,7 +14,7 @@ jQuery(document).ready(function($) {
 		cleverness_status: status
 		};
 
-		jQuery.post(ajaxurl, data, function(response) {
+		jQuery.post(cltd.AJAX_URL, data, function(response) {
 			$(todoid).fadeOut();
 			// add the row to the correct table
 			});

@@ -1,7 +1,7 @@
-.todo-important {
+.todo-important, .widefat .todo-important td {
 	color: #CC0033;
 	}
-.todo-low {
+.todo-low, .widefat .todo-low td {
 	color: #666666;
 }
 p.error {
