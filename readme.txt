@@ -1,6 +1,5 @@
 === Cleverness To-Do List ===
-Contributors: elusivelight, bas_der_gruene
-<<<<<<< .mine
+Contributors: elusivelight
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cindy@cleverness.org
 Author URI: http://cleverness.org
 Plugin URI: http://cleverness.org/plugins/to-do-list
@@ -8,13 +7,6 @@ Tags: to-do, to do list, to-do list, list, todo, to do, assign, task, assignment
 Requires at least: 3.3
 Tested up to: 3.3.1
 Stable tag: 3.0
-=======
-Donate link: http://cleverness.org/plugins/to-do-list/
-Tags: to-do, to do list, to-do list, list, assign tasks, tasks, admin
-Requires at least: 2.8
-Tested up to: 3.0.2
-Stable tag: 2.2.8
->>>>>>> .r510187
 
 Integrates a very customizable, multi-featured to-do list.
 
@@ -140,7 +132,6 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 3. Settings Page
 
 == Changelog ==
-<<<<<<< .mine
 = 3.0 =
 * Converted rest of the code to classes
 * Converted custom database tables to custom post type
@@ -153,13 +144,6 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Changed some wording on the Settings page
 * Fixed master list view
 * Added date picker to deadline field
-=======
-= 2.3 =
-* Integrated code from bas_der_gruene (Janne Fleischer): widget options, assign additional users, and to-do list comments
-* Moved dashboard widgets settings to the dashboard widget
-* Added ajax to dashboard widget
-* HTML in tasks has been fixed
->>>>>>> .r510187
 
 = 2.3 =
 * Moved dashboard widgets settings to the dashboard widget
