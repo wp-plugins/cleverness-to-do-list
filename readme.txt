@@ -1,28 +1,42 @@
-=== Plugin Name ===
+=== Cleverness To-Do List ===
 Contributors: elusivelight, bas_der_gruene
+<<<<<<< .mine
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cindy@cleverness.org
+Author URI: http://cleverness.org
+Plugin URI: http://cleverness.org/plugins/to-do-list
+Tags: to-do, to do list, to-do list, list, todo, to do, assign, task, assignments, multi-author
+Requires at least: 3.3
+Tested up to: 3.3.1
+Stable tag: 3.0
+=======
 Donate link: http://cleverness.org/plugins/to-do-list/
 Tags: to-do, to do list, to-do list, list, assign tasks, tasks, admin
 Requires at least: 2.8
 Tested up to: 3.0.2
 Stable tag: 2.2.8
+>>>>>>> .r510187
 
-Integrates a multi-featured to-do list into the WordPress administration area that is very customizable.
+Integrates a very customizable, multi-featured to-do list.
 
 == Description ==
 
 This plugin provides users with a to-do list feature.
 
-You can configure the plugin to have private to-do lists for each user, for all users to share a to-do list, or a master list with individual completing of items. The shared to-do list has a variety of settings available. You can assign tasks to a specific user (includes a setting to email a new task to the assigned user) and have only those tasks assigned viewable to a user. You can also assign different permission levels using capabilities. There are also settings to show deadline and progress fields. Category support is now included.
+You can configure the plugin to have private to-do lists for each user, to have all users share a to-do list, or to have a master list with individual completion of items. The shared to-do list has a variety of settings
+available. You can assign to-do items to a specific user (includes a setting to email a new to-do item to the assigned user) and optionally have those items only viewable by that user. You can also assign different
+permission levels using capabilities. There are also settings to show deadline and progress fields. Category support is included as well as front-end administration.
 
-A new menu item is added to manage your list and it is also listed on a dashboard widget.
+A new menu item is added to the backend to manage your list and the to-do list is also listed on a dashboard widget.
 
 A sidebar widget is available as well as shortcode to display the to-do list items on your site.
+
+There are two shortcodes for front-end administration of the list. Management of categories is restricted to the back-end.
 
 [Plugin Website](http://cleverness.org/plugins/to-do-list/)
 
 == Installation ==
 
-1. Upload the folder /cleverness-to-do-list/ to the '/wp-content/plugins/' directory
+1. Upload the folder `/cleverness-to-do-list/` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Configure the settings on the Settings page under the To-Do List menu
 
@@ -38,14 +52,8 @@ You should have received a copy of the GNU General Public License along with thi
 
 == Frequently Asked Questions ==
 
-= I upgraded and the new tables or fields haven't been added to the database =
-If you did not do the automatic upgrade from the Plugins page, make sure you deactivate and then activate the plugin. The database changes are done on activation.
-
-= I enabled categories and now my items don't show up on the dashboard, sidebar, or using the shortcode. =
-This is because the items have not yet been assigned a category. Once you edit the item and select a category, they will appear.
-
-= I can't mark items as completed =
-Please visit the To-Do List settings page and click on Save Changes. There was a typo in a previous version in the default settings.
+= I upgraded and all my to-do items are gone =
+If you did not do the automatic upgrade from the Plugins page, make sure you deactivate and then activate the plugin. Your to-do list items should be converted to the new format once you activate the plugin.
 
 = What is the shortcode to display items in a post or page? =
 [todolist]
@@ -55,7 +63,7 @@ Several options are available:
 * **title** - default is no title.
 * **type** - you can chose *list* or *table* view. Default is *list*.
 * **priorities** - default is *show*. Use a blank value to hide (only applies to table view).
-* **assigned** - default is *show*. Use a blank value to hide).
+* **assigned** - default is *show*. Use a blank value to hide.
 * **deadline** - default is *show*. Use a blank value to hide.
 * **progress** - default is *show*. Use a blank value to hide.
 * **addedby** - default is *show*. Use a blank value to hide.
@@ -69,6 +77,45 @@ Example:
 Table view with the title of Upcoming Articles and showing the progress and who the item was assigned to.
 
 [todolist title="Upcoming Articles" type="table" priorities="" deadline="" addedby=""]
+
+= What is the shortcode to display a checklist in a post or page? =
+[todochecklist]
+
+The options are:
+* **title** - default is no title.
+* **priority** - default is hide (0). Use 1 to show.
+* **assigned** - default is hide (0). Use 1 to show.
+* **deadline** - default is hide (0). Use 1 to show.
+* **progress** - default is hide (0). Use 1 to show.
+* **category** - default is all categories (0). Use the category ID to show a specific category.
+* **addedby** - default is hide (0). Use 1 to show.
+* **editlink** - default is hide (0). Use 1 to show.
+* **todoid** - default is blank (""). Use the ID of the to-do item to display just one item.
+
+Example:
+
+Set the title to "My To-Do List" and show the deadline and the category.
+
+[todoadmin title="My To-Do List" deadline=1 categories=1]
+
+= What is the shortcode to display the administration page in the front-end? =
+[todoadmin]
+
+The options are:
+* **title** - default is no title.
+* **priority** - default is hide (0). Use 1 to show.
+* **assigned** - default is hide (0). Use 1 to show.
+* **deadline** - default is hide (0). Use 1 to show.
+* **progress** - default is hide (0). Use 1 to show.
+* **categories** - default is hide (0). Use 1 to show.
+* **addedby** - default is hide (0). Use 1 to show.
+* **editlink** - default is show (1). Use 0 to hide.
+
+Example:
+
+Set the title to "Things to Do" and show the priority and the progress.
+
+[todoadmin title="Things to Do" priority=1 progress=1]
 
 = Can you explain the permissions in more detail? =
 
@@ -88,16 +135,41 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Screenshots ==
 
-1. Dashboard Widget - Individual Setting
-2. To-Do List Page - Group Setting with Assign Tasks on
+1. Dashboard Widget
+2. To-Do List Page - Deadline, Progress, and Categories Enabled
 3. Settings Page
 
 == Changelog ==
+<<<<<<< .mine
+= 3.0 =
+* Converted rest of the code to classes
+* Converted custom database tables to custom post type
+* Added option to show all items in Widget
+* Added To-Do List menu to Admin Bar (with option to remove in Settings)
+* Renamed cleverness-to-do-list-options.php to cleverness-to-do-list-settings.php
+* Divided settings into three sections
+* Moved Help page to the Help Admin Tab
+* Added tabs to Settings page
+* Changed some wording on the Settings page
+* Fixed master list view
+* Added date picker to deadline field
+=======
 = 2.3 =
 * Integrated code from bas_der_gruene (Janne Fleischer): widget options, assign additional users, and to-do list comments
 * Moved dashboard widgets settings to the dashboard widget
 * Added ajax to dashboard widget
 * HTML in tasks has been fixed
+>>>>>>> .r510187
+
+= 2.3 =
+* Moved dashboard widgets settings to the dashboard widget
+* Added ajax to dashboard widget, main plugin page, and category page
+* Added front-end shortcode
+* HTML in tasks has been fixed
+* Started moving code into classes and redoing a lot of it
+* Fixed categories not working in multi-site with the plugin network-activated
+* Added Czech translation by Tomas Vesely
+* Added updated German translation by Janne Fleischer
 
 = 2.2.8 =
 * Fix issue where completed items would not show using list in the shortcode
@@ -241,6 +313,12 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Upgrade Notice ==
 
+= 3.0 =
+Major code rewrite and custom tables were converted to custom post types.
+
+= 2.3 =
+Code rewrite and front-end administration
+
 = 2.2.8 =
 Bug fix
 
@@ -342,6 +420,8 @@ Major changes to plugin
 
 This plugin was originally from Abstract Dimensions (site no longer available) with a patch to display the list in the dashboard by WordPress by Example (site also no longer available). It was abandoned prior to WordPress 2.7.
 
+Icon by [Hylke Bons](http://www.iconfinder.com/icondetails/30045/32/list_shopping_list_todo_todo_list_icon)
+
 Spanish translation by [Ricardo](http://yabocs.avytes.com/)
 
 Russian translation by [Almaz](http://alm.net.ru)
@@ -351,3 +431,7 @@ German translation by Ascobol
 Japanese translation by [Takemi Tasaki](http://route58.org)
 
 French translation by Thibault Guerpillon
+
+Czech translation by Tomas Vesely
+
+German translation updated by Janne Fleischer
