@@ -1,25 +1,50 @@
 <?php
 /*
 Plugin Name: Cleverness To-Do List
-Version: 2.2.8
+Version: 3.0
 Description: Manage to-do list items on a individual or group basis with categories. Includes a dashboard widget and a sidebar widget.
 Author: C.M. Kendrick
 Author URI: http://cleverness.org
 Plugin URI: http://cleverness.org/plugins/to-do-list/
 */
 
-/*
-Based on the ToDo plugin by Abstract Dimensions with a patch by WordPress by Example.
-*/
+/**
+ * Cleverness To-Do List Plugin Main File
+ *
+ * This plugin was based on the to-do plugin by Abstract Dimensions with a patch by WordPress by Example.
+ * @author C.M. Kendrick <cindy@cleverness.org>
+ * @package cleverness-to-do-list
+ * @version 3.0
+ */
 
-global $wp_version;
+add_action( 'init', 'cleverness_todo_loader' );
+register_activation_hook( __FILE__, 'cleverness_todo_activation' );
+include_once 'includes/cleverness-to-do-list-widget.class.php';
 
+<<<<<<< .mine
+/**
+ * Define constants and load the plugin
+ */
+function cleverness_todo_loader() {
+=======
 $exit_msg = __('To-Do List requires WordPress 3.2 or newer. <a href="http://codex.wordpress.org/Upgrading_WordPress">Please update.</a>', 'cleverness-to-do-list');
+>>>>>>> .r510187
 
+<<<<<<< .mine
+	define( 'CTDL_FILE', __FILE__ );
+	define( 'CTDL_BASENAME', plugin_basename( __FILE__ ) );
+	define( 'CTDL_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+	define( 'CTDL_PLUGIN_URL', plugins_url( '', __FILE__ ) );
+=======
 if (version_compare($wp_version, "3.2", "<")) {
 	exit($exit_msg);
   	}
+>>>>>>> .r510187
 
+<<<<<<< .mine
+	include_once 'includes/cleverness-to-do-list-loader.class.php';
+	CTDL_Loader::init();
+=======
 define( 'CTDL_BASENAME', plugin_basename(__FILE__) );
 define( 'CTDL_PLUGIN_DIR', plugin_dir_path( __FILE__) );
 define( 'CTDL_PLUGIN_URL', plugins_url('', __FILE__) );
@@ -33,7 +58,13 @@ if ( is_plugin_active_for_network( CTDL_BASENAME ) ) {
 define( 'CTDL_TODO_TABLE', $prefix.'todolist' );
 define( 'CTDL_CATS_TABLE', $prefix.'todolist_cats' );
 define( 'CTDL_STATUS_TABLE', $prefix.'todolist_status' );
+>>>>>>> .r510187
 
+<<<<<<< .mine
+	$action = '';
+	if ( isset( $_GET['action'] ) ) $action = $_GET['action'];
+	if ( isset( $_POST['action'] ) ) $action = $_POST['action'];
+=======
 include_once(CTDL_PLUGIN_DIR . 'includes/cleverness-to-do-list-options.php');
 include_once(CTDL_PLUGIN_DIR . 'includes/cleverness-to-do-list-dashboard-widget.php');
 include_once(CTDL_PLUGIN_DIR . 'includes/cleverness-to-do-list-widget.php');
@@ -46,17 +77,25 @@ include_once(CTDL_PLUGIN_DIR . 'includes/cleverness-to-do-list-frontend.php');
 
 /* 	WANT TO BE ABLE TO REMOVE OPTION FROM GLOBAL */
 $cleverness_todo_option = get_option('cleverness_todo_settings');
+>>>>>>> .r510187
 
-$action = '';
-if ( isset($_GET['action']) ) $action = $_GET['action'];
-if ( isset($_POST['action']) ) $action = $_POST['action'];
+	switch( $action ) {
 
-switch($action) {
+		case 'addtodo':
+			CTDL_Lib::insert_todo();
+			break;
 
-case 'setuptodo':
-	cleverness_todo_install();
-	break;
+		case 'updatetodo':
+			CTDL_Lib::edit_todo();
+			break;
 
+<<<<<<< .mine
+		case 'completetodo':
+			$cleverness_todo_complete_nonce = $_REQUEST['_wpnonce'];
+			if ( !wp_verify_nonce( $cleverness_todo_complete_nonce, 'todocomplete' ) ) die( 'Security check failed' );
+			CTDL_LIb::complete_todo( absint( $_GET['id'] ), 1 );
+			break;
+=======
 case 'addtodo':
 	$message = '';
 	if ( $_POST['cleverness_todo_description'] != '' ) {
@@ -83,7 +122,15 @@ case 'addtodo':
 		$message = __('To-Do cannot be blank.', 'cleverness-to-do-list');
 	}
 	break;
+>>>>>>> .r510187
 
+<<<<<<< .mine
+		case 'uncompletetodo':
+			$cleverness_todo_complete_nonce = $_REQUEST['_wpnonce'];
+			if ( !wp_verify_nonce( $cleverness_todo_complete_nonce, 'todocomplete' ) ) die( 'Security check failed' );
+			CTDL_LIb::complete_todo( absint( $_GET['id'] ), 0 );
+			break;
+=======
 case 'updatetodo':
 	$assign = (  isset($_POST['cleverness_todo_assign']) ?  $_POST['cleverness_todo_assign'] : 0 );
 	$deadline = (  isset($_POST['cleverness_todo_deadline']) ?  $_POST['cleverness_todo_deadline'] : '' );
@@ -93,12 +140,28 @@ case 'updatetodo':
 	if (!wp_verify_nonce($_REQUEST['_wpnonce'], 'todoupdate') ) die('Security check failed');
 	$message = cleverness_todo_update($assign, $deadline, $progress, $category);
 	break;
+>>>>>>> .r510187
 
+<<<<<<< .mine
+		case 'purgetodo':
+			CTDL_Lib::delete_all_todos();
+			break;
+
+=======
+>>>>>>> .r510187
+<<<<<<< .mine
+		case 'deletetables':
+			CTDL_Lib::delete_tables();
+			break;
+=======
 case 'completetodo':
 	$id = absint($_GET['id']);
 	$message = cleverness_todo_complete($id, '1');
 	break;
+>>>>>>> .r510187
 
+<<<<<<< .mine
+=======
 case 'uncompletetodo':
 	$id = absint($_GET['id']);
 	$message = cleverness_todo_complete($id, '0');
@@ -491,8 +554,11 @@ function cleverness_todo_admin_menu() {
 		add_submenu_page( 'cleverness-to-do-list', __('To-Do List Settings', 'cleverness-to-do-list'), __('Settings', 'cleverness-to-do-list'), 'manage_options', 'cleverness-to-do-list-options', 'cleverness_todo_settings_page');
 		add_submenu_page( 'cleverness-to-do-list', __('To-Do List Help', 'cleverness-to-do-list'), __('Help', 'cleverness-to-do-list'), $cleverness_todo_option['view_capability'], 'cleverness-to-do-list-help', 'cleverness_todo_help');
         }
+>>>>>>> .r510187
 	}
 
+<<<<<<< .mine
+=======
 /* Add plugin info to admin footer */
 function cleverness_todo_admin_footer() {
 	$plugin_data = get_plugin_data( __FILE__ );
@@ -513,13 +579,19 @@ function cleverness_todo_admin_add_css() {
 function cleverness_todo_load_translation_file() {
 	$plugin_path = CTDL_BASENAME .'/lang';
 	load_plugin_textdomain( 'cleverness-to-do-list', '', $plugin_path );
+>>>>>>> .r510187
 }
 
-/* Register the options field */
-function cleverness_todo_register_settings() {
-  register_setting( 'cleverness-todo-settings-group', 'cleverness_todo_settings' );
+/**
+ * Install plugin on plugin activation
+ */
+function cleverness_todo_activation() {
+	include_once 'includes/cleverness-to-do-list-library.class.php';
+	CTDL_Lib::install_plugin();
 }
 
+<<<<<<< .mine
+=======
 /* Add Settings link to plugin */
 function cleverness_add_settings_link($links, $file) {
 	static $this_plugin;
@@ -590,4 +662,5 @@ function cleverness_todo_delete_callback() {
 	die(); // this is required to return a proper result
 }
 /* end Delete To-Do Ajax */
+>>>>>>> .r510187
 ?>
