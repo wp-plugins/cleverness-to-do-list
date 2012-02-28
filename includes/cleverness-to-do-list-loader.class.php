@@ -5,7 +5,7 @@
  * Loads the plugin
  * @author C.M. Kendrick <cindy@cleverness.org>
  * @package cleverness-to-do-list
- * @version 3.0
+ * @version 3.0.2
  */
 
 /**
@@ -19,7 +19,10 @@ class CTDL_Loader {
 	public static function init() {
 
 		self::check_wp_version();
-		self::$settings = array_merge( get_option( 'CTDL_general' ), get_option( 'CTDL_advanced' ), get_option( 'CTDL_permissions' ) );
+		$general_options = ( get_option( 'CTDL_general' ) ? get_option( 'CTDL_general' ) : array() );
+		$advanced_options = ( get_option( 'CTDL_advanced' ) ? get_option( 'CTDL_advanced' ) : array() );
+		$permissions_options = ( get_option( 'CTDL_permissions' ) ? get_option( 'CTDL_permissions' ) : array() );
+		self::$settings = array_merge( $general_options, $advanced_options, $permissions_options );
 		self::setup_custom_post_type();
 		self::create_taxonomies();
 		self::include_files();
