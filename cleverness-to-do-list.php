@@ -78,7 +78,7 @@ function cleverness_todo_loader() {
  * Install plugin on plugin activation
  */
 function cleverness_todo_activation() {
-	if ( defined( 'CTDL_FILE' ) ) define( 'CTDL_FILE', __FILE__ );
+	if ( !defined( 'CTDL_FILE' ) ) define( 'CTDL_FILE', __FILE__ );
 	include_once 'includes/cleverness-to-do-list-library.class.php';
 	CTDL_Lib::install_plugin();
 }
