@@ -6,7 +6,7 @@ Plugin URI: http://cleverness.org/plugins/to-do-list
 Tags: to-do, to do list, to-do list, list, todo, to do, assign, task, assignments, multi-author
 Requires at least: 3.3
 Tested up to: 3.3.1
-Stable tag: 3.0.6
+Stable tag: 3.1
 
 Integrates a customizable, multi-featured to-do list.
 
@@ -44,9 +44,6 @@ You should have received a copy of the GNU General Public License along with thi
 
 == Frequently Asked Questions ==
 
-= I upgraded and all my to-do items are gone =
-If you did not do the automatic upgrade from the Plugins page, make sure you deactivate and then activate the plugin. Your to-do list items should be converted to the new format once you activate the plugin.
-
 = What is the shortcode to display items in a post or page? =
 [todolist]
 
@@ -59,6 +56,7 @@ Several options are available:
 * **deadline** - default is *show*. Use a blank value to hide.
 * **progress** - default is *show*. Use a blank value to hide.
 * **addedby** - default is *show*. Use a blank value to hide.
+* **date** - default is hide (0). Use 1 to show.
 * **completed** - default is blank. Set to *show* to display completed items.
 * **completed_title** - default is no title.
 * **list_type** - default is *ol* (ordered list). Use *ul* to show an unordered list.
@@ -74,6 +72,7 @@ Table view with the title of Upcoming Articles and showing the progress and who 
 [todochecklist]
 
 The options are:
+
 * **title** - default is no title.
 * **priority** - default is hide (0). Use 1 to show.
 * **assigned** - default is hide (0). Use 1 to show.
@@ -81,6 +80,7 @@ The options are:
 * **progress** - default is hide (0). Use 1 to show.
 * **category** - default is all categories (0). Use the category ID to show a specific category.
 * **addedby** - default is hide (0). Use 1 to show.
+* **date** - default is hide (0). Use 1 to show.
 * **editlink** - default is hide (0). Use 1 to show.
 * **todoid** - default is blank (""). Use the ID of the to-do item to display just one item.
 
@@ -91,9 +91,11 @@ Set the title to "My To-Do List" and show the deadline and the category.
 [todoadmin title="My To-Do List" deadline=1 categories=1]
 
 = What is the shortcode to display the administration page in the front-end? =
+Permalinks must be enabled on the site to be able to use this feature.
 [todoadmin]
 
 The options are:
+
 * **title** - default is no title.
 * **priority** - default is hide (0). Use 1 to show.
 * **assigned** - default is hide (0). Use 1 to show.
@@ -101,6 +103,7 @@ The options are:
 * **progress** - default is hide (0). Use 1 to show.
 * **categories** - default is hide (0). Use 1 to show.
 * **addedby** - default is hide (0). Use 1 to show.
+* **date** - default is hide (0). Use 1 to show.
 * **editlink** - default is show (1). Use 0 to hide.
 
 Example:
@@ -132,6 +135,18 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 3. Settings Page
 
 == Changelog ==
+
+= 3.1 =
+* Lowered the number of database calls when showing to-do items
+* Added option to show date to-do item was added
+* Added button under Settings to delete all to-do items
+* Added setting to show who assigned the to-do item in email
+* Fixed master view not showing only assigned items
+* Fixed translations not loading
+* Changed plugin activation set-up
+* Changed the field order in the display table
+* Deleting the plugin via WordPress will now delete to-do items and categories
+* Fixed issues with fields that should be hidden appearing when using the todoadmin shortcode
 
 = 3.0.6 =
 * Removed code that was causing the duplicated to-dos (it was the code for checking to see if the plugin database version matched the one stored in an option)
@@ -315,6 +330,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Fixed to work in WordPress 2.8
 
 == Upgrade Notice ==
+
+= 3.1 =
+Bug fix, new features
 
 = 3.0.6 =
 Bug fix

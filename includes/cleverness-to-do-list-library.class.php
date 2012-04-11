@@ -5,7 +5,7 @@
  * Library of functions for the To-Do List
  * @author C.M. Kendrick <cindy@cleverness.org>
  * @package cleverness-to-do-list
- * @version 3.0.2
+ * @version 3.1
  */
 
 /**
@@ -24,8 +24,12 @@ class CTDL_Lib {
 	public static function get_todos( $user, $limit = -1, $status = 0, $cat_id = 0, $to_exclude = array() ) {
 
 		/* Sort Order */
-		// if sort order is deadline, progress, or assigned user, order by that first
-		if ( CTDL_Loader::$settings['sort_order'] == '_deadline' || CTDL_Loader::$settings['sort_order'] == '_progress' || CTDL_Loader::$settings['sort_order'] == '_assign' ) {
+		// if sort_order is post_date, order by that first
+		if ( CTDL_Loader::$settings['sort_order'] == 'post_date' ) {
+			$orderby = 'post_date';
+			$metakey = '';
+		// if sort order is deadline, progress, or assigned user, order by that
+		} elseif ( CTDL_Loader::$settings['sort_order'] == '_deadline' || CTDL_Loader::$settings['sort_order'] == '_progress' || CTDL_Loader::$settings['sort_order'] == '_assign' ) {
 			$orderby = 'meta_value title';
 			$metakey = CTDL_Loader::$settings['sort_order'];
 		// otherwise, order first by priority
@@ -42,6 +46,7 @@ class CTDL_Lib {
 		}
 
 		/* View Settings */
+
 		// In Group View, Show Only Tasks Assigned to That User when Set
 		if ( CTDL_Loader::$settings['list_view'] == '1' && CTDL_Loader::$settings['show_only_assigned'] == '0' && ( !current_user_can( CTDL_Loader::$settings['view_all_assigned_capability'] ) ) ) {
 			$metaquery = array(
@@ -54,6 +59,7 @@ class CTDL_Lib {
 					'value' => $user,
 				)
 			);
+
 		// Master view with No Editing Capabilities
 		} elseif ( CTDL_Loader::$settings['list_view'] == '2' && !current_user_can( CTDL_Loader::$settings['edit_capability'] ) ) {
 
@@ -75,12 +81,26 @@ class CTDL_Lib {
 					$to_exclude[] = get_the_ID();
 				endwhile;
 
-				$metaquery = array(
-					array(
-						'key'   => '_status',
-						'value' => 0,
-					)
-				);
+				if ( CTDL_Loader::$settings['show_only_assigned'] == '0' && ( !current_user_can( CTDL_Loader::$settings['view_all_assigned_capability'] ) ) ) {
+					$metaquery = array(
+						array(
+							'key'   => '_status',
+							'value' => $status,
+						),
+						array (
+							'key'   => '_assign',
+							'value' => $user,
+						)
+					);
+				} else {
+					$metaquery = array(
+						array(
+							'key'   => '_status',
+							'value' => 0,
+						)
+					);
+				}
+
 			} elseif ( $status == 1 ) {
 				$metaquery = array(
 					array(
@@ -209,24 +229,13 @@ class CTDL_Lib {
 
 			if ( isset( $_POST['cat'] ) ) wp_set_post_terms( $post_id, absint( $_POST['cat'] ), 'todocategories', false);
 			add_post_meta( $post_id, '_status', 0, true );
-			add_post_meta( $post_id, '_priority', $_POST['cleverness_todo_priority'], true );
-			if ( isset( $_POST['cleverness_todo_assign'] ) ) {
-				$assign = esc_attr( $_POST['cleverness_todo_assign'] );
-			} else {
-				$assign = -1;
-			}
+			$priority = ( isset( $_POST['cleverness_todo_priority'] ) ? absint( $_POST['cleverness_todo_priority'] ) : 1 );
+			add_post_meta( $post_id, '_priority', $priority, true );
+			$assign = ( isset( $_POST['cleverness_todo_assign'] ) ? esc_attr( $_POST['cleverness_todo_assign'] ) : -1 );
 			add_post_meta( $post_id, '_assign', $assign, true );
-			if ( isset( $_POST['cleverness_todo_deadline'] ) ) {
-				$deadline = esc_attr( $_POST['cleverness_todo_deadline'] );
-			} else {
-				$deadline = '';
-			}
+			$deadline = ( isset( $_POST['cleverness_todo_deadline'] ) ? esc_attr( $_POST['cleverness_todo_deadline'] ) : '' );
 			add_post_meta( $post_id, '_deadline', $deadline, true );
-			if ( isset( $_POST['cleverness_todo_progress'] ) ) {
-				$progress = absint( $_POST['cleverness_todo_progress'] );
-			} else {
-				$progress = 0;
-			}
+			$progress = ( isset( $_POST['cleverness_todo_progress'] ) ? absint( $_POST['cleverness_todo_progress'] ) : 0 );
 			add_post_meta( $post_id, '_progress', $progress, true );
 
 		}
@@ -236,6 +245,8 @@ class CTDL_Lib {
 
 	/* Send an email to assigned user */
 	protected static function email_user( $assign, $deadline, $category = 0 ) {
+		global $current_user;
+		get_currentuserinfo();
 
 		$priority = esc_attr( $_POST['cleverness_todo_priority'] );
 		$todo_text = esc_html( $_POST['cleverness_todo_description'] );
@@ -252,6 +263,7 @@ class CTDL_Lib {
 			$email = $assign_user->user_email;
 			$email_message = CTDL_Loader::$settings['email_text']."\r\n";
 			$email_message .= "\r\n".__( 'Priority', 'cleverness-to-do-list' ).': '.$priority_array[$priority]."\r\n";
+			if ( CTDL_Loader::$settings['email_show_assigned_by'] == 1 ) $email_message .= "\r\n".__( 'From', 'cleverness-to-do-list' ).': '.$current_user->display_name.' ('.$current_user->user_email.')'."\r\n";
 			if ( $category != 0 && $category != -1 ) $email_message .= __( 'Category', 'cleverness-to-do-list' ).': '.$category."\r\n";
 			if ( $deadline != '' ) $email_message .= __( 'Deadline:', 'cleverness-to-do-list' ).' '.$deadline."\r\n";
 			$email_message .= __( 'To-Do:', 'cleverness-to-do-list' ).$todo_text."\r\n";
@@ -303,7 +315,7 @@ class CTDL_Lib {
 	}
 
 	/* Delete all completed to-do list items */
-	public static function delete_all_todos() {
+	public static function delete_all_completed_todos() {
 		global $userdata;
 
 		$permission = CTDL_LIB::check_permission( 'todo', 'purge' );
@@ -349,29 +361,56 @@ class CTDL_Lib {
 		}
 	}
 
+	/* Delete all to-do list items */
+	public static function delete_all_todos() {
+
+		$permission = CTDL_LIB::check_permission( 'todo', 'purge' );
+
+		if ( $permission === true ) {
+			$cleverness_todo_delete_all_nonce = $_REQUEST['_wpnonce'];
+			if ( !wp_verify_nonce( $cleverness_todo_delete_all_nonce, 'tododeletetodos' ) ) die( 'Security check failed' );
+
+			$args = array(
+				'post_type' => 'todo',
+				'posts_per_page' => -1,
+				);
+
+			$todo_items = new WP_Query( $args );
+
+			while ( $todo_items->have_posts() ) : $todo_items->the_post();
+				$id = get_the_ID();
+				wp_delete_post( absint( $id ), true );
+			endwhile;
+		}
+	}
+
 	/**
 	 * Delete old custom database tables
-	 * @todo show confirmation of deletion
 	 * @static
 	 */
 	public static function delete_tables() {
-		global $wpdb;
 
-		$cleverness_todo_complete_nonce = $_REQUEST['_wpnonce'];
-		if ( !wp_verify_nonce( $cleverness_todo_complete_nonce, 'tododeletetables' ) ) die( 'Security check failed' );
-		if ( !function_exists( 'is_plugin_active_for_network' ) ) require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
-		if ( is_plugin_active_for_network( __FILE__ ) ) {
-			$prefix = $wpdb->base_prefix;
-		} else {
-			$prefix = $wpdb->prefix;
+		$permission = CTDL_LIB::check_permission( 'todo', 'purge' );
+
+		if ( $permission === true ) {
+			global $wpdb;
+
+			$cleverness_todo_delete_tables_nonce = $_REQUEST['_wpnonce'];
+			if ( !wp_verify_nonce( $cleverness_todo_delete_tables_nonce, 'tododeletetables' ) ) die( 'Security check failed' );
+			if ( !function_exists( 'is_plugin_active_for_network' ) ) require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+			if ( is_plugin_active_for_network( __FILE__ ) ) {
+				$prefix = $wpdb->base_prefix;
+			} else {
+				$prefix = $wpdb->prefix;
+			}
+
+			$thetable = $prefix."todolist";
+			$wpdb->query( "DROP TABLE IF EXISTS $thetable" );
+			$thecattable = $prefix."todolist_cats";
+			$wpdb->query( "DROP TABLE IF EXISTS $thecattable" );
+			$thestatustable = $prefix."todolist_status";
+			$wpdb->query( "DROP TABLE IF EXISTS $thestatustable" );
 		}
-
-		$thetable = $prefix."todolist";
-		$wpdb->query( "DROP TABLE IF EXISTS $thetable" );
-		$thecattable = $prefix."todolist_cats";
-		$wpdb->query( "DROP TABLE IF EXISTS $thecattable" );
-		$thestatustable = $prefix."todolist_status";
-		$wpdb->query( "DROP TABLE IF EXISTS $thestatustable" );
 	}
 
 	/**
@@ -388,6 +427,38 @@ class CTDL_Lib {
 		$url = strtok( $url, '?' );
 		$action = ( isset( $_GET['action'] ) ? $_GET['action'] : '' );
 		return array( $priorities, $user, $url, $action );
+	}
+
+	/**
+	 * Get the To-Do post meta and assign to variables
+	 * @static
+	 * @param $id
+	 * @return array
+	 * @since 3.1
+	 */
+	public static function get_todo_meta( $id ) {
+		$post_meta = get_post_custom( $id );
+		$priority = ( isset( $post_meta['_priority'][0] ) ? $post_meta['_priority'][0] : 1 );
+		$assign_meta = ( isset( $post_meta['_assign'][0] ) ? $post_meta['_assign'][0] : 0 );
+		$deadline_meta = ( isset( $post_meta['_deadline'][0] ) ? $post_meta['_deadline'][0] : '' );
+		$completed_meta = ( isset( $post_meta['_completed'][0] ) ? $post_meta['_completed'][0] : NULL );
+		$progress_meta = ( isset( $post_meta['_progress'][0] ) ? $post_meta['_progress'][0] : '' );
+		return array( $priority, $assign_meta, $deadline_meta, $completed_meta, $progress_meta );
+	}
+
+	/**
+	 * Sets the priority class of a to-do item
+	 * @static
+	 * @param $priority
+	 * @return string
+	 * @since 3.1
+	 */
+	public static function set_priority_class( $priority ) {
+		$priority_class = '';
+		if ( $priority == '0' ) $priority_class = ' class="todo-important"';
+		if ( $priority == '1' ) $priority_class = ' class="todo-normal"';
+		if ( $priority == '2' ) $priority_class = ' class="todo-low"';
+		return $priority_class;
 	}
 
 	/* Check if User Has Permission */
@@ -433,7 +504,6 @@ class CTDL_Lib {
 		$pageURL .= "://";
 		if ( $_SERVER["SERVER_PORT"] != "80" ) {
 			$pageURL .= $_SERVER["HTTP_HOST"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
-			//$pageURL .= $_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"];
 		} else {
 			$pageURL .= $_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"];
 		}
@@ -484,70 +554,113 @@ class CTDL_Lib {
 
 	/* Create database table and add default options */
 	public static function install_plugin () {
-		global $wpdb, $current_user;
-		get_currentuserinfo();
-		$cleverness_todo_db_version = '3.0.3'; // also update in main file
-		include_once plugin_dir_path( __FILE__ ).'/cleverness-to-do-list-loader.class.php';
 
-		CTDL_Loader::setup_custom_post_type();
-		CTDL_Loader::create_taxonomies();
-
+		// get database version from options table
 		if ( get_option( 'CTDL_db_version' ) ) {
-			$installed_ver = get_option( 'CTDL_db_version' );
+			$installed_version = get_option( 'CTDL_db_version' );
 		} elseif ( get_option( 'cleverness_todo_db_version' ) ) {
-			$installed_ver = get_option( 'cleverness_todo_db_version' );
+			$installed_version  = get_option( 'cleverness_todo_db_version' );
 		} else {
-			$installed_ver = 0;
+			$installed_version  = 0;
 		}
 
-		if ( $installed_ver == 0 ) {
+		// check if the db version is the same as the db version constant
+		if ( $installed_version != CTDL_DB_VERSION ) {
 
-			// add first post
-			$first_post = __( 'Add your first To-Do List item', 'cleverness-to-do-list' );
+			include_once plugin_dir_path( __FILE__ ).'/cleverness-to-do-list-loader.class.php';
+			if ( !post_type_exists( 'todo' ) ) CTDL_Loader::setup_custom_post_type();
+			if ( !taxonomy_exists( 'todocategories' ) ) CTDL_Loader::create_taxonomies();
 
-			$my_post = array(
-				'post_type'        => 'todo',
-				'post_title'       => substr( $first_post, 0, 100 ),
-				'post_content'     => $first_post,
-				'post_status'      => 'publish',
-				'post_author'      => $current_user->ID,
-				'comment_status'   => 'closed',
-				'ping_status'      => 'closed',
-			);
+			// if there was no db version option
+			if ( $installed_version  == 0 ) {
 
-			$post_id = wp_insert_post( $my_post );
-			add_post_meta( $post_id, '_status', 0, true );
-			add_post_meta( $post_id, '_priority', 1, true );
-			add_post_meta( $post_id, '_assign', -1, true );
-			add_post_meta( $post_id, '_deadline', '', true );
-			add_post_meta( $post_id, '_progress', 0, true );
+				// check to see if there are any to-do custom posts
+				$existing_todos = self::check_for_todos();
 
+				// if not, add the first to-do item
+				if ( $existing_todos == 0 ) {
+					global $current_user;
+					get_currentuserinfo();
+
+					// add first post
+					$first_post = __( 'Add your first To-Do List item', 'cleverness-to-do-list' );
+
+					$the_post = array(
+						'post_type'        => 'todo',
+						'post_title'       => substr( $first_post, 0, 100 ),
+						'post_content'     => $first_post,
+						'post_status'      => 'publish',
+						'post_author'      => $current_user->ID,
+						'comment_status'   => 'closed',
+						'ping_status'      => 'closed',
+					);
+
+					$post_id = wp_insert_post( $the_post );
+					add_post_meta( $post_id, '_status', 0, true );
+					add_post_meta( $post_id, '_priority', 1, true );
+					add_post_meta( $post_id, '_assign', -1, true );
+					add_post_meta( $post_id, '_deadline', '', true );
+					add_post_meta( $post_id, '_progress', 0, true );
+				}
+
+				self::set_options( $installed_version );
+
+			} else {
+
+				self::set_options( $installed_version );
+
+				// update db version to current versions
+				update_option( 'CTDL_db_version', CTDL_DB_VERSION );
+
+				// if the db version is < 3.0
+				if ( $installed_version < 3 ) {
+
+					// check to see if there's existing to-do items. if so, convert them to custom posts
+					$existing_todos = self::check_for_todos();
+
+					if ( $existing_todos == 0 ) {
+						self::convert_todos();
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	public static function set_options( $version ) {
+
+		if ( $version == 0 ) {
 			// add default options
 			$general_options = array(
-				'categories'            => '0',
-				'list_view'             => '0',
-				'todo_author'           => '0',
-				'show_completed_date'   => '0',
-				'show_deadline'         => '0',
-				'show_progress'         => '0',
+				'categories'            => 0,
+				'list_view'             => 0,
+				'todo_author'           => 0,
+				'show_completed_date'   => 0,
+				'show_deadline'         => 0,
+				'show_progress'         => 0,
 				'sort_order'            => 'ID',
-				'admin_bar'             => '1'
+				'admin_bar'             => 1
 			);
 
 			$advanced_options = array(
-				'date_format'           => 'm/d/Y',
-				'priority_0'            => __( 'Important', 'cleverness-to-do-list' ),
-				'priority_1'            => __( 'Normal', 'cleverness-to-do-list' ),
-				'priority_2'            => __( 'Low', 'cleverness-to-do-list' ),
-				'assign'                => '1',
-				'show_only_assigned'    => '1',
-				'user_roles'            => 'contributor, author, editor, administrator',
-				'email_assigned'        => '0',
-				'email_from'            => html_entity_decode( get_bloginfo( 'name' ) ),
-				'email_subject'         => __( 'A to-do list item has been assigned to you', 'cleverness-to-do-list' ),
-				'email_text'            => __( 'The following item has been assigned to you:', 'cleverness-to-do-list' ),
-				'email_category'        => 1,
-				'show_id'               => '0',
+				'date_format'               => 'm/d/Y',
+				'priority_0'                => __( 'Important', 'cleverness-to-do-list' ),
+				'priority_1'                => __( 'Normal', 'cleverness-to-do-list' ),
+				'priority_2'                => __( 'Low', 'cleverness-to-do-list' ),
+				'assign'                    => 1,
+				'show_only_assigned'        => 1,
+				'user_roles'                => 'contributor, author, editor, administrator',
+				'email_assigned'            => 0,
+				'email_from'                => html_entity_decode( get_bloginfo( 'name' ) ),
+				'email_subject'             => __( 'A to-do list item has been assigned to you', 'cleverness-to-do-list' ),
+				'email_text'                => __( 'The following item has been assigned to you:', 'cleverness-to-do-list' ),
+				'email_category'            => 1,
+				'email_show_assigned_by'    => 0,
+				'show_id'                   => 0,
+				'show_date_added'           => 0,
 			);
 
 			$permissions_options = array(
@@ -565,87 +678,9 @@ class CTDL_Lib {
 			add_option( 'CTDL_general', $general_options );
 			add_option( 'CTDL_advanced', $advanced_options );
 			add_option( 'CTDL_permissions', $permissions_options );
-			add_option( 'CTDL_db_version', $cleverness_todo_db_version );
+			add_option( 'CTDL_db_version', CTDL_DB_VERSION );
 
-		} elseif ( $installed_ver != $cleverness_todo_db_version ) {
-
-			if ( !function_exists( 'is_plugin_active_for_network' ) ) require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
-			if ( is_plugin_active_for_network( CTDL_FILE ) ) {
-				$prefix = $wpdb->base_prefix;
-			} else {
-				$prefix = $wpdb->prefix;
-			}
-
-			$table_name         = $prefix.'todolist';
-			$cat_table_name     = $prefix.'todolist_cats';
-			$status_table_name  = $prefix.'todolist_status';
-
-			if ( $wpdb->get_var( "SHOW TABLES LIKE '$cat_table_name'" ) == $cat_table_name ) {
-
-				$cats = $wpdb->get_results( "SELECT * FROM $cat_table_name" );
-
-				if ( !empty( $cats ) ) {
-
-					foreach ( $cats as $cat ) {
-						$term = wp_insert_term( $cat->name, 'todocategories' );
-						if ( !is_wp_error( $term ) ) {
-							$category_id = $term['term_id'];
-							$options = get_option( 'CTDL_categories' );
-							$options["category_$category_id"] = $cat->visibility;
-							update_option( "CTDL_categories", $options );
-						}
-					}
-
-				}
-
-			}
-
-			if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) == $table_name ) {
-
-				$todos = $wpdb->get_results( "SELECT * FROM $table_name" );
-
-				if ( !empty( $todos ) ) {
-
-					foreach ( $todos as $todo ) {
-
-						$post['post_type']      = 'todo';
-						$post['post_title']     = substr( $todo->todotext, 0, 100 );
-						$post['post_content']   = $todo->todotext;
-						$post['post_parent']    = 0;
-						$post['post_author']    = $todo->author;
-						$post['post_status']    = 'publish';
-						$post['comment_status'] = 'closed';
-						$post['ping_status']    = 'closed';
-
-						$post_id = wp_insert_post( $post );
-
-						add_post_meta( $post_id, '_status', $todo->status, true );
-						add_post_meta( $post_id, '_priority', $todo->priority, true );
-						add_post_meta( $post_id, '_assign', $todo->assign, true );
-						add_post_meta( $post_id, '_deadline', $todo->deadline, true );
-						add_post_meta( $post_id, '_progress', $todo->progress, true );
-						add_post_meta( $post_id, '_completed', $todo->completed, true );
-
-						// add any master view statuses
-						$statuses = $wpdb->get_results( "SELECT * FROM $status_table_name WHERE id = '$todo->id'" );
-
-						foreach ( $statuses as $status ) {
-							add_post_meta( $post_id, '_user_'.$status->user.'_status', $status->status );
-						}
-
-						// add category if set
-						if ( $todo->cat_id != 0 ) {
-							$sql = "SELECT name FROM ".$cat_table_name." WHERE id = '".$todo->cat_id."' LIMIT 1";
-							$category_name = $wpdb->get_row( $sql );
-							$category = get_term_by( 'name', $category_name->name, 'todocategories' );
-							wp_set_post_terms( $post_id, $category->term_id, 'todocategories', false );
-						}
-
-					}
-
-				}
-
-			}
+		} else {
 
 			if ( get_option( 'cleverness_todo_settings' ) ) {
 				$the_options = get_option( 'cleverness_todo_settings' );
@@ -669,19 +704,21 @@ class CTDL_Lib {
 				);
 
 				$advanced_options = array(
-					'date_format'           => $the_options['date_format'],
-					'priority_0'            => $the_options['priority_0'],
-					'priority_1'            => $the_options['priority_1'],
-					'priority_2'            => $the_options['priority_2'],
-					'assign'                => $the_options['assign'],
-					'show_only_assigned'    => $the_options['show_only_assigned'],
-					'user_roles'            => $the_options['user_roles'],
-					'email_assigned'        => $the_options['email_assigned'],
-					'email_from'            => $the_options['email_from'],
-					'email_subject'         => $the_options['email_subject'],
-					'email_text'            => $the_options['email_text'],
-					'email_category'        => 1,
-					'show_id'               => 0,
+					'date_format'               => $the_options['date_format'],
+					'priority_0'                => $the_options['priority_0'],
+					'priority_1'                => $the_options['priority_1'],
+					'priority_2'                => $the_options['priority_2'],
+					'assign'                    => $the_options['assign'],
+					'show_only_assigned'        => $the_options['show_only_assigned'],
+					'user_roles'                => $the_options['user_roles'],
+					'email_assigned'            => $the_options['email_assigned'],
+					'email_from'                => $the_options['email_from'],
+					'email_subject'             => $the_options['email_subject'],
+					'email_text'                => $the_options['email_text'],
+					'email_category'            => 1,
+					'email_show_assigned_by'    => 0,
+					'show_id'                   => 0,
+					'show_date_added'           => 0,
 				);
 
 				$permissions_options = array(
@@ -714,9 +751,119 @@ class CTDL_Lib {
 				delete_option( 'atd_db_version' );
 				delete_option( 'cleverness_todo_db_version' );
 				delete_option( 'cleverness_todo_settings' );
+
+			} elseif ( $version < 3.1 ) {
+				$advanced_options = get_option( 'CTDL_advanced' );
+				$advanced_options['email_show_assigned_by'] = 0;
+				$advanced_options['show_date_added'] = 0;
+				update_option( 'CTDL_advanced', $advanced_options );
 			}
 
-			update_option( 'CTDL_db_version', $cleverness_todo_db_version );
+		}
+	}
+
+	/**
+	 * Check for existing to-do custom post types
+	 * @static
+	 * @since 3.1
+	 * @return int
+	 */
+	public static function check_for_todos() {
+		$args = array(
+			'post_type' => 'todo',
+		);
+		$todo_items = new WP_Query( $args );
+		if ( $todo_items->have_posts() ) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+
+	/**
+	 * Convert to-dos from old custom tables to custom post types
+	 * @static
+	 * @since 3.0
+	 */
+	public static function convert_todos() {
+		global $wpdb;
+
+		if ( !function_exists( 'is_plugin_active_for_network' ) ) require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+		if ( is_plugin_active_for_network( CTDL_FILE ) ) {
+			$prefix = $wpdb->base_prefix;
+		} else {
+			$prefix = $wpdb->prefix;
+		}
+
+		$table_name         = $prefix.'todolist';
+		$cat_table_name     = $prefix.'todolist_cats';
+		$status_table_name  = $prefix.'todolist_status';
+
+		if ( $wpdb->get_var( "SHOW TABLES LIKE '$cat_table_name'" ) == $cat_table_name ) {
+
+			$cats = $wpdb->get_results( "SELECT * FROM $cat_table_name" );
+
+			if ( !empty( $cats ) ) {
+
+				foreach ( $cats as $cat ) {
+					$term = wp_insert_term( $cat->name, 'todocategories' );
+					if ( !is_wp_error( $term ) ) {
+						$category_id = $term['term_id'];
+						$options = get_option( 'CTDL_categories' );
+						$options["category_$category_id"] = $cat->visibility;
+						update_option( "CTDL_categories", $options );
+					}
+				}
+
+			}
+
+		}
+
+		if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) == $table_name ) {
+
+			$todos = $wpdb->get_results( "SELECT * FROM $table_name" );
+
+			if ( !empty( $todos ) ) {
+
+				foreach ( $todos as $todo ) {
+
+					$post['post_type']      = 'todo';
+					$post['post_title']     = substr( $todo->todotext, 0, 100 );
+					$post['post_content']   = $todo->todotext;
+					$post['post_parent']    = 0;
+					$post['post_author']    = $todo->author;
+					$post['post_status']    = 'publish';
+					$post['comment_status'] = 'closed';
+					$post['ping_status']    = 'closed';
+
+					$post_id = wp_insert_post( $post );
+
+					add_post_meta( $post_id, '_status', $todo->status, true );
+					add_post_meta( $post_id, '_priority', $todo->priority, true );
+					add_post_meta( $post_id, '_assign', $todo->assign, true );
+					add_post_meta( $post_id, '_deadline', $todo->deadline, true );
+					add_post_meta( $post_id, '_progress', $todo->progress, true );
+					add_post_meta( $post_id, '_completed', $todo->completed, true );
+
+					// add any master view statuses
+					$statuses = $wpdb->get_results( "SELECT * FROM $status_table_name WHERE id = '$todo->id'" );
+
+					foreach ( $statuses as $status ) {
+						add_post_meta( $post_id, '_user_'.$status->user.'_status', $status->status );
+					}
+
+					// add category if set
+					if ( $todo->cat_id != 0 ) {
+						$sql = "SELECT name FROM ".$cat_table_name." WHERE id = '".$todo->cat_id."' LIMIT 1";
+						$category_name = $wpdb->get_row( $sql );
+						$category = get_term_by( 'name', $category_name->name, 'todocategories' );
+						wp_set_post_terms( $post_id, $category->term_id, 'todocategories', false );
+					}
+
+				}
+
+			}
+
 		}
 	}
 

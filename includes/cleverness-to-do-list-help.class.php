@@ -77,9 +77,6 @@ class CTDL_Help {
 	public static function cleverness_todo_faqs_help() { ?>
 		<h3><?php _e( 'Frequently Asked Questions', 'cleverness-to-do-list' ); ?></h3>
 
-		<p><strong><?php _e( 'I upgraded and all my to-do items are gone', 'cleverness-to-do-list' ); ?></strong><br/>
-		<?php _e( 'If you did not do the automatic upgrade from the Plugins page, make sure you deactivate and then activate the plugin. Your to-do list items should be converted to the new format once you activate the plugin.', 'cleverness - to -do-list' ); ?></p>
-
 		<p><strong><?php _e( 'What should I do if I find a bug?', 'cleverness-to-do-list' ); ?></strong><br/>
 		<?php _e( 'Visit the plugin website and leave a comment or contact me.', 'cleverness-to-do-list' ); ?><br/>
 		<a href="http://cleverness.org/plugins/to-do-list/#respond" target="_blank">http://cleverness.org/plugins/to-do-list/#respond</a><br/>
@@ -104,6 +101,7 @@ class CTDL_Help {
 			<li><strong>deadline</strong> &#8211; <?php _e( 'default is <em>show</em>. Use a blank value to hide', 'cleverness-to-do-list' ); ?>.</li>
 			<li><strong>progress</strong> &#8211; <?php _e( 'default is <em>show</em>. Use a blank value to hide', 'cleverness-to-do-list' ); ?>.</li>
 			<li><strong>addedby</strong> &#8211; <?php _e( 'default is <em>show</em>. Use a blank value to hide', 'cleverness-to-do-list' ); ?>.</li>
+			<li><strong>date</strong> &#8211; <?php _e( 'default is hide (0). Use 1 to show', 'cleverness-to-do-list' ); ?>.</li>
 			<li><strong>completed</strong> &#8211; <?php _e( 'default is blank. Set to <em>show</em> to display completed items', 'cleverness-to-do-list' ); ?>.</li>
 			<li><strong>completed_title</strong> &#8211; <?php _e( 'default is no title', 'cleverness-to-do-list' ); ?>.</li>
 			<li><strong>list_type</strong> &#8211; <?php _e( 'default is <em>ol</em> (ordered list). Use <em>ul</em> to show an unordered list', 'cleverness-to-do-list' ); ?>.</li>
@@ -127,6 +125,7 @@ class CTDL_Help {
 			<li><strong>progress</strong> &#8211; <?php _e( 'default is hide (0). Use 1 to show', 'cleverness-to-do-list' ); ?>.</li>
 			<li><strong>category</strong> &#8211; <?php _e( 'default is all categories (0).  Use the category ID to show a specific category', 'cleverness-to-do-list' ); ?>.</li>
 			<li><strong>addedby</strong> &#8211; <?php _e( 'default is hide (0). Use 1 to show', 'cleverness-to-do-list' ); ?>.</li>
+			<li><strong>date</strong> &#8211; <?php _e( 'default is hide (0). Use 1 to show', 'cleverness-to-do-list' ); ?>.</li>
 			<li><strong>editlink</strong> &#8211; <?php _e( 'default is hide (0). Use 1 to show', 'cleverness-to-do-list' ); ?>.</li>
 			<li><strong>todoid</strong> &#8211; <?php _e( 'default is blank (""). Use the ID of the to-do item to display just one item', 'cleverness-to-do-list' ); ?>.</li>
 		</ul>
@@ -137,6 +136,7 @@ class CTDL_Help {
 		<hr/>
 
 		<h4><?php _e( 'Display a To-Do List Administration Area', 'cleverness-to-do-list' ); ?></h4>
+		<p><em>This features only works with permalinks enabled.</em></p>
 		<p><strong>&#91;todoadmin&#93;</strong></p>
 
 		<ul>
@@ -147,6 +147,7 @@ class CTDL_Help {
 			<li><strong>progress</strong> &#8211; <?php _e( 'default is hide (0). Use 1 to show', 'cleverness-to-do-list' ); ?>.</li>
 			<li><strong>categories</strong> &#8211; <?php _e( 'default is hide (0). Use 1 to show', 'cleverness-to-do-list' ); ?>.</li>
 			<li><strong>addedby</strong> &#8211; <?php _e( 'default is hide (0). Use 1 to show', 'cleverness-to-do-list' ); ?>.</li>
+			<li><strong>date</strong> &#8211; <?php _e( 'default is hide (0). Use 1 to show', 'cleverness-to-do-list' ); ?>.</li>
 			<li><strong>editlink</strong> &#8211; <?php _e( 'default is show (1). Use 0 to hide', 'cleverness-to-do-list' ); ?>.</li>
 		</ul>
 		<p><strong><?php _e( 'Example:', 'cleverness-to-do-list' ); ?></strong><br/>

@@ -3,8 +3,9 @@
  * Cleverness To-Do List Plugin Categories
  * @author C.M. Kendrick <cindy@cleverness.org>
  * @package cleverness-to-do-list
- * @version 3.0
- * @todo add meta value for sort order and enable sorting
+ * @version 3.1
+ * @todo add meta value for sort order and enable
+ * @todo fix privacy to work when sort order is any
  */
 
 /**
@@ -55,7 +56,7 @@ class CTDL_Categories {
 		if ( !is_wp_error( $term ) ) {
 			$category_id = $term['term_id'];
 			$options = get_option( 'CTDL_categories' );
-			$options["category_$category_id"] = $_POST['cleverness_todo_cat_visibility'];
+			$options["category_$category_id"] = absint( $_POST['cleverness_todo_cat_visibility'] );
 			update_option( 'CTDL_categories', $options );
 			return 1;
 		} else {
@@ -100,9 +101,9 @@ class CTDL_Categories {
 
 		if ( $permission === true ) {
 			$cleverness_todo = CTDL_Categories::get_category();
-			$category_id = $cleverness_todo->term_id;
-			$visibility = get_option( 'CTDL_categories' );
-			$visibility = ( $visibility["category_$category_id"] != '' ? $visibility["category_$category_id"] : '0' );
+			$category_id     = $cleverness_todo->term_id;
+			$visibility      = get_option( 'CTDL_categories' );
+			$visibility      = ( $visibility["category_$category_id"] != '' ? $visibility["category_$category_id"] : '0' );
 			echo json_encode( array( 'cleverness_todo_cat_name' => $cleverness_todo->name, 'cleverness_todo_cat_visibility' => $visibility ) );
 		}
 
@@ -162,6 +163,7 @@ class CTDL_Categories {
 		} // end switch
 
 		?>
+
 	<div class="wrap">
 		<div class="icon32"><img src="<?php echo CTDL_PLUGIN_URL; ?>/images/cleverness-todo-icon.png" alt="" /></div>
 		<h2><?php _e( 'To-Do List Categories', 'cleverness-to-do-list' ); ?></h2>
@@ -169,6 +171,7 @@ class CTDL_Categories {
 		<?php if ( $cleverness_todo_message != '' ) echo '<div id="message" class="error below-h2"><p>'.$cleverness_todo_message.'</p></div>'; ?>
 
 		<h3><?php _e( 'Add New Category', 'cleverness-to-do-list' ); ?></h3>
+
 		<form name="addtodocat" id="addtodocat" action="" method="post">
 			<table class="form-table">
 				<tr>
@@ -182,7 +185,7 @@ class CTDL_Categories {
 							<option value="0" selected="selected"><?php _e( 'Public', 'cleverness-to-do-list' ); ?>&nbsp;</option>
 							<option value="1"><?php _e( 'Private', 'cleverness-to-do-list' ); ?></option>
 						</select>
-						<br /><span class="description"><?php _e('Private categories are not visible using the sidebar widgets or shortcode.', 'cleverness-to-do-list'); ?></span>
+						<br /><span class="description"><?php _e( 'Private categories are not visible using the sidebar widgets or shortcode (only when Sort Order is set to Category)', 'cleverness-to-do-list' ); ?></span>
 					</td>
 				</tr>
 				<tr><td></td>
@@ -212,8 +215,8 @@ class CTDL_Categories {
 				if ( $categories ) {
 					foreach ( $categories as $category ) {
 						$category_id = $category->term_id;
-						$visibility = get_option( 'CTDL_categories' );
-						$visibility = ( $visibility["category_$category_id"] != '' ? $visibility["category_$category_id"] : '0' );
+						$visibility  = get_option( 'CTDL_categories' );
+						$visibility  = ( $visibility["category_$category_id"] != '' ? $visibility["category_$category_id"] : '0' );
 						?>
 						<tr id="<?php echo $category_id; ?>">
 							<td><?php echo $category_id; ?></td>

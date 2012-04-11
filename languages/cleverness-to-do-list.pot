@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Cleverness To-Do List package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Cleverness To-Do List 3.0\n"
+"Project-Id-Version: Cleverness To-Do List 3.0.6\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/cleverness-to-do-list\n"
-"POT-Creation-Date: 2012-02-25 00:31:54+00:00\n"
+"POT-Creation-Date: 2012-03-11 20:42:01+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,7 +14,7 @@ msgstr ""
 
 #: includes/cleverness-to-do-list-categories.class.php:153
 #: includes/cleverness-to-do-list-categories.class.php:279
-#: includes/cleverness-to-do-list-loader.class.php:204
+#: includes/cleverness-to-do-list-loader.class.php:232
 msgid "There was a problem performing that action."
 msgstr ""
 
@@ -23,7 +23,7 @@ msgid "Category name cannot be blank."
 msgstr ""
 
 #: includes/cleverness-to-do-list-categories.class.php:167
-#: includes/cleverness-to-do-list-loader.class.php:141
+#: includes/cleverness-to-do-list-loader.class.php:169
 msgid "To-Do List Categories"
 msgstr ""
 
@@ -107,7 +107,7 @@ msgstr ""
 
 #: includes/cleverness-to-do-list-categories.class.php:280
 #: includes/cleverness-to-do-list-library.class.php:151
-#: includes/cleverness-to-do-list-loader.class.php:205
+#: includes/cleverness-to-do-list-loader.class.php:233
 msgid "You do not have sufficient privileges to do that."
 msgstr ""
 
@@ -116,7 +116,7 @@ msgid "Edit Category"
 msgstr ""
 
 #: includes/cleverness-to-do-list-categories.class.php:284
-#: includes/cleverness-to-do-list-loader.class.php:206
+#: includes/cleverness-to-do-list-loader.class.php:234
 msgid ""
 "You are about to permanently delete the selected item. \n"
 " 'Cancel' to stop, 'OK' to delete."
@@ -240,7 +240,7 @@ msgstr ""
 #: includes/cleverness-to-do-list-dashboard-widget.class.php:216
 #: includes/cleverness-to-do-list-help.class.php:68
 #: includes/cleverness-to-do-list-library.class.php:450
-#: includes/cleverness-to-do-list-loader.class.php:138
+#: includes/cleverness-to-do-list-loader.class.php:166
 #: includes/cleverness-to-do-list-widget.class.php:22
 #: includes/cleverness-to-do-list-widget.class.php:190
 #: includes/cleverness-to-do-list.class.php:31
@@ -593,70 +593,70 @@ msgid ""
 "a><br />"
 msgstr ""
 
-#: includes/cleverness-to-do-list-library.class.php:505
+#: includes/cleverness-to-do-list-library.class.php:506
 msgid "Add your first To-Do List item"
 msgstr ""
 
-#: includes/cleverness-to-do-list-library.class.php:538
+#: includes/cleverness-to-do-list-library.class.php:539
 msgid "Important"
 msgstr ""
 
-#: includes/cleverness-to-do-list-library.class.php:539
+#: includes/cleverness-to-do-list-library.class.php:540
 msgid "Normal"
 msgstr ""
 
-#: includes/cleverness-to-do-list-library.class.php:540
+#: includes/cleverness-to-do-list-library.class.php:541
 msgid "Low"
 msgstr ""
 
-#: includes/cleverness-to-do-list-library.class.php:546
-#: includes/cleverness-to-do-list-library.class.php:656
+#: includes/cleverness-to-do-list-library.class.php:547
+#: includes/cleverness-to-do-list-library.class.php:657
 msgid "A to-do list item has been assigned to you"
 msgstr ""
 
-#: includes/cleverness-to-do-list-library.class.php:547
-#: includes/cleverness-to-do-list-library.class.php:655
+#: includes/cleverness-to-do-list-library.class.php:548
+#: includes/cleverness-to-do-list-library.class.php:656
 msgid "The following item has been assigned to you:"
 msgstr ""
 
-#: includes/cleverness-to-do-list-loader.class.php:47
+#: includes/cleverness-to-do-list-loader.class.php:51
 msgid ""
 "To-Do List requires WordPress 3.3 or newer. <a href=\"http://codex.wordpress."
 "org/Upgrading_WordPress\">Please update.</a>"
 msgstr ""
 
-#: includes/cleverness-to-do-list-loader.class.php:57
-#: includes/cleverness-to-do-list-loader.class.php:58
+#: includes/cleverness-to-do-list-loader.class.php:84
+#: includes/cleverness-to-do-list-loader.class.php:85
 #: includes/cleverness-to-do-list.class.php:366
 msgid "To-Do"
 msgstr ""
 
-#: includes/cleverness-to-do-list-loader.class.php:71
+#: includes/cleverness-to-do-list-loader.class.php:102
 msgctxt "taxonomy general name"
 msgid "Categories"
 msgstr ""
 
-#: includes/cleverness-to-do-list-loader.class.php:72
+#: includes/cleverness-to-do-list-loader.class.php:103
 msgctxt "taxonomy singular name"
 msgid "Category"
 msgstr ""
 
-#: includes/cleverness-to-do-list-loader.class.php:141
+#: includes/cleverness-to-do-list-loader.class.php:169
 #: includes/cleverness-to-do-list-settings.class.php:77
 msgid "Categories"
 msgstr ""
 
-#: includes/cleverness-to-do-list-loader.class.php:203
+#: includes/cleverness-to-do-list-loader.class.php:231
 msgid "To-Do Deleted."
 msgstr ""
 
-#: includes/cleverness-to-do-list-loader.class.php:207
+#: includes/cleverness-to-do-list-loader.class.php:235
 msgid ""
 "You are about to permanently delete all completed items. \n"
 " 'Cancel' to stop, 'OK' to delete."
 msgstr ""
 
-#: includes/cleverness-to-do-list-loader.class.php:208
+#: includes/cleverness-to-do-list-loader.class.php:236
 msgid ""
 "You are about to permanently delete database tables. This cannot be "
 "undone. \n"
