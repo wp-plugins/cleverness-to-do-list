@@ -1,7 +1,27 @@
 jQuery( document ).ready( function( $ ) {
 
+	$( '#todo-list' ).tablesorter();
+
+	$( "#cleverness_todo_assign" ).select2( {
+		placeholder: ctdl.SELECT_USER
+	} );
+
+	$( function () {
+		$( "#cleverness-todo-progress-slider" ).slider( {
+			range:"min",
+			value:$( "#cleverness_todo_progress" ).val(),
+			min  :0,
+			max  :100,
+			step :5,
+			slide:function ( event, ui ) {
+				$( "#cleverness_todo_progress" ).val( ui.value );
+			}
+		} );
+		$( "#cleverness_todo_progress" ).val( $( "#cleverness-todo-progress-slider" ).slider( "value" ) );
+	} );
+
 	$( function() {
-		$cleverness_todo_dateformat = $( "#cleverness_todo_format" ).val();
+		var $cleverness_todo_dateformat = $( "#cleverness_todo_format" ).val();
 		$( "#cleverness_todo_deadline" ).datepicker( { dateFormat:$cleverness_todo_dateformat } );
 	} );
 

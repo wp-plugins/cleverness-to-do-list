@@ -5,8 +5,10 @@ Author URI: http://cleverness.org
 Plugin URI: http://cleverness.org/plugins/to-do-list
 Tags: to-do, to do list, to-do list, list, todo, to do, assign, task, assignments, multi-author
 Requires at least: 3.3
-Tested up to: 3.3.2
-Stable tag: 3.1.7
+Tested up to: 3.4
+Stable tag: 3.2.1
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Integrates a customizable, multi-featured to-do list.
 
@@ -24,6 +26,8 @@ A sidebar widget is available as well as shortcode to display the to-do list ite
 
 There are two shortcodes for front-end administration of the list. Management of categories is restricted to the back-end.
 
+You can also use this plugin to create custom to-do lists for your Post Planners if you own my premium plugin, [Post Planner](http://codecanyon.net/item/wordpress-post-planner/2496996?ref=seaserpentstudio).
+
 [Plugin Website](http://cleverness.org/plugins/to-do-list/)
 
 == Installation ==
@@ -31,16 +35,6 @@ There are two shortcodes for front-end administration of the list. Management of
 1. Upload the folder `/cleverness-to-do-list/` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Configure the settings on the Settings page under the To-Do List menu
-
-== License ==
-
-This file is part of Cleverness To-Do List.
-
-Cleverness To-Do List is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-
-Cleverness To-Do List is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with this plugin. If not, see <http://www.gnu.org/licenses/>.
 
 == Frequently Asked Questions ==
 
@@ -131,10 +125,34 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 == Screenshots ==
 
 1. Dashboard Widget
-2. To-Do List Page - Deadline, Progress, and Categories Enabled
+2. To-Do List Page
 3. Settings Page
+4. Everything Enabled
 
 == Changelog ==
+
+= 3.2.1 =
+* Added Post Planner plugin integration
+* Added ability to assign to-do items to multiple users
+* Added the option for the textarea to use WP_Editor
+* Added option to use wpautop to automatically add paragraph tags
+* Added dashboard setting to hide the Edit link on the Dashboard widget
+* Added jQuery table sorting of the To-Do List using tablesorter
+* Added filters and hooks
+* Added Widget option to show a logged-in user's own items only
+* Added Import/Export of Settings
+* Added some CSS classes to items
+* Added ability to collapse the Completed To-Do table when you click on the table headings
+* Added Polish translation by [Adam Zienkowicz](http://i2biz.pl)
+* Fixed missing jQuery UI CSS images
+* Fixed completed date not showing in front-end shortcode
+* Fixed issue with multiple widgets
+* Fixed sorting by deadlines
+* Changed User Roles in Settings to checkboxes instead of text field
+* Changed Progress dropdown to slider
+* Changed Assign dropdown to use Select2
+* Changed some default user permissions to edit_posts instead of publish_posts
+* Removed closing PHP tags in files
 
 = 3.1.7 =
 * Fixed issue with front-end shortcode
@@ -355,6 +373,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Upgrade Notice ==
 
+= 3.2.1 =
+New features
+
 = 3.1.7 =
 Bug fix
 
@@ -519,3 +540,15 @@ French translation by Thibault Guerpillon
 Czech translation by Tomas Vesely
 
 German translation updated by Janne Fleischer
+
+Polish translation by [Adam Zienkowicz](http://i2biz.pl)
+
+== License ==
+
+This file is part of Cleverness To-Do List.
+
+Cleverness To-Do List is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+Cleverness To-Do List is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this plugin. If not, see <http://www.gnu.org/licenses/>.
