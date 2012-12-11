@@ -5,8 +5,8 @@ Author URI: http://cleverness.org
 Plugin URI: http://cleverness.org/plugins/to-do-list
 Tags: to-do, to do list, to-do list, list, todo, to do, assign, task, assignments, multi-author
 Requires at least: 3.3
-Tested up to: 3.4
-Stable tag: 3.2.2
+Tested up to: 3.5
+Stable tag: 3.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -130,6 +130,14 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 4. Everything Enabled
 
 == Changelog ==
+
+= 3.2.3 =
+* Updated Select2 jQuery plugin to version 3.2 (fixes assignment issue with WordPress 3.5)
+* Added todolist-completed class to completed items using todolist shortcode
+* Added plugin version to enqueue script/styles
+* Added passing of Planner ID from Post Planner plugin
+* Fixed Delete All To-Dos/Delete Completed Items/Delete Category/Delete To-Do Javascript Confirm Cancel button issue
+* Adjusted width of WYSIWYG editor
 
 = 3.2.2 =
 * Fixed Emailing of Assigned Items
@@ -375,6 +383,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 * Fixed to work in WordPress 2.8
 
 == Upgrade Notice ==
+
+= 3.2.3 =
+Bug fix
 
 = 3.2.2 =
 Bug fix

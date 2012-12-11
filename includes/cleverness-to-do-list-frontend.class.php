@@ -611,7 +611,7 @@ class CTDL_Frontend_List extends ClevernessToDoList {
 				if ( $completed_title != '') {
 					$this->list .= '<h3 class="todo-title">'.esc_html( $completed_title ).'</h3>';
 				}
-				$this->list .= '<'.$list_type.' class="todolist">';
+				$this->list .= '<'.$list_type.' class="todolist todolist-completed">';
 				$this->loop_through_todos( 1, $category );
 				$this->list .= '</'.$list_type.'>';
 
