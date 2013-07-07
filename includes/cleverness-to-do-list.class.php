@@ -401,8 +401,9 @@ class ClevernessToDoList {
 	 * @param int $cat_id Existing field data
 	 */
 	protected function create_category_field( $cat_id = NULL ) {
+		$cat_id = ( is_array( $cat_id ) ? reset( $cat_id ) : NULL );
 		if ( CTDL_Loader::$settings['categories'] == 1 ) {
-			$cat_id = ( $cat_id != NULL ? $cat_id[0]->term_id : 0 );
+			$cat_id = ( $cat_id != NULL ? $cat_id->term_id : 0 );
 			$this->form .= '<tr><th scope="row"><label for="cat">'.apply_filters( 'ctdl_category', esc_html__( 'Category', 'cleverness-to-do-list' ) ).'</label></th><td>'.
 				wp_dropdown_categories( 'taxonomy=todocategories&echo=0&orderby=name&hide_empty=0&show_option_none='.__( 'None', 'cleverness-to-do-list' ).'&selected='.$cat_id ).'</td></tr>';
 		}
@@ -628,7 +629,8 @@ class ClevernessToDoList {
 	public function show_deadline( $deadline, $layout = 'table' ) {
 		if ( CTDL_Loader::$settings['show_deadline'] == 1 ) {
 			if ( $layout == 'table' ) {
-				$this->list .= ( $deadline != '' ? sprintf( '<td class="todo-deadline">%s</td>', date( CTDL_Loader::$settings['date_format'], $deadline ) ) : '<td class="todo-deadline"></td>' );
+				$formatted_deadline = ( $deadline != '' ? date( CTDL_Loader::$settings['date_format'], $deadline ) : '' );
+				$this->list .= apply_filters( 'ctdl_show_deadline', '<td class="todo-deadline">'.$formatted_deadline.'</td>', CTDL_Loader::$settings['date_format'], $deadline );
 			} else {
 				$this->list .= ( $deadline != '' ? sprintf( '%s', date( CTDL_Loader::$settings['date_format'], $deadline ) ) : '' );
 			}
@@ -645,7 +647,7 @@ class ClevernessToDoList {
 	public function show_date_added( $date, $formatted_date, $layout = 'table' ) {
 		if ( CTDL_Loader::$settings['show_date_added'] == 1 ) {
 			if ( $layout == 'table' ) {
-				$this->list .= ( $date != '' ? sprintf( '<td class="todo-date"><span style="display:none">%s</span>%s</td>', esc_attr( $date ),
+				$this->list .= ( $date != '' ? sprintf( '<td class="todo-date"><span style="display:none;">%s</span>%s</td>', esc_attr( $date ),
 					esc_attr( $formatted_date ) ) : '<td class="todo-date"></td>' );
 			} else {
 				$this->list .= ( $date != '' ? sprintf( '%s', esc_attr( $formatted_date ) ) : '' );
