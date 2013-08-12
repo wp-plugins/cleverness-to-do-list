@@ -6,7 +6,7 @@ Plugin URI: http://cleverness.org/plugins/to-do-list
 Tags: to-do, to do list, to-do list, list, todo, to do, assign, task, assignments, multi-author
 Requires at least: 3.3
 Tested up to: 3.6
-Stable tag: 3.3.1
+Stable tag: 3.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -131,6 +131,10 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 4. Everything Enabled
 
 == Changelog ==
+
+= 3.3.2 =
+* Updated Polish translation from Michał Wielkopolski
+* Fixed Trying to get property of non-object notice in todolist shortcode
 
 = 3.3.1 =
 * Updated Russian translation from Sergei Zastavnyi
@@ -409,6 +413,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Upgrade Notice ==
 
+= 3.3.2 =
+Bug fix, updated translation
+
 = 3.3.1 =
 Bug fix
 
@@ -589,7 +596,7 @@ Czech translation by Tomas Vesely
 
 German translation updated by Janne Fleischer
 
-Polish translation by [Adam Zienkowicz](http://i2biz.pl)
+Polish translation by [Adam Zienkowicz](http://i2biz.pl) - Updated by [Michał Wielkopolski](http://www.oikoslab.pl/)
 
 Slovak translation by Branco [WebHostingGeeks.com](http://webhostinggeeks.com/user-reviews/)
 
