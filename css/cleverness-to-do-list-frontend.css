@@ -1,0 +1,58 @@
+div > .todo-checkbox {
+	float: left;
+	margin-right: 5px;
+	margin-top: 5px;
+}
+
+div.todo-list {
+	clear: both;
+}
+
+table#todo-list thead tr .tablesorter-header {
+	background-image: url('images/bg.gif');
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+}
+
+table#todo-list thead tr .tablesorter-headerAsc {
+	background-image: url('images/asc.gif');
+}
+
+table#todo-list thead tr .tablesorter-headerDesc {
+	background-image: url('images/desc.gif');
+}
+
+table#todo-list thead tr .sorter-false {
+	background-image: url('');
+}
+
+#ui-datepicker-div {
+	display: none;
+}
+
+#cleverness_todo_progress {
+	width: 30px;
+	margin-left: 5px;
+	margin-right: 0;
+	border: 0;
+	text-align: right;
+	padding: 0;
+	background: transparent url('');
+	box-shadow: 0 0 0;
+}
+
+#cleverness-todo-progress-slider {
+	float: left;
+	width: 170px;
+	margin-top: 5px;
+	border-radius: 0;
+}
+
+.todoitem {
+	margin-left: 20px;
+}
+
+table#todo-list {
+	vertical-align: text-top;
+}
