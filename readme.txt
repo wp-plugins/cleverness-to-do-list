@@ -4,9 +4,9 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cindy
 Author URI: http://cleverness.org
 Plugin URI: http://cleverness.org/plugins/to-do-list
 Tags: to-do, to do list, to-do list, list, todo, to do, assign, task, assignments, multi-author
-Requires at least: 3.3
-Tested up to: 3.6
-Stable tag: 3.3.2
+Requires at least: 3.8
+Tested up to: 4.2
+Stable tag: 3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,11 +22,11 @@ permission levels using capabilities. There are also settings to show deadline a
 
 A new menu item is added to the backend to manage your list and the to-do list is also listed on a dashboard widget.
 
-A sidebar widget is available as well as shortcode to display the to-do list items on your site.
+A sidebar widget is available as well as a shortcode to display the to-do list items on your site.
 
 There are two shortcodes for front-end administration of the list. Management of categories is restricted to the back-end.
 
-You can also use this plugin to create custom to-do lists for your Post Planners if you own my premium plugin, [Post Planner](http://codecanyon.net/item/wordpress-post-planner/2496996?ref=seaserpentstudio).
+You can also use this plugin to create custom to-do lists for your Post Planners if you own my commercial plugin, [Post Planner](http://codecanyon.net/item/wordpress-post-planner/2496996?ref=seaserpentstudio).
 
 [Plugin Website](http://cleverness.org/plugins/to-do-list/)
 
@@ -51,14 +51,15 @@ Several options are available:
 * **progress** - default is *show*. Use a blank value to hide.
 * **addedby** - default is *show*. Use a blank value to hide.
 * **date** - default is hide (0). Use 1 to show.
-* **completed** - default is blank. Set to *show* to display completed items.
+* **completed** - default is blank. Set to *show* to display completed items. Set to *only* to show just the completed items.
 * **completed_title** - default is no title.
+* **completed_date** – default is hide (0). Use 1 to show.
 * **list_type** - default is *ol* (ordered list). Use *ul* to show an unordered list.
 * **category** - default is *all*. Use the category ID to show a specific category.
 
 Example:
 
-Table view with the title of Upcoming Articles and showing the progress and who the item was assigned to.
+Table view with the title of Upcoming Articles, hiding priorities, deadline, and added by.
 
 [todolist title="Upcoming Articles" type="table" priorities="" deadline="" addedby=""]
 
@@ -77,15 +78,15 @@ The options are:
 * **date** - default is hide (0). Use 1 to show.
 * **editlink** - default is hide (0). Use 1 to show.
 * **todoid** - default is blank (""). Use the ID of the to-do item to display just one item.
+* **completed** – default is 0. Use 1 to show completed items only
 
 Example:
 
-Set the title to "My To-Do List" and show the deadline and the category.
+Set the title to "My To-Do List" and show the deadline and only items in a specific category.
 
-[todoadmin title="My To-Do List" deadline=1 categories=1]
+[todochecklist title="My To-Do List" deadline=1 category=1]
 
 = What is the shortcode to display the administration page in the front-end? =
-Permalinks must be enabled on the site to be able to use this feature.
 [todoadmin]
 
 The options are:
@@ -100,6 +101,9 @@ The options are:
 * **date** - default is hide (0). Use 1 to show.
 * **editlink** - default is show (1). Use 0 to hide.
 * **category** - default is all categories (0).  Use the category ID to show a specific category.
+* **completed** – default is hide (0). Use 1 to show
+* **completed_date** – default is hide (0). Use 1 to show
+* **planner** – default is hide(0). Use 1 to show
 
 Example:
 
@@ -119,6 +123,15 @@ Set the title to "Things to Do" and show the priority and the progress.
 * **Purge To-Do Items Capability** - This allows the selected capability to purge all the completed to-do items.
 * **Add Categories Capability** - This allows the selected capability to add new categories.
 
+= How can I customize the plugin? =
+
+I have numerous hooks in the plugin so you can customize how it looks and functions. If a hook is needed somewhere, please [let me know](http://cleverness.org/contact/).
+
+* [View the list of actions and filters](http://cleverness.org/plugins/to-do-list/cleverness-to-do-list-filters-and-hooks/).
+* [View the WordPress Codex article on hooks](https://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters).
+
+You can create your own templates for the dashboard widget and the widget. You can find them in the `/templates/` directory. Place them in your theme's folder in a directory called `ctdl-templates`.
+
 = What should I do if I find a bug? =
 
 Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave a comment](http://cleverness.org/plugins/to-do-list/#respond) or [contact me](http://cleverness.org/contact/).
@@ -131,6 +144,40 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 4. Everything Enabled
 
 == Changelog ==
+
+= 3.4 =
+* Fixed Assigned To text showing even though the value is empty on dashboard widget
+* Fixed Master View - view assigned only - completed items issue where items were showing that should not be
+* Fixed an issue with the frontend date added attribute
+* Fixed todoadmin shortcode table overflowing container
+* Changed progress to show as 100% completed for completed items
+* Changed to-do editor to full width
+* Changed CSS class in todochecklist shortcode from 'uncompleted' to 'todo-uncompleted'
+* Changed todolist shortcode attributes to use 1 instead of show (show still works)
+* Changed default to-do limits from unlimited
+* Changed to dashicons for menu icon; changeable with ctdl_icon filter
+* Changed ctdl_add_form and ctdl_edit_form filters to ctdl_add_form_action and ctdl_edit_form_action hooks. ctdl_add_form and ctdl_edit_form are now filters applied to the forms after the new actions
+* Added heading option to dashboard widget (configure link is show when hovering over widget title)
+* Added ctdl_send_email filter that determines if email notification should be sent or not
+* Added is_user_member_of_blog() to todoadmin shortcode
+* Added link to individual Post Planner's titles instead of showing just the title
+* Added completed items display option to dashboard widget (configure link is show when hovering over widget title)
+* Added templates for dashboard widget and widget - can be overwritten in your theme folder by copying files from the plugin's /templates/ folder to a folder named ctdl-templates in your theme
+* Added completed=only attribute for todolist shortcode to show only completed items
+* Added completed=1 attribute for todochecklist shortcode to show only completed items
+* Added completed=1 and completed_date=1 attributes for todoadmin shortcode to show completed items and date completed
+* Added Post Planner display attribute to todoadmin shortcode: planner=1
+* Added wp_reset_postdata() to widget loop (thanks to dwightlathan77), delete all todos loop, get_todos loop for master view, get all completed todos loop, main show_todo_list_items loop, dashboard widget loop,
+and frontend loops
+* Replaced create_function calls
+* Removed HTML email type after sending email
+* Removed uses of extract
+* Update widget, dashboard, and category visibility options if category is split in WordPress 4.2 (shortcodes will need to be updated manually if a category id has changed)
+* Show a message if the category id has changed when updating the category name
+* Only show sorting arrows for table column headings on hover
+* Backend style adjustments to match current WordPress UI
+* Updated version of Select2 to 3.5.2
+* Updated Spanish translation by Jorge Flores [Mayan Group](http://www.mayan.mx/)
 
 = 3.3.2 =
 * Updated Polish translation from Michał Wielkopolski
@@ -413,6 +460,9 @@ Visit [the plugin website](http://cleverness.org/plugins/to-do-list/) and [leave
 
 == Upgrade Notice ==
 
+= 3.4 =
+Bug fixes, new features
+
 = 3.3.2 =
 Bug fix, updated translation
 
@@ -582,7 +632,7 @@ This plugin was originally from Abstract Dimensions (site no longer available) w
 
 Icon by [Hylke Bons](http://www.iconfinder.com/icondetails/30045/32/list_shopping_list_todo_todo_list_icon)
 
-Spanish translation by [Ricardo](http://yabocs.avytes.com/)
+Spanish translation by [Ricardo](http://yabocs.avytes.com/) - Updated by Jorge Flores [Mayan Group](http://www.mayan.mx/)
 
 Russian translation by [Almaz](http://alm.net.ru) - Updated by Sergei Zastavnyi
 
